@@ -1,7 +1,6 @@
 "use client"
 
 import React, { useRef, useEffect, useState } from 'react'
-import { iOSDebugLog } from './ios-debug-logger'
 
 interface SlideStageProps {
   children: React.ReactNode
@@ -28,9 +27,7 @@ export default function SlideStage({
   const [isVisible, setIsVisible] = useState(false)
   const [scaleFactor, setScaleFactor] = useState(1)
 
-  // iOS detection
-  const isIOS = typeof window !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream
-  const isIPhone = typeof window !== 'undefined' && /iPhone/.test(navigator.userAgent) && !(window as any).MSStream
+  // Unified behavior for all devices
 
   // Intersection Observer for lazy loading frames
   useEffect(() => {
@@ -41,9 +38,6 @@ export default function SlideStage({
         entries.forEach((entry) => {
           if (entry.isIntersecting && entry.intersectionRatio > 0.1) {
             setIsVisible(true)
-            if (isIPhone) {
-              iOSDebugLog('info', `Frame ${frameId} now visible`, 'SlideStage')
-            }
           } else {
             setIsVisible(false)
           }
@@ -57,7 +51,7 @@ export default function SlideStage({
 
     observer.observe(stageRef.current)
     return () => observer.disconnect()
-  }, [frameSrc, frameId, isIPhone])
+  }, [frameSrc, frameId])
 
   // Scale calculation based on container size
   useEffect(() => {
@@ -78,15 +72,15 @@ export default function SlideStage({
     const resizeObserver = new ResizeObserver(updateScale)
     resizeObserver.observe(stageRef.current)
 
-    // iPhone: Less frequent updates to reduce performance impact
-    const intervals = isIPhone ? [1000, 3000] : [100, 500, 1000]
+    // Standard update intervals for all devices
+    const intervals = [100, 500, 1000]
     const timers = intervals.map(ms => setTimeout(updateScale, ms))
 
     return () => {
       resizeObserver.disconnect()
       timers.forEach(clearTimeout)
     }
-  }, [isIPhone])
+  }, [])
 
   const {
     scaleX = 1,
@@ -124,11 +118,7 @@ export default function SlideStage({
             transform: `scale(${scaleX * scaleFactor}, ${scaleY * scaleFactor})`,
             transformOrigin: 'center center',
             pointerEvents: 'none',
-            zIndex: 2,
-            // iOS optimizations
-            backfaceVisibility: 'hidden',
-            WebkitTransformStyle: 'flat',
-            willChange: isIPhone ? 'auto' : 'transform'
+            zIndex: 2
           }}
           aria-hidden="true"
         >
@@ -143,15 +133,11 @@ export default function SlideStage({
               width: '120%',
               height: '120%',
               objectFit: fit,
-              borderRadius: '12px',
-              // iOS optimizations
-              WebkitTransform: 'translate(-50%, -50%)',
-              backfaceVisibility: 'hidden'
+              borderRadius: '12px'
             }}
             loading="lazy"
             decoding="async"
             onError={(e) => {
-              iOSDebugLog('error', `Frame image failed to load: ${frameId}`, 'SlideStage')
               console.warn(`Failed to load frame image: ${frameSrc}`)
             }}
           />
@@ -173,18 +159,7 @@ export default function SlideStage({
           }
         }
 
-        /* iOS specific optimizations */
-        @supports (-webkit-touch-callout: none) {
-          .slide-frame {
-            -webkit-transform-style: flat;
-            will-change: auto;
-          }
-
-          .slide-frame img {
-            -webkit-backface-visibility: hidden;
-            -webkit-transform-style: flat;
-          }
-        }
+        /* Unified styling for all devices */
       `}</style>
     </div>
   )

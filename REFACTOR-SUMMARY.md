@@ -71,42 +71,27 @@ Se ha implementado exitosamente la refactorización del sistema de marcos global
 - **Parámetros configurables**: scaleX, scaleY, offsetX, offsetY, fit
 - **Backwards compatibility**: Mantiene la apariencia visual original
 
-## Mitigaciones iOS Safari
+## Comportamiento Unificado
 
-### CSS Optimizations (`globals.css`)
-```css
-@supports (-webkit-touch-callout: none) {
-  .slide-stage {
-    -webkit-transform-style: flat;
-    backface-visibility: hidden;
-  }
+### Sin Diferencias por Dispositivo
+- ✅ **Mismo comportamiento** en todos los dispositivos (iOS, Android, Desktop)
+- ✅ **Sin detección de navegador** ni lógica específica de plataforma
+- ✅ **CSS unificado** sin @supports queries específicos
+- ✅ **JavaScript uniforme** sin diferencias por User-Agent
 
-  .slide-frame {
-    -webkit-transform-style: flat;
-    -webkit-backface-visibility: hidden;
-    will-change: auto; /* Evita will-change: transform en iOS */
-  }
-
-  /* Deshabilita background-attachment: fixed en iOS */
-  * {
-    background-attachment: scroll !important;
-  }
-}
-```
-
-### JavaScript Optimizations (`slide-stage.tsx`)
+### Optimizaciones Universales (`slide-stage.tsx`)
 - **Intersection Observer**: Lazy loading de marcos para reducir memoria
-- **Throttled updates**: Actualizaciones menos frecuentes en iPhone
-- **Minimal transforms**: Evita transformaciones complejas en iOS
-- **Error handling**: Logging de errores específico para iOS
+- **ResizeObserver**: Actualizaciones de escala responsivas
+- **Container Queries**: Escalado responsivo basado en tamaño real
+- **Error handling**: Logging de errores estándar
 
 ## Beneficios de la Nueva Arquitectura
 
-### 1. Compatibilidad iOS
+### 1. Compatibilidad Universal
 - ✅ Elimina stacking contexts globales problemáticos
-- ✅ Reduce el uso de memoria GPU
+- ✅ Reduce el uso de memoria GPU en todos los dispositivos
 - ✅ Evita clipping por overflow en contenedores padre
-- ✅ Mitigaciones específicas para limitaciones de Safari iOS
+- ✅ Arquitectura DOM compatible con todas las plataformas
 
 ### 2. Rendimiento
 - ✅ Lazy loading de marcos fuera de viewport
@@ -139,7 +124,8 @@ Se ha implementado exitosamente la refactorización del sistema de marcos global
 - ✅ Chrome/Edge: Soporte completo con container queries
 - ✅ Firefox: Soporte completo con container queries
 - ✅ Safari desktop: Soporte completo
-- ✅ iOS Safari: Mitigaciones específicas implementadas
+- ✅ iOS Safari: Mismo comportamiento que desktop
+- ✅ Android Chrome: Mismo comportamiento universal
 
 ### Funcionalidad Preservada
 - ✅ Todos los carruseles mantienen su marco correspondiente

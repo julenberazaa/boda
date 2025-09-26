@@ -538,39 +538,9 @@
 
 /* Accesibilidad - Motion reduce no needed in fixed layout */
 
-/* iOS Safari optimizations for local frames */
-@supports (-webkit-touch-callout: none) {
-  /* iOS-specific optimizations */
-  .slide-stage {
-    -webkit-transform-style: flat;
-    backface-visibility: hidden;
-  }
+/* Unified styles for all devices - no platform-specific differences */
 
-  .slide-frame {
-    -webkit-transform-style: flat;
-    -webkit-backface-visibility: hidden;
-    will-change: auto; /* Avoid will-change: transform on iOS */
-  }
-
-  .slide-frame img {
-    -webkit-backface-visibility: hidden;
-    -webkit-transform-style: flat;
-  }
-
-  /* Disable background-attachment: fixed on iOS */
-  * {
-    background-attachment: scroll !important;
-  }
-
-  /* Reduce GPU memory usage */
-  .timeline-item {
-    will-change: auto;
-    transform: translateZ(0); /* Force compositing layer */
-    -webkit-transform: translateZ(0);
-  }
-}
-
-/* Container queries support for responsive frames */
+/* Responsive scaling for smaller screens */
 @container (width < 768px) {
   .slide-frame {
     --mobile-scale: 0.8;

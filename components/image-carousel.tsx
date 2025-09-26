@@ -16,9 +16,18 @@ interface ImageCarouselProps extends React.HTMLAttributes<HTMLDivElement> {
   onVideoClick?: (videoSrc: string, rect: DOMRect) => void
   onOpenMediaCarousel?: (items: MediaItem[], startIndex: number, rect: DOMRect) => void
   experienceId?: string
+  // Frame properties - añadimos el marco directamente al carrusel
+  frameSrc?: string
+  frameConfig?: {
+    scaleX?: number
+    scaleY?: number
+    offsetX?: number
+    offsetY?: number
+    fit?: 'cover' | 'contain' | 'fill'
+  }
 }
 
-export default function ImageCarousel({ images, media, alt, onImageClick, onVideoClick, onOpenMediaCarousel, experienceId, className, ...rest }: ImageCarouselProps) {
+export default function ImageCarousel({ images, media, alt, onImageClick, onVideoClick, onOpenMediaCarousel, experienceId, frameSrc, frameConfig, className, ...rest }: ImageCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0)
 
   // Detección específica de iPhone
@@ -220,6 +229,34 @@ export default function ImageCarousel({ images, media, alt, onImageClick, onVide
           )
         })}
       </div>
+
+      {/* Frame overlay - renderizado DENTRO del carrusel */}
+      {frameSrc && (
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            zIndex: 30, // Por encima de las imágenes (z-index 20)
+            width: `${100 * (frameConfig?.scaleX || 1)}%`,
+            height: `${100 * (frameConfig?.scaleY || 1)}%`,
+            top: `${frameConfig?.offsetY || 0}%`,
+            left: `${frameConfig?.offsetX || 0}%`,
+          }}
+        >
+          <img
+            src={frameSrc}
+            alt=""
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: frameConfig?.fit || 'contain',
+              borderRadius: '12px'
+            }}
+            className="block"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      )}
     </div>
   )
 }

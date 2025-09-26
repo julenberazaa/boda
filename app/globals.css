@@ -537,3 +537,64 @@
 }
 
 /* Accesibilidad - Motion reduce no needed in fixed layout */
+
+/* iOS Safari optimizations for local frames */
+@supports (-webkit-touch-callout: none) {
+  /* iOS-specific optimizations */
+  .slide-stage {
+    -webkit-transform-style: flat;
+    backface-visibility: hidden;
+  }
+
+  .slide-frame {
+    -webkit-transform-style: flat;
+    -webkit-backface-visibility: hidden;
+    will-change: auto; /* Avoid will-change: transform on iOS */
+  }
+
+  .slide-frame img {
+    -webkit-backface-visibility: hidden;
+    -webkit-transform-style: flat;
+  }
+
+  /* Disable background-attachment: fixed on iOS */
+  * {
+    background-attachment: scroll !important;
+  }
+
+  /* Reduce GPU memory usage */
+  .timeline-item {
+    will-change: auto;
+    transform: translateZ(0); /* Force compositing layer */
+    -webkit-transform: translateZ(0);
+  }
+}
+
+/* Container queries support for responsive frames */
+@container (width < 768px) {
+  .slide-frame {
+    --mobile-scale: 0.8;
+  }
+}
+
+/* Performance optimizations for all devices */
+.slide-stage {
+  container-type: inline-size;
+  position: relative;
+  overflow: visible;
+  isolation: isolate;
+}
+
+.slide-frame {
+  contain: layout style paint;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .slide-frame {
+    transition: none !important;
+    animation: none !important;
+  }
+}

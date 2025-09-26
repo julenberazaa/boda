@@ -23,13 +23,14 @@ export default function EmergencyDebug() {
       message,
       data
     }
-    
-    setLogs(prev => [...prev.slice(-49), entry]) // Keep last 50
-    
-    // Also log to console for backup
-    console[level === 'error' ? 'error' : level === 'warn' ? 'warn' : 'log'](
-      `[${entry.timestamp}] ${message}`, data || ''
-    )
+
+    // Defer state updates to avoid render cycle issues
+    setTimeout(() => {
+      setLogs(prev => [...prev.slice(-49), entry]) // Keep last 50
+      if (level === 'error') {
+        setIsVisible(true)
+      }
+    }, 0)
   }
 
   useEffect(() => {
@@ -56,20 +57,17 @@ export default function EmergencyDebug() {
         colno: event.colno,
         stack: event.error?.stack
       })
-      setIsVisible(true) // Show on any error
     }
 
     const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
       addLog('error', `Unhandled rejection: ${event.reason}`)
-      setIsVisible(true)
     }
 
     // Catch React errors
     const originalError = console.error
     console.error = (...args) => {
       addLog('error', `Console error: ${args.join(' ')}`)
-      setIsVisible(true)
-      originalError(...args)
+      originalError.apply(console, args)
     }
 
     window.addEventListener('error', handleError)

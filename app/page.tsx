@@ -4,7 +4,9 @@ import { useEffect, useMemo, useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import { Heart, Plane, MapPin, Camera, Video, Sun, Star, Ship, BellRingIcon as Ring, BookOpen, PartyPopper, X, PawPrint, Eye, EyeOff, ChevronLeft, ChevronRight } from "lucide-react"
 import ImageCarousel from "@/components/image-carousel"
-import FramesOverlay from "@/components/frames-overlay"
+// import FramesOverlay from "@/components/frames-overlay" // DEPRECATED: Replaced with local SlideStage
+import SlideStage from "@/components/slide-stage"
+import { getFrameConfig } from "@/lib/local-frame-config"
 import { iOSDebugLog } from "@/components/ios-debug-logger"
 import { emergencyLog } from "@/components/emergency-debug"
 
@@ -1002,7 +1004,8 @@ export default function TimelinePage() {
         </div>
       ), document.body)}
       {/* Static frames overlay, above base content but below modal/video */}
-      {!overlayVisible && <FramesOverlay />}
+      {/* {!overlayVisible && <FramesOverlay />} */}
+      {/* DEPRECATED: Global frames overlay replaced with local SlideStage components */}
       {/* Image Modal via portal to escape transformed ancestors */}
       {selectedImage.src && createPortal(
         (
@@ -1373,25 +1376,28 @@ export default function TimelinePage() {
           <div className="col-span-6">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative' }}>
-                  <ImageCarousel
-                    images={[
-                      "/primeras-escapadas-01.png",
-                      "/experiences/experience-02/primeras-escapadas-02.jpg",
-                      "/experiences/experience-02/primeras-escapadas-03.jpg",
-                      "/experiences/experience-02/escapadas.png",
-                      "/experiences/experience-02/escapadas2.png"
-                    ]}
-                    alt="Primeras escapadas"
-                    experienceId="02"
-                    onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
-                      openImageCarousel(imageSrc, imageArray, currentIndex, rect)
-                    }}
-                    data-frame-anchor="carousel-frame-anchor"
-                  />
-                  
-                </div>
-                
+                <SlideStage
+                  frameId="02"
+                  frameSrc={getFrameConfig("02")?.frameSrc}
+                  frameConfig={getFrameConfig("02")}
+                >
+                  <div style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative' }}>
+                    <ImageCarousel
+                      images={[
+                        "/primeras-escapadas-01.png",
+                        "/experiences/experience-02/primeras-escapadas-02.jpg",
+                        "/experiences/experience-02/primeras-escapadas-03.jpg",
+                        "/experiences/experience-02/escapadas.png",
+                        "/experiences/experience-02/escapadas2.png"
+                      ]}
+                      alt="Primeras escapadas"
+                      experienceId="02"
+                      onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
+                        openImageCarousel(imageSrc, imageArray, currentIndex, rect)
+                      }}
+                    />
+                  </div>
+                </SlideStage>
               </div>
             </div>
           </div>
@@ -1402,26 +1408,28 @@ export default function TimelinePage() {
           <div className="col-span-6 order-1">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-hidden" style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative' }}>
-                  <ImageCarousel
-                    images={[
-                      "/estudios/ESTUDIOS.jpeg",
-                      "/estudios/ESTUDIOS.png",
-                      "/estudios_.png",
-                      "/estudios_2.png",
-                      "/mir/MIR4.jpeg",
-                    ]}
-                    alt="Estudios universitarios"
-                    experienceId="estudios"
-                    onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
-                      openImageCarousel(imageSrc, imageArray, currentIndex, rect)
-                    }}
-                    data-frame-anchor="carousel-frame-anchor-estudios"
-                  />
-                  
-                </div>
-                
-                
+                <SlideStage
+                  frameId="estudios"
+                  frameSrc={getFrameConfig("estudios")?.frameSrc}
+                  frameConfig={getFrameConfig("estudios")}
+                >
+                  <div className="overflow-hidden" style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative' }}>
+                    <ImageCarousel
+                      images={[
+                        "/estudios/ESTUDIOS.jpeg",
+                        "/estudios/ESTUDIOS.png",
+                        "/estudios_.png",
+                        "/estudios_2.png",
+                        "/mir/MIR4.jpeg",
+                      ]}
+                      alt="Estudios universitarios"
+                      experienceId="estudios"
+                      onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
+                        openImageCarousel(imageSrc, imageArray, currentIndex, rect)
+                      }}
+                    />
+                  </div>
+                </SlideStage>
               </div>
             </div>
           </div>
@@ -1454,26 +1462,28 @@ export default function TimelinePage() {
           <div className="col-span-6">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="rounded-2xl" style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative' }}>
-                  <ImageCarousel
-                    images={[
-                      "/estudios-oposiciones-01.png",
-                      "/estudios-oposiciones-02.jpg",
-                      "/estudios-oposiciones-03.png",
-                      "/estudios-oposiciones-04.png",
-                      "/policia/POLICIA.png"
-                    ]}
-                    alt="Oposiciones de policía"
-                    experienceId="03"
-                    onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
-                      openImageCarousel(imageSrc, imageArray, currentIndex, rect)
-                    }}
-                    data-frame-anchor="frame-anchor-policia"
-                  />
-                  
-                </div>
-                
-                
+                <SlideStage
+                  frameId="03"
+                  frameSrc={getFrameConfig("03")?.frameSrc}
+                  frameConfig={getFrameConfig("03")}
+                >
+                  <div className="rounded-2xl" style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative' }}>
+                    <ImageCarousel
+                      images={[
+                        "/estudios-oposiciones-01.png",
+                        "/estudios-oposiciones-02.jpg",
+                        "/estudios-oposiciones-03.png",
+                        "/estudios-oposiciones-04.png",
+                        "/policia/POLICIA.png"
+                      ]}
+                      alt="Oposiciones de policía"
+                      experienceId="03"
+                      onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
+                        openImageCarousel(imageSrc, imageArray, currentIndex, rect)
+                      }}
+                    />
+                  </div>
+                </SlideStage>
               </div>
             </div>
           </div>
@@ -1484,25 +1494,27 @@ export default function TimelinePage() {
           <div className="col-span-6 order-1">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-hidden rounded-2xl" style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative' }}>
-                  <ImageCarousel
-                    images={[
-                      "/mir/MIR.png",
-                      "/mir/MIR2.png",
-                      "/mir/MIR3.png",
-                      "/medicina-graduacion.png",
-                    ]}
-                    alt="MIR"
-                    experienceId="mir"
-                    onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
-                      openImageCarousel(imageSrc, imageArray, currentIndex, rect)
-                    }}
-                    data-frame-anchor="frame-anchor-medicina"
-                  />
-                  
-                </div>
-                
-                
+                <SlideStage
+                  frameId="mir"
+                  frameSrc={getFrameConfig("mir")?.frameSrc}
+                  frameConfig={getFrameConfig("mir")}
+                >
+                  <div className="overflow-hidden rounded-2xl" style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative' }}>
+                    <ImageCarousel
+                      images={[
+                        "/mir/MIR.png",
+                        "/mir/MIR2.png",
+                        "/mir/MIR3.png",
+                        "/medicina-graduacion.png",
+                      ]}
+                      alt="MIR"
+                      experienceId="mir"
+                      onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
+                        openImageCarousel(imageSrc, imageArray, currentIndex, rect)
+                      }}
+                    />
+                  </div>
+                </SlideStage>
               </div>
             </div>
           </div>
@@ -1535,25 +1547,28 @@ export default function TimelinePage() {
           <div className="col-span-6">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-hidden" style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative' }}>
-                  <ImageCarousel
-                    images={[
-                      "/hobbies/HOBBIES.jpeg",
-                      "/hobbies/HOBBIES.png",
-                      "/hobbie_.png",
-                      "/hobbie_2.png",
-                      "/hobbies/HOBBIE_FUTBOL.jpeg",
-                    ]}
-                    alt="Hobbies"
-                    experienceId="hobbies"
-                    onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
-                      openImageCarousel(imageSrc, imageArray, currentIndex, rect)
-                    }}
-                    data-frame-anchor="carousel-frame-anchor-hobbies"
-                  />
-                  
-                </div>
-                
+                <SlideStage
+                  frameId="hobbies"
+                  frameSrc={getFrameConfig("hobbies")?.frameSrc}
+                  frameConfig={getFrameConfig("hobbies")}
+                >
+                  <div className="overflow-hidden" style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative' }}>
+                    <ImageCarousel
+                      images={[
+                        "/hobbies/HOBBIES.jpeg",
+                        "/hobbies/HOBBIES.png",
+                        "/hobbie_.png",
+                        "/hobbie_2.png",
+                        "/hobbies/HOBBIE_FUTBOL.jpeg",
+                      ]}
+                      alt="Hobbies"
+                      experienceId="hobbies"
+                      onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
+                        openImageCarousel(imageSrc, imageArray, currentIndex, rect)
+                      }}
+                    />
+                  </div>
+                </SlideStage>
               </div>
             </div>
           </div>
@@ -1564,27 +1579,30 @@ export default function TimelinePage() {
           <div className="col-span-6 order-1">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-hidden" style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative' }}>
-                  <ImageCarousel
-                    images={[
-                      "/independizarse/INDEP.png",
-                      "/independizarse/INDEP2.png",
-                      "/independizarse/INDEP3.png",
-                      "/independizarse/INDEP4.png",
-                      "/independizarse/INDEP5.png",
-                      "/independizarse/INDEP6.png",
-                      "/independizarse/casa.png",
-                    ]}
-                    alt="Independizarse"
-                    experienceId="independizarse"
-                    onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
-                      openImageCarousel(imageSrc, imageArray, currentIndex, rect)
-                    }}
-                    data-frame-anchor="carousel-frame-anchor-indep"
-                  />
-                  
-                </div>
-                
+                <SlideStage
+                  frameId="independizarse"
+                  frameSrc={getFrameConfig("independizarse")?.frameSrc}
+                  frameConfig={getFrameConfig("independizarse")}
+                >
+                  <div className="overflow-hidden" style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative' }}>
+                    <ImageCarousel
+                      images={[
+                        "/independizarse/INDEP.png",
+                        "/independizarse/INDEP2.png",
+                        "/independizarse/INDEP3.png",
+                        "/independizarse/INDEP4.png",
+                        "/independizarse/INDEP5.png",
+                        "/independizarse/INDEP6.png",
+                        "/independizarse/casa.png",
+                      ]}
+                      alt="Independizarse"
+                      experienceId="independizarse"
+                      onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
+                        openImageCarousel(imageSrc, imageArray, currentIndex, rect)
+                      }}
+                    />
+                  </div>
+                </SlideStage>
               </div>
             </div>
           </div>
@@ -1617,44 +1635,47 @@ export default function TimelinePage() {
           <div className="col-span-6">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-hidden" style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative' }}>
-                  <ImageCarousel
-                    media={[
-                      { type: 'image', src: '/ilun/ILUN.png' },
-                      { type: 'image', src: '/ilun/ILUN2.png' },
-                      { type: 'image', src: '/ilun_.jpeg' },
-                      { type: 'image', src: '/ilun_2.png' },
-                      { type: 'image', src: '/ilun/ILUN3.png' },
-                      { type: 'image', src: '/ilun_3.png' },
-                      { type: 'image', src: '/ilun/ILUN4.png' },
-                      { type: 'image', src: '/ilun_4.png' },
-                      { type: 'image', src: '/ilun/ILUN5.png' },
-                      { type: 'image', src: '/ilun_5.png' },
-                      { type: 'image', src: '/ilun/ILUN_01.jpeg' },
-                      { type: 'image', src: '/ilun_6.png' },
-                      { type: 'video', src: 'https://res.cloudinary.com/dgevq0wwq/video/upload/v1755357104/VID-20250816-WA0014_fwf3ov.mp4' },
-                      { type: 'image', src: '/ilun/ILUN6.png' },
-                      { type: 'image', src: '/ilun/ILUN7.png' },
-                      { type: 'image', src: '/ilun/ILUN8.png' },
-                      { type: 'image', src: '/ilun/ILUN9.png' },
-                      { type: 'image', src: '/ilun/ILUN10.png' },
-                    ]}
-                    alt="Ilun"
-                    experienceId="ilun"
-                    onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
-                      openImageCarousel(imageSrc, imageArray, currentIndex, rect)
-                    }}
-                    onVideoClick={(videoSrc, rect) => {
-                      openVideoFromCarousel(videoSrc, rect)
-                    }}
-                    onOpenMediaCarousel={(items, startIndex, rect) => {
-                      openUnifiedMediaCarousel(items, startIndex, rect)
-                    }}
-                    data-frame-anchor="carousel-frame-anchor-ilun"
-                  />
-                  
-                </div>
-                
+                <SlideStage
+                  frameId="ilun"
+                  frameSrc={getFrameConfig("ilun")?.frameSrc}
+                  frameConfig={getFrameConfig("ilun")}
+                >
+                  <div className="overflow-hidden" style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative' }}>
+                    <ImageCarousel
+                      media={[
+                        { type: 'image', src: '/ilun/ILUN.png' },
+                        { type: 'image', src: '/ilun/ILUN2.png' },
+                        { type: 'image', src: '/ilun_.jpeg' },
+                        { type: 'image', src: '/ilun_2.png' },
+                        { type: 'image', src: '/ilun/ILUN3.png' },
+                        { type: 'image', src: '/ilun_3.png' },
+                        { type: 'image', src: '/ilun/ILUN4.png' },
+                        { type: 'image', src: '/ilun_4.png' },
+                        { type: 'image', src: '/ilun/ILUN5.png' },
+                        { type: 'image', src: '/ilun_5.png' },
+                        { type: 'image', src: '/ilun/ILUN_01.jpeg' },
+                        { type: 'image', src: '/ilun_6.png' },
+                        { type: 'video', src: 'https://res.cloudinary.com/dgevq0wwq/video/upload/v1755357104/VID-20250816-WA0014_fwf3ov.mp4' },
+                        { type: 'image', src: '/ilun/ILUN6.png' },
+                        { type: 'image', src: '/ilun/ILUN7.png' },
+                        { type: 'image', src: '/ilun/ILUN8.png' },
+                        { type: 'image', src: '/ilun/ILUN9.png' },
+                        { type: 'image', src: '/ilun/ILUN10.png' },
+                      ]}
+                      alt="Ilun"
+                      experienceId="ilun"
+                      onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
+                        openImageCarousel(imageSrc, imageArray, currentIndex, rect)
+                      }}
+                      onVideoClick={(videoSrc, rect) => {
+                        openVideoFromCarousel(videoSrc, rect)
+                      }}
+                      onOpenMediaCarousel={(items, startIndex, rect) => {
+                        openUnifiedMediaCarousel(items, startIndex, rect)
+                      }}
+                    />
+                  </div>
+                </SlideStage>
               </div>
             </div>
           </div>
@@ -1665,21 +1686,24 @@ export default function TimelinePage() {
           <div className="col-span-6 order-1">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-hidden" style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative' }}>
-                  <ImageCarousel
-                    images={[
-                      "/pedida/PEDIDA_MANO.png",
-                    ]}
-                    alt="Pedida de mano"
-                    experienceId="pedida"
-                    onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
-                      openImageCarousel(imageSrc, imageArray, currentIndex, rect)
-                    }}
-                    data-frame-anchor="carousel-frame-anchor-pedida"
-                  />
-                  
-                </div>
-                
+                <SlideStage
+                  frameId="pedida"
+                  frameSrc={getFrameConfig("pedida")?.frameSrc}
+                  frameConfig={getFrameConfig("pedida")}
+                >
+                  <div className="overflow-hidden" style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative' }}>
+                    <ImageCarousel
+                      images={[
+                        "/pedida/PEDIDA_MANO.png",
+                      ]}
+                      alt="Pedida de mano"
+                      experienceId="pedida"
+                      onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
+                        openImageCarousel(imageSrc, imageArray, currentIndex, rect)
+                      }}
+                    />
+                  </div>
+                </SlideStage>
               </div>
             </div>
           </div>

@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../../Downloads/fotos"
+		}
+	],
+	"settings": {},
+	"launch": {
+		"configurations": [
+			{
+				"type": "chrome",
+				"name": "https://garaiona.com/",
+				"request": "launch",
+				"url": "https://garaiona.com/"
+			}
+		]
+	}
+}

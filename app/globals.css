@@ -553,12 +553,28 @@
   position: relative;
   overflow: visible;
   isolation: isolate;
+  /* iOS Safari stability */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 .slide-frame {
   contain: layout style paint;
   pointer-events: none;
   user-select: none;
+  /* iOS Safari optimizations */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
+}
+
+.slide-frame img {
+  /* Prevent iOS image rendering issues */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
 /* Reduce motion for accessibility */

@@ -113,10 +113,8 @@ export default function SlideStage({
             position: 'absolute',
             top: `${offsetY}%`,
             left: `${offsetX}%`,
-            width: '100%',
-            height: '100%',
-            transform: `scale(${scaleX * scaleFactor}, ${scaleY * scaleFactor})`,
-            transformOrigin: 'center center',
+            width: `${100 * scaleX * scaleFactor}%`,
+            height: `${100 * scaleY * scaleFactor}%`,
             pointerEvents: 'none',
             zIndex: 2
           }}
@@ -126,14 +124,11 @@ export default function SlideStage({
             src={frameSrc}
             alt=""
             style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: '120%',
-              height: '120%',
+              width: '100%',
+              height: '100%',
               objectFit: fit,
-              borderRadius: '12px'
+              borderRadius: '12px',
+              display: 'block'
             }}
             loading="lazy"
             decoding="async"

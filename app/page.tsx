@@ -1379,7 +1379,7 @@ export default function TimelinePage() {
                 <SlideStage
                   frameId="02"
                   frameSrc={getFrameConfig("02")?.frameSrc}
-                  frameConfig={getFrameConfig("02")}
+                  frameConfig={getFrameConfig("02") || undefined}
                 >
                   <div style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative' }}>
                     <ImageCarousel
@@ -1411,7 +1411,7 @@ export default function TimelinePage() {
                 <SlideStage
                   frameId="estudios"
                   frameSrc={getFrameConfig("estudios")?.frameSrc}
-                  frameConfig={getFrameConfig("estudios")}
+                  frameConfig={getFrameConfig("estudios") || undefined}
                 >
                   <div className="overflow-hidden" style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative' }}>
                     <ImageCarousel
@@ -1465,7 +1465,7 @@ export default function TimelinePage() {
                 <SlideStage
                   frameId="03"
                   frameSrc={getFrameConfig("03")?.frameSrc}
-                  frameConfig={getFrameConfig("03")}
+                  frameConfig={getFrameConfig("03") || undefined}
                 >
                   <div className="rounded-2xl" style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative' }}>
                     <ImageCarousel
@@ -1497,7 +1497,7 @@ export default function TimelinePage() {
                 <SlideStage
                   frameId="mir"
                   frameSrc={getFrameConfig("mir")?.frameSrc}
-                  frameConfig={getFrameConfig("mir")}
+                  frameConfig={getFrameConfig("mir") || undefined}
                 >
                   <div className="overflow-hidden rounded-2xl" style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative' }}>
                     <ImageCarousel
@@ -1550,7 +1550,7 @@ export default function TimelinePage() {
                 <SlideStage
                   frameId="hobbies"
                   frameSrc={getFrameConfig("hobbies")?.frameSrc}
-                  frameConfig={getFrameConfig("hobbies")}
+                  frameConfig={getFrameConfig("hobbies") || undefined}
                 >
                   <div className="overflow-hidden" style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative' }}>
                     <ImageCarousel
@@ -1582,7 +1582,7 @@ export default function TimelinePage() {
                 <SlideStage
                   frameId="independizarse"
                   frameSrc={getFrameConfig("independizarse")?.frameSrc}
-                  frameConfig={getFrameConfig("independizarse")}
+                  frameConfig={getFrameConfig("independizarse") || undefined}
                 >
                   <div className="overflow-hidden" style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative' }}>
                     <ImageCarousel
@@ -1638,7 +1638,7 @@ export default function TimelinePage() {
                 <SlideStage
                   frameId="ilun"
                   frameSrc={getFrameConfig("ilun")?.frameSrc}
-                  frameConfig={getFrameConfig("ilun")}
+                  frameConfig={getFrameConfig("ilun") || undefined}
                 >
                   <div className="overflow-hidden" style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative' }}>
                     <ImageCarousel
@@ -1689,7 +1689,7 @@ export default function TimelinePage() {
                 <SlideStage
                   frameId="pedida"
                   frameSrc={getFrameConfig("pedida")?.frameSrc}
-                  frameConfig={getFrameConfig("pedida")}
+                  frameConfig={getFrameConfig("pedida") || undefined}
                 >
                   <div className="overflow-hidden" style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative' }}>
                     <ImageCarousel

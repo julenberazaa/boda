@@ -86,14 +86,7 @@ export default function TimelinePage() {
     // Standard scroll initialization for all devices
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
 
-    // Block scroll during overlay - unified approach
-    const prevHtmlOverflowY = document.documentElement.style.overflowY
-    const prevBodyOverflowY = document.body.style.overflowY
-
-    document.documentElement.style.overflowY = 'hidden'
-    document.body.style.overflowY = 'hidden'
-
-    // No timeout needed - scroll control is handled by the overlayVisible useEffect
+    // Scroll control is managed by the overlayVisible useEffect - no need to block here
     return () => {}
   }, [hasMounted])
 

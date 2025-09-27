@@ -31,7 +31,7 @@ export default function RootLayout({
         {/* Sistema de zoom fijo - CSS base */}
         <style dangerouslySetInnerHTML={{
           __html: `
-            /* CSS BÁSICO SIN SISTEMA DE ZOOM - DEBUGGING */
+            /* SISTEMA DE ZOOM FIJO CORREGIDO */
             html {
               overflow-x: hidden;
               overflow-y: auto;
@@ -44,24 +44,46 @@ export default function RootLayout({
               padding: 0;
               overflow-x: hidden;
               overflow-y: auto;
+              width: 100vw;
               font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
               -webkit-font-smoothing: antialiased;
               -moz-osx-font-smoothing: grayscale;
             }
             
-            #fixed-layout {
+            #fixed-layout-wrapper {
+              overflow: hidden;
+              position: relative;
+            }
+            
+            #scroll-root {
+              overflow: auto;
+              height: 100vh;
+            }
+            
+            #scroll-spacer {
               position: relative;
               width: 100%;
-              min-height: 100vh;
+            }
+            
+            #fixed-layout {
+              width: 1920px;
+              transform-origin: top left;
+              position: relative;
             }
           `
         }} />
       </head>
       <body>
-        <div id="fixed-layout">
-          {children}
+        <div id="fixed-layout-wrapper">
+          <div id="scroll-root">
+            <div id="scroll-spacer">
+              <div id="fixed-layout">
+                {children}
+              </div>
+            </div>
+          </div>
         </div>
-        {/* <FixedZoom /> TEMPORALMENTE DESHABILITADO PARA DEBUGGING */}
+        <FixedZoom />
         <EmergencyDebug />
       </body>
     </html>

@@ -13,25 +13,28 @@ export default function FixedZoom() {
       const newScale = windowWidth / DESIGN_WIDTH
       
       // Aplicar el factor de escala al contenedor
+      const wrapper = document.getElementById('fixed-layout-wrapper')
       const fixedLayout = document.getElementById('fixed-layout')
-      if (fixedLayout) {
+      const scrollRoot = document.getElementById('scroll-root')
+      if (wrapper && fixedLayout && scrollRoot) {
         fixedLayout.style.transform = `scale(${newScale})`
-        
-        // Ajustar altura del body utilizando la altura real renderizada
-        const renderedHeight = fixedLayout.getBoundingClientRect().height
-        const finalVideoSection = document.getElementById('final-video-section')
-        const finalVideoBottom = finalVideoSection ? finalVideoSection.getBoundingClientRect().bottom : renderedHeight
 
-        console.log('📐 FixedZoom metrics:', {
-          renderedHeight,
-          finalVideoBottom,
-          windowHeight: window.innerHeight
-        })
+        const scaledHeight = fixedLayout.getBoundingClientRect().height
+        const elements = Array.from(scrollRoot.querySelectorAll('*')) as HTMLElement[]
+        const nonAbsoluteBottom = elements.reduce((max, el) => {
+          const style = window.getComputedStyle(el)
+          if (style.position === 'absolute' || style.position === 'fixed') return max
+          const rect = el.getBoundingClientRect()
+          return Math.max(max, rect.bottom)
+        }, 0)
 
-        const finalHeight = Math.max(window.innerHeight, Math.max(renderedHeight, finalVideoBottom))
+        const measuredHeight = Math.max(nonAbsoluteBottom, scaledHeight)
 
-        document.body.style.minHeight = `${finalHeight}px`
-        document.body.style.height = `${finalHeight}px`
+        wrapper.style.height = `${scaledHeight}px`
+        scrollRoot.style.minHeight = `${measuredHeight}px`
+        scrollRoot.style.height = `${measuredHeight}px`
+
+        console.log('📏 Heights:', { scaledHeight, nonAbsoluteBottom, measuredHeight })
       }
       
       setScale(newScale)

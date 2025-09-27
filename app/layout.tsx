@@ -50,17 +50,27 @@ export default function RootLayout({
               -moz-osx-font-smoothing: grayscale;
             }
             
+            #fixed-layout-wrapper {
+              position: relative;
+              width: 100%;
+              overflow: hidden;
+            }
+
             #fixed-layout {
               width: 1920px;
               transform-origin: top left;
-              position: relative;
+              position: absolute;
+              top: 0;
+              left: 0;
             }
           `
         }} />
       </head>
       <body>
-        <div id="fixed-layout">
-          {children}
+        <div id="fixed-layout-wrapper">
+          <div id="fixed-layout">
+            {children}
+          </div>
         </div>
         <FixedZoom />
         <EmergencyDebug />

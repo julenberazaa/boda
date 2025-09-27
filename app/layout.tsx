@@ -28,60 +28,79 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
 
-        {/* Sistema de zoom fijo - CSS base */}
+        {/* Sistema de zoom fijo para desktop + responsive mobile */}
         <style dangerouslySetInnerHTML={{
           __html: `
-            /* SISTEMA DE ZOOM FIJO CORREGIDO */
             html {
               overflow-x: hidden;
               overflow-y: auto;
               margin: 0;
               padding: 0;
             }
-            
+
             body {
               margin: 0;
               padding: 0;
               overflow-x: hidden;
               overflow-y: auto;
-              width: 100vw;
               font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
               -webkit-font-smoothing: antialiased;
               -moz-osx-font-smoothing: grayscale;
             }
-            
-            #fixed-layout-wrapper {
-              overflow: hidden;
-              position: relative;
-            }
-            
-            #scroll-root {
-              overflow: auto;
-              height: 100vh;
-            }
-            
-            #scroll-spacer {
+
+            #fixed-layout {
               position: relative;
               width: 100%;
+              min-height: 100vh;
             }
-            
-            #fixed-layout {
-              width: 1920px;
-              transform-origin: top left;
-              position: relative;
+
+            /* Mobile-first responsive utilities */
+            @media (max-width: 767px) {
+              /* Mobile: reset any fixed positioning and use native responsive */
+              body {
+                height: auto !important;
+                min-height: 100vh !important;
+              }
+
+              #fixed-layout {
+                transform: none !important;
+                transform-origin: unset !important;
+              }
+
+              /* Compact text for mobile */
+              .mobile-text-xs { font-size: 0.625rem; line-height: 0.75rem; }
+              .mobile-text-sm { font-size: 0.75rem; line-height: 1rem; }
+              .mobile-text-base { font-size: 0.8125rem; line-height: 1.125rem; }
+              .mobile-text-lg { font-size: 0.9375rem; line-height: 1.25rem; }
+              .mobile-text-xl { font-size: 1.0625rem; line-height: 1.375rem; }
+              .mobile-text-2xl { font-size: 1.25rem; line-height: 1.5rem; }
+              .mobile-text-3xl { font-size: 1.5rem; line-height: 1.75rem; }
+              .mobile-text-4xl { font-size: 1.75rem; line-height: 2rem; }
+
+              /* Mobile two-column layout for timeline */
+              .mobile-timeline-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 0.75rem;
+                align-items: start;
+              }
+
+              .mobile-timeline-content {
+                padding: 0.5rem;
+                font-size: 0.75rem;
+                line-height: 1rem;
+              }
+
+              .mobile-timeline-media {
+                padding: 0.25rem;
+              }
             }
           `
         }} />
       </head>
       <body>
-        <div id="fixed-layout-wrapper">
-          <div id="scroll-root">
-            <div id="scroll-spacer">
-              <div id="fixed-layout">
-                {children}
-              </div>
-            </div>
-          </div>
+        <div id="fixed-layout">
+          {children}
         </div>
         <FixedZoom />
         <EmergencyDebug />

@@ -11,7 +11,10 @@
       "Bash(npx next:*)",
       "Bash(npx tsc:*)",
       "Bash(git log:*)",
-      "Bash(git rev-list:*)"
+      "Bash(git rev-list:*)",
+      "Bash(npm run dev:*)",
+      "Bash(git pull:*)",
+      "Bash(git rebase:*)"
     ],
     "deny": [],
     "ask": []

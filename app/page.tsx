@@ -93,18 +93,8 @@ export default function TimelinePage() {
     document.documentElement.style.overflowY = 'hidden'
     document.body.style.overflowY = 'hidden'
 
-    // Standard unlock timeout for all devices
-    const unlock = setTimeout(() => {
-      if (!overlayVisibleRef.current) {
-        // Restore scroll with explicit values instead of potentially empty previous values
-        document.documentElement.style.overflowY = 'auto'
-        document.body.style.overflowY = 'auto'
-        document.documentElement.style.overflowX = 'hidden'
-        document.body.style.overflowX = 'hidden'
-      }
-    }, 1000)
-
-    return () => clearTimeout(unlock)
+    // No timeout needed - scroll control is handled by the overlayVisible useEffect
+    return () => {}
   }, [hasMounted])
 
   // Unified scroll management - no complex cutting logic needed

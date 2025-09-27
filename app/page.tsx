@@ -933,7 +933,6 @@ export default function TimelinePage() {
                   style={{
                     top: '50%',
                     left: '20px',
-                    top: '50%',
                     marginTop: '-25%',
                     zIndex: 101
                   }}
@@ -948,7 +947,6 @@ export default function TimelinePage() {
                   style={{
                     top: '50%',
                     right: '20px',
-                    top: '50%',
                     marginTop: '-25%',
                     zIndex: 101
                   }}
@@ -1064,8 +1062,7 @@ export default function TimelinePage() {
                     style={{
                       top: '50%',
                       left: '20px',
-                      top: '50%',
-                    marginTop: '-25%',
+                      marginTop: '-25%',
                       zIndex: 101
                     }}
                   >
@@ -1079,8 +1076,7 @@ export default function TimelinePage() {
                     style={{
                       top: '50%',
                       right: '20px',
-                      top: '50%',
-                    marginTop: '-25%',
+                      marginTop: '-25%',
                       zIndex: 101
                     }}
                   >
@@ -1577,7 +1573,7 @@ export default function TimelinePage() {
           </div>
 
           {!showVideo && (
-            <button 
+            <button
               onClick={() => {
                 setShowVideo(true)
                 // UNIFIED: Standard smooth scroll for all devices
@@ -1585,9 +1581,8 @@ export default function TimelinePage() {
                   window.scrollBy({
                     top: 160,
                     behavior: 'smooth'
-                    })
-                  }, 750)
-                }
+                  })
+                }, 750)
               }}
               className="bg-terracotta hover:bg-terracotta/90 text-ivory px-8 py-4 rounded-full font-semibold shadow-lg flex items-center gap-2 mx-auto"
             >

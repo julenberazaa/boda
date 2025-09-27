@@ -39,15 +39,8 @@ export default function EmergencyDebug() {
     // Log that debug system is active
     addLog('info', 'Emergency debug system initialized')
     
-    // Detect device
-    const isIPhone = /iPhone/.test(navigator.userAgent)
-    addLog('info', `Device detected: ${isIPhone ? 'iPhone' : 'Other'}`)
-    
-    // Auto-show on iPhone
-    if (isIPhone) {
-      setIsVisible(true)
-      addLog('warn', 'Auto-showing debug overlay on iPhone')
-    }
+    // Unified device detection - no special treatment
+    addLog('info', 'Device detected: Universal')
     
     // Global error handler
     const handleError = (event: ErrorEvent) => {
@@ -166,7 +159,7 @@ ${logText}`
 
       {/* Device Info */}
       <div className="px-3 py-2 bg-yellow-900 border-b border-yellow-600 text-xs">
-        <div>🔍 Device: {/iPhone/.test(navigator.userAgent) ? 'iPhone' : /iPad/.test(navigator.userAgent) ? 'iPad' : 'Other'}</div>
+        <div>🔍 Device: {navigator.platform || 'Unknown'}</div>
         <div>📱 Screen: {window.screen.width}x{window.screen.height} | Viewport: {window.innerWidth}x{window.innerHeight}</div>
         <div>🌐 URL: {window.location.pathname}</div>
       </div>

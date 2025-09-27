@@ -6,7 +6,7 @@ import { Heart, Plane, MapPin, Camera, Video, Sun, Star, Ship, BellRingIcon as R
 import ImageCarousel from "@/components/image-carousel-unified"
 // import FramesOverlay from "@/components/frames-overlay" // DEPRECATED: Replaced with frames inside carousels
 import { getFrameConfig } from "@/lib/local-frame-config"
-// import { iOSDebugLog } from "@/components/ios-debug-logger" // REMOVED: No iOS differences
+// Unified debug logging - no platform-specific logic
 import { emergencyLog } from "@/components/emergency-debug"
 
 interface ImageState {
@@ -21,7 +21,7 @@ export default function TimelinePage() {
   // Emergency logging for debugging white screen
   emergencyLog('info', 'TimelinePage component started rendering')
   
-  // NO MORE iPhone blocking - allow access to all devices
+  // Universal access - no device restrictions
 
   const heroRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLIFrameElement>(null)
@@ -45,7 +45,7 @@ export default function TimelinePage() {
   const [showVideo, setShowVideo] = useState(false)
   const [modalImageIndex, setModalImageIndex] = useState(0)
   const [tuentiStarted, setTuentiStarted] = useState(false)
-  // HARD CUT aplicado en FixedZoom - no necesitamos lógica de scroll compleja
+  // Simplified scroll handling - unified for all platforms
 
   // Overlay de contraseña (pantalla previa)
   const [overlayVisible, setOverlayVisible] = useState(true)
@@ -73,10 +73,15 @@ export default function TimelinePage() {
       history.scrollRestoration = 'manual'
     }
 
-    // Standard scroll reset for all devices
+    // Standard scroll reset for all devices - iOS-safe approach
     window.scrollTo(0, 0)
-    document.documentElement.scrollTop = 0
-    document.body.scrollTop = 0
+    // Safe DOM manipulation - avoid null reference errors
+    if (document.documentElement) {
+      document.documentElement.scrollTop = 0
+    }
+    if (document.body) {
+      document.body.scrollTop = 0
+    }
 
     // Standard scroll initialization for all devices
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
@@ -99,8 +104,7 @@ export default function TimelinePage() {
     return () => clearTimeout(unlock)
   }, [hasMounted])
 
-  // HARD CUT: La lógica de corte de scroll ahora está en FixedZoom.
-  // El documento se corta físicamente a la altura del video, eliminando scroll extra.
+  // Unified scroll management - no complex cutting logic needed
 
   useEffect(() => {
     if (selectedImage.src) {
@@ -214,9 +218,9 @@ export default function TimelinePage() {
       observer.observe(item)
     })
 
-    // iOS-SAFE: No scroll effects to prevent compatibility issues
+    // Unified scroll behavior - same for all platforms
     const handleScroll = () => {
-      // All scroll effects disabled for maximum iOS compatibility
+      // Simplified scroll effects for universal compatibility
     }
 
     window.addEventListener("scroll", handleScroll, { passive: true })
@@ -293,7 +297,7 @@ export default function TimelinePage() {
           setOverlayVisible(false)
           emergencyLog('info', 'overlayVisible set to false')
 
-          // UNIFIED: Standard scroll reactivation for all devices
+          // Standard scroll reactivation - universal approach
           requestAnimationFrame(() => {
             document.documentElement.style.overflowY = ''
             document.body.style.overflowY = ''
@@ -459,7 +463,7 @@ export default function TimelinePage() {
 
   // Removed old dynamic overlay logic; frames are now rendered via FramesOverlay
 
-  // Get current FixedZoom scale factor
+  // Standard viewport handling
   const getCurrentScale = (): number => {
     const fixedLayout = document.getElementById('fixed-layout')
     if (!fixedLayout) return 1
@@ -783,7 +787,7 @@ export default function TimelinePage() {
           </div>
           <style jsx>{`
             @keyframes shakeX {
-              /* Shake animation disabled for iOS compatibility */
+              /* Simplified shake animation */
             }
             .animate-shake-x { animation: shakeX 0.6s ease; }
           `}</style>
@@ -853,7 +857,7 @@ export default function TimelinePage() {
           {/* Animaciones locales */}
           <style jsx>{`
             @keyframes shakeX {
-              /* Shake animation disabled for iOS compatibility */
+              /* Simplified shake animation */
             }
             .animate-shake-x { animation: shakeX 0.6s ease; }
           `}</style>

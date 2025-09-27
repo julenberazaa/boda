@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
-// import FixedZoom from '@/components/fixed-zoom' // REMOVED: Potential iOS compatibility issues
+// Simplified layout - no platform-specific components needed
 import EmergencyDebug from '@/components/emergency-debug'
 
 export const metadata: Metadata = {
@@ -27,7 +27,7 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
 
-        {/* ULTRA-SIMPLE: iOS-safe CSS only */}
+        {/* Universal CSS - cross-platform compatibility */}
         <style dangerouslySetInnerHTML={{
           __html: `
             * {

@@ -553,7 +553,7 @@
   position: relative;
   overflow: visible;
   isolation: isolate;
-  /* iOS Safari stability */
+  /* Cross-platform GPU acceleration */
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
 }
@@ -562,7 +562,7 @@
   contain: layout style paint;
   pointer-events: none;
   user-select: none;
-  /* iOS Safari optimizations */
+  /* Universal rendering optimizations */
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   -webkit-perspective: 1000px;
@@ -570,7 +570,7 @@
 }
 
 .slide-frame img {
-  /* Prevent iOS image rendering issues */
+  /* Prevent image rendering issues across browsers */
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   image-rendering: -webkit-optimize-contrast;

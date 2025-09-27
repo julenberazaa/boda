@@ -96,8 +96,11 @@ export default function TimelinePage() {
     // Standard unlock timeout for all devices
     const unlock = setTimeout(() => {
       if (!overlayVisibleRef.current) {
-        document.documentElement.style.overflowY = prevHtmlOverflowY || ''
-        document.body.style.overflowY = prevBodyOverflowY || ''
+        // Restore scroll with explicit values instead of potentially empty previous values
+        document.documentElement.style.overflowY = 'auto'
+        document.body.style.overflowY = 'auto'
+        document.documentElement.style.overflowX = 'hidden'
+        document.body.style.overflowX = 'hidden'
       }
     }, 1000)
 

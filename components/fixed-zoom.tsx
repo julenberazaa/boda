@@ -40,28 +40,50 @@ export default function FixedZoom() {
         scrollRoot.style.overflowY = 'auto'
         scrollRoot.scrollTop = 0 // Reset scroll position
         
-        // VERIFICAR CORRECCIONES APLICADAS
-        const timelineWrapper = fixedLayout.querySelector('.w-full.relative')
-        const textureOverlay = fixedLayout.querySelector('.absolute.pointer-events-none.z-0') as HTMLElement
-        
-        console.log('🔧 CORRECCIONES VERIFICADAS:', {
-          'Timeline Wrapper': timelineWrapper ? timelineWrapper.scrollHeight + 'px' : 'No encontrado',
-          'Texture Overlay': textureOverlay ? textureOverlay.style.height || 'Sin altura fija' : 'No encontrado',
-          'Altura total': unscaledHeight + 'px',
-          'Altura visual': scaledHeight + 'px', 
-          'Ratio actual': (scaledHeight / window.innerHeight).toFixed(1) + 'x',
-          'Meta objetivo': '2-3x'
+        // INVESTIGACIÓN PROFUNDA: ¿Qué otros elementos inflan la altura total?
+        console.log('🔬 INVESTIGACIÓN DE ALTURA REMANENTE:')
+
+        // Analizar todas las secciones principales
+        const sections = [
+          { name: 'Hero Section', element: fixedLayout.querySelector('section:first-of-type') },
+          { name: 'Timeline Container', element: fixedLayout.querySelector('.w-full.relative') },
+          { name: 'Final Video Section', element: fixedLayout.querySelector('#final-video-section') },
+          { name: 'Whole Content', element: fixedLayout }
+        ]
+
+        sections.forEach(({ name, element }) => {
+          if (element) {
+            const height = element.scrollHeight
+            console.log(`  ${name}: ${height}px`)
+          }
         })
-        
-        // Verificar si logramos el objetivo
-        const ratio = scaledHeight / window.innerHeight
-        if (ratio <= 3) {
-          console.log('✅ OBJETIVO ALCANZADO: Ratio <= 3x')
-        } else if (ratio <= 5) {
-          console.log('🔶 MEJORA PARCIAL: Ratio reducido pero aún alto')
-        } else {
-          console.log('🔴 NECESITA MÁS TRABAJO: Ratio aún muy alto')
+
+        // Buscar elementos con altura > 1000px que no sean el timeline
+        const suspiciousElements = Array.from(fixedLayout.querySelectorAll('*')).filter(el => {
+          const height = el.scrollHeight || el.getBoundingClientRect().height
+          return height > 1000 && !el.classList.contains('w-full') && !el.classList.contains('relative')
+        }).map(el => ({
+          tagName: el.tagName,
+          className: el.className.substring(0, 40),
+          height: el.scrollHeight || el.getBoundingClientRect().height,
+          id: el.id
+        }))
+
+        if (suspiciousElements.length > 0) {
+          console.warn('⚠️ ELEMENTOS SOSPECHOSOS (>1000px):', suspiciousElements)
         }
+
+        // Calcular diferencia inexplicada
+        const accountedHeight = sections.reduce((total, { element }) => total + (element ? element.scrollHeight : 0), 0)
+        const unexplainedHeight = unscaledHeight - accountedHeight
+
+        console.log('📊 ANÁLISIS DE ALTURA:', {
+          'Altura total': unscaledHeight + 'px',
+          'Altura contabilizada': accountedHeight + 'px',
+          'Altura inexplicada': unexplainedHeight + 'px',
+          'Altura visual': scaledHeight + 'px',
+          'Ratio actual': (scaledHeight / window.innerHeight).toFixed(1) + 'x'
+        })
 
         // El body ya no necesita altura específica
         document.body.style.height = '100vh'

@@ -721,7 +721,7 @@ export default function TimelinePage() {
   })
 
   return (
-    <div id="scroll-root" className="bg-ivory text-midnight overflow-x-hidden relative">
+    <div className="bg-ivory text-midnight overflow-x-hidden relative">
       {/* Password overlay - Fixed background and perfect centering */}
       
       {/* Overlay inline SSR (antes del montaje) para evitar FOUC - también con viewport dimensions */}
@@ -1610,7 +1610,7 @@ export default function TimelinePage() {
         id="final-video-section"
         ref={finalSectionRef}
         className="relative py-32 bg-midnight text-center overflow-hidden"
-        style={{ minHeight: '600px', paddingBottom: '0px' }}
+        style={{ minHeight: '600px' }}
       >
         <div
           ref={finalSectionImageRef}
@@ -1648,8 +1648,8 @@ export default function TimelinePage() {
             </button>
           )}
 
-          <div className={`w-full max-w-4xl transition-all duration-700 ease-in-out ${showVideo ? 'max-h-[600px] mt-8' : 'max-h-0 overflow-hidden'}`} style={{ marginBottom: '0px' }}>
-            <div className="p-6" style={{ paddingBottom: '0px' }}>
+          <div className={`w-full max-w-4xl transition-all duration-700 ease-in-out ${showVideo ? 'max-h-[600px] mt-8' : 'max-h-0 overflow-hidden'}`}>
+            <div className="p-6">
               <div className="overflow-hidden rounded-2xl custom-shadow-right-bottom-large hover:custom-shadow-right-bottom-large-hover transition-all duration-500">
                 <iframe
                   ref={videoRef}

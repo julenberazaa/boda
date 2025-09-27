@@ -13,28 +13,35 @@ export default function FixedZoom() {
       const newScale = windowWidth / DESIGN_WIDTH
       
       // Aplicar el factor de escala al contenedor
-      const wrapper = document.getElementById('fixed-layout-wrapper')
       const fixedLayout = document.getElementById('fixed-layout')
-      const scrollRoot = document.getElementById('scroll-root')
-      if (wrapper && fixedLayout && scrollRoot) {
+      if (fixedLayout) {
         fixedLayout.style.transform = `scale(${newScale})`
+        
+        // SOLUCION: Obtener altura sin escalar y aplicar escala manualmente
+        // Temporal: remover transform para obtener altura real
+        const originalTransform = fixedLayout.style.transform
+        fixedLayout.style.transform = ''
+        
+        const unscaledHeight = fixedLayout.scrollHeight
+        
+        // Restaurar transform
+        fixedLayout.style.transform = originalTransform
+        
+        // Aplicar escala manualmente a la altura real
+        const correctScaledHeight = unscaledHeight * newScale
+        
+        console.log('🔧 CORRECCIÓN FixedZoom:', {
+          'altura sin escalar': unscaledHeight,
+          'escala aplicada': newScale,
+          'altura correcta escalada': correctScaledHeight,
+          'altura de ventana': window.innerHeight,
+          'altura anterior (incorrecta)': fixedLayout.getBoundingClientRect().height
+        })
 
-        const scaledHeight = fixedLayout.getBoundingClientRect().height
-        const elements = Array.from(scrollRoot.querySelectorAll('*')) as HTMLElement[]
-        const nonAbsoluteBottom = elements.reduce((max, el) => {
-          const style = window.getComputedStyle(el)
-          if (style.position === 'absolute' || style.position === 'fixed') return max
-          const rect = el.getBoundingClientRect()
-          return Math.max(max, rect.bottom)
-        }, 0)
+        const finalHeight = Math.max(window.innerHeight, correctScaledHeight)
 
-        const measuredHeight = Math.max(nonAbsoluteBottom, scaledHeight)
-
-        wrapper.style.height = `${scaledHeight}px`
-        scrollRoot.style.minHeight = `${measuredHeight}px`
-        scrollRoot.style.height = `${measuredHeight}px`
-
-        console.log('📏 Heights:', { scaledHeight, nonAbsoluteBottom, measuredHeight })
+        document.body.style.minHeight = `${finalHeight}px`
+        document.body.style.height = `${finalHeight}px`
       }
       
       setScale(newScale)

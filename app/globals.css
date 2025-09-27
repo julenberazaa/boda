@@ -29,7 +29,7 @@
     --sage: #c8d6c1;
     --midnight: #2e2e3a;
     --font-scale: 1.2;
-    --timeline-extra-spacing: 12rem;
+    --timeline-extra-spacing: 0rem;
   }
 
   .dark {
@@ -278,7 +278,7 @@
   contain-intrinsic-size: auto;
 }
 
-/* Espaciado vertical adicional entre secciones, ajustable con --timeline-extra-spacing */
+/* Espaciado vertical optimizado entre secciones del timeline */
 .timeline-item + .timeline-item {
   margin-top: var(--timeline-extra-spacing, 0rem);
 }

@@ -1238,9 +1238,9 @@ export default function TimelinePage() {
           className="absolute bottom-12 right-12 w-48 h-48 opacity-70 z-10 pointer-events-none"
         />
         
-        <div className="max-w-7xl mx-auto px-4 py-32 relative z-20">
+        <div className="max-w-7xl mx-auto px-4 py-16 relative z-20">
         {/* 2010 - Conocidos - Chat Tuenti */}
-        <section id="conocidos-2010" className="timeline-item mb-32 grid grid-cols-12 sm:grid-cols-12 gap-8 items-center opacity-0 translate-y-8 transition-all duration-1000 ease-in-out pt-24">
+        <section id="conocidos-2010" className="timeline-item mb-16 grid grid-cols-12 sm:grid-cols-12 gap-8 items-center opacity-0 translate-y-8 transition-all duration-1000 ease-in-out pt-24">
           <div className="col-span-6 pr-8">
             {/* Chat de Tuenti */}
             <div className="p-6">
@@ -1277,7 +1277,7 @@ export default function TimelinePage() {
         </section>
 
         {/* 2012 - Amigos inseparables */}
-        <section className="timeline-item mb-32 grid grid-cols-12 sm:grid-cols-12 gap-8 items-center opacity-0 translate-y-8 transition-all duration-1000 ease-in-out">
+        <section className="timeline-item mb-16 grid grid-cols-12 sm:grid-cols-12 gap-8 items-center opacity-0 translate-y-8 transition-all duration-1000 ease-in-out">
           <div className="col-span-6 pr-12">
             <div className="flex items-center mb-6">
               <div className="timeline-icon-circle bg-escape mr-4">
@@ -1316,7 +1316,7 @@ export default function TimelinePage() {
         </section>
 
         {/* 2015-2018 - Estudios universitarios */}
-        <section className="timeline-item mb-32 grid grid-cols-12 sm:grid-cols-12 gap-8 items-center opacity-0 translate-y-8 transition-all duration-1000 ease-in-out">
+        <section className="timeline-item mb-16 grid grid-cols-12 sm:grid-cols-12 gap-8 items-center opacity-0 translate-y-8 transition-all duration-1000 ease-in-out">
           <div className="col-span-6 order-1">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
@@ -1355,7 +1355,7 @@ export default function TimelinePage() {
         </section>
 
         {/* 2019-2022 - Oposiciones de policía */}
-        <section className="timeline-item mb-32 grid grid-cols-12 sm:grid-cols-12 gap-8 items-center opacity-0 translate-y-8 transition-all duration-1000 ease-in-out">
+        <section className="timeline-item mb-16 grid grid-cols-12 sm:grid-cols-12 gap-8 items-center opacity-0 translate-y-8 transition-all duration-1000 ease-in-out">
           <div className="col-span-6 pr-12">
             <div className="flex items-center mb-6">
               <div className="timeline-icon-circle bg-midnight mr-4">
@@ -1394,7 +1394,7 @@ export default function TimelinePage() {
         </section>
 
         {/* 2020-2023 - MIR  */}
-        <section className="timeline-item mb-32 grid grid-cols-12 sm:grid-cols-12 gap-8 items-center opacity-0 translate-y-8 transition-all duration-1000 ease-in-out">
+        <section className="timeline-item mb-16 grid grid-cols-12 sm:grid-cols-12 gap-8 items-center opacity-0 translate-y-8 transition-all duration-1000 ease-in-out">
           <div className="col-span-6 order-1">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
@@ -1432,7 +1432,7 @@ export default function TimelinePage() {
         </section>
 
         {/* 2017 - Reencuentro en París */}
-        <section className="timeline-item mb-32 grid grid-cols-12 sm:grid-cols-12 gap-8 items-center opacity-0 translate-y-8 transition-all duration-1000 ease-in-out">
+        <section className="timeline-item mb-16 grid grid-cols-12 sm:grid-cols-12 gap-8 items-center opacity-0 translate-y-8 transition-all duration-1000 ease-in-out">
           <div className="col-span-6 pr-12">
             <div className="flex items-center mb-6">
               <div className="timeline-icon-circle bg-pine mr-4">
@@ -1471,7 +1471,7 @@ export default function TimelinePage() {
         </section>
 
         {/* Independizarse */}
-        <section className="timeline-item mb-32 grid grid-cols-12 sm:grid-cols-12 gap-8 items-center opacity-0 translate-y-8 transition-all duration-1000 ease-in-out">
+        <section className="timeline-item mb-16 grid grid-cols-12 sm:grid-cols-12 gap-8 items-center opacity-0 translate-y-8 transition-all duration-1000 ease-in-out">
           <div className="col-span-6 order-1">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
@@ -1512,7 +1512,7 @@ export default function TimelinePage() {
         </section>
 
         {/* Ilun */}
-        <section className="timeline-item mb-32 grid grid-cols-12 sm:grid-cols-12 gap-8 items-center opacity-0 translate-y-8 transition-all duration-1000 ease-in-out">
+        <section className="timeline-item mb-16 grid grid-cols-12 sm:grid-cols-12 gap-8 items-center opacity-0 translate-y-8 transition-all duration-1000 ease-in-out">
           <div className="col-span-6 pr-12">
             <div className="flex items-center mb-6">
               <div className="timeline-icon-circle bg-moss mr-4">
@@ -1570,7 +1570,7 @@ export default function TimelinePage() {
         </section>
 
         {/* Pedida de mano */}
-        <section className="timeline-item mb-32 grid grid-cols-12 sm:grid-cols-12 gap-8 items-center opacity-0 translate-y-8 transition-all duration-1000 ease-in-out">
+        <section className="timeline-item mb-16 grid grid-cols-12 sm:grid-cols-12 gap-8 items-center opacity-0 translate-y-8 transition-all duration-1000 ease-in-out">
           <div className="col-span-6 order-1">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>

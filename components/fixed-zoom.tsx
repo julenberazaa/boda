@@ -40,71 +40,11 @@ export default function FixedZoom() {
         scrollRoot.style.overflowY = 'auto'
         scrollRoot.scrollTop = 0 // Reset scroll position
         
-        // INVESTIGACIÓN ESPECÍFICA DEL TIMELINE
-        const timelineContainer = fixedLayout.querySelector('.w-full.relative')
-        if (timelineContainer) {
-          console.log('🕵️ INVESTIGACIÓN DETALLADA DEL TIMELINE:')
-          
-          // Analizar todas las secciones del timeline
-          const timelineSections = timelineContainer.querySelectorAll('section')
-          console.log(`  Total secciones encontradas: ${timelineSections.length}`)
-          
-          timelineSections.forEach((section, index) => {
-            const rect = section.getBoundingClientRect()
-            const height = section.scrollHeight || rect.height
-            const id = section.id || `section-${index}`
-            console.log(`    Sección ${index + 1} (${id}):`, {
-              'altura': height,
-              'top': rect.top,
-              'bottom': rect.bottom,
-              'clase': section.className.substring(0, 50) + '...'
-            })
-            
-            if (height > 1000) {
-              console.warn(`      ⚠️ Sección excesiva: ${id} con ${height}px`)
-            }
-          })
-          
-          // Buscar elementos específicos problemáticos dentro del timeline
-          const problematicElements = Array.from(timelineContainer.querySelectorAll('*')).filter(el => {
-            const height = el.scrollHeight || el.getBoundingClientRect().height
-            return height > 2000
-          })
-          
-          if (problematicElements.length > 0) {
-            console.warn('🔴 ELEMENTOS PROBLEMÁTICOS EN TIMELINE:', 
-              problematicElements.map(el => ({
-                tagName: el.tagName,
-                className: el.className.substring(0, 30),
-                height: el.scrollHeight || el.getBoundingClientRect().height,
-                id: el.id
-              }))
-            )
-          }
-        }
-
-        // Buscar elementos con altura anormalmente alta
-        const allElements = Array.from(fixedLayout.querySelectorAll('*'))
-        const suspiciousElements = allElements.filter(el => {
-          const height = el.scrollHeight || el.getBoundingClientRect().height
-          return height > 3000 // Elementos con más de 3000px
-        }).map(el => ({
-          element: el,
-          height: el.scrollHeight || el.getBoundingClientRect().height,
-          className: el.className,
-          tagName: el.tagName
-        }))
-
-        if (suspiciousElements.length > 0) {
-          console.warn('⚠️ ELEMENTOS CON ALTURA EXCESIVA DETECTADOS:', suspiciousElements)
-        }
-
-        console.log('📏 RESUMEN SCROLL:', {
-          'altura original total': unscaledHeight,
-          'altura escalada': scaledHeight,
-          'altura ventana': window.innerHeight,
-          'escala': newScale,
-          'ratio altura/ventana': (scaledHeight / window.innerHeight).toFixed(2) + 'x'
+        // Spacing optimizado - debug limpio
+        console.log('✅ SCROLL OPTIMIZADO:', {
+          'altura contenido': unscaledHeight,
+          'altura visual': scaledHeight,
+          'ratio ventana': (scaledHeight / window.innerHeight).toFixed(1) + 'x'
         })
 
         // El body ya no necesita altura específica

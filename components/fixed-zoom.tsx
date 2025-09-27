@@ -17,12 +17,21 @@ export default function FixedZoom() {
       if (fixedLayout) {
         fixedLayout.style.transform = `scale(${newScale})`
         
-        // Ajustar altura del body para el contenido escalado
-        const actualContentHeight = fixedLayout.scrollHeight
-        const scaledHeight = actualContentHeight * newScale
-        
-        document.body.style.minHeight = `${Math.max(window.innerHeight, scaledHeight)}px`
-        document.body.style.height = 'auto'
+        // Ajustar altura del body utilizando la altura real renderizada
+        const renderedHeight = fixedLayout.getBoundingClientRect().height
+        const finalVideoSection = document.getElementById('final-video-section')
+        const finalVideoBottom = finalVideoSection ? finalVideoSection.getBoundingClientRect().bottom : renderedHeight
+
+        console.log('📐 FixedZoom metrics:', {
+          renderedHeight,
+          finalVideoBottom,
+          windowHeight: window.innerHeight
+        })
+
+        const finalHeight = Math.max(window.innerHeight, Math.max(renderedHeight, finalVideoBottom))
+
+        document.body.style.minHeight = `${finalHeight}px`
+        document.body.style.height = `${finalHeight}px`
       }
       
       setScale(newScale)

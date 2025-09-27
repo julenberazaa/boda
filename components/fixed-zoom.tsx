@@ -58,10 +58,10 @@ export default function FixedZoom() {
           }
         })
 
-        // Buscar elementos con altura > 1000px que no sean el timeline
-        const suspiciousElements = Array.from(fixedLayout.querySelectorAll('*')).filter(el => {
+        // Buscar elementos específicos que inflan el timeline
+        const timelineElements = Array.from(timelineContainer?.querySelectorAll('*') || []).filter(el => {
           const height = el.scrollHeight || el.getBoundingClientRect().height
-          return height > 1000 && !el.classList.contains('w-full') && !el.classList.contains('relative')
+          return height > 2000
         }).map(el => ({
           tagName: el.tagName,
           className: el.className.substring(0, 40),
@@ -69,20 +69,19 @@ export default function FixedZoom() {
           id: el.id
         }))
 
-        if (suspiciousElements.length > 0) {
-          console.warn('⚠️ ELEMENTOS SOSPECHOSOS (>1000px):', suspiciousElements)
+        if (timelineElements.length > 0) {
+          console.warn('🔴 ELEMENTOS PROBLEMÁTICOS DENTRO DEL TIMELINE:', timelineElements)
         }
 
-        // Calcular diferencia inexplicada
+        // Calcular métricas finales
         const accountedHeight = sections.reduce((total, { element }) => total + (element ? element.scrollHeight : 0), 0)
-        const unexplainedHeight = unscaledHeight - accountedHeight
 
-        console.log('📊 ANÁLISIS DE ALTURA:', {
+        console.log('📊 MÉTRICAS FINALES:', {
           'Altura total': unscaledHeight + 'px',
           'Altura contabilizada': accountedHeight + 'px',
-          'Altura inexplicada': unexplainedHeight + 'px',
           'Altura visual': scaledHeight + 'px',
-          'Ratio actual': (scaledHeight / window.innerHeight).toFixed(1) + 'x'
+          'Ratio actual': (scaledHeight / window.innerHeight).toFixed(1) + 'x',
+          'Objetivo': '2-3x'
         })
 
         // El body ya no necesita altura específica

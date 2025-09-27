@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 // Simplified layout - no platform-specific components needed
 import EmergencyDebug from '@/components/emergency-debug'
+import FixedZoom from '@/components/fixed-zoom'
 
 export const metadata: Metadata = {
   title: 'Boda J&M',
@@ -27,27 +28,40 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
 
-        {/* Universal CSS - cross-platform compatibility */}
+        {/* Sistema de zoom fijo - CSS base */}
         <style dangerouslySetInnerHTML={{
           __html: `
-            * {
+            /* Sistema de zoom fijo - CSS base */
+            html {
+              overflow-x: hidden;
               margin: 0;
               padding: 0;
-              box-sizing: border-box;
             }
-
-            html, body {
-              height: 100%;
+            
+            body {
+              margin: 0;
+              padding: 0;
               overflow-x: hidden;
+              width: 100vw;
               font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
               -webkit-font-smoothing: antialiased;
               -moz-osx-font-smoothing: grayscale;
+            }
+            
+            #fixed-layout {
+              width: 1920px;
+              min-height: 100vh;
+              transform-origin: top left;
+              position: relative;
             }
           `
         }} />
       </head>
       <body>
-        {children}
+        <div id="fixed-layout">
+          {children}
+        </div>
+        <FixedZoom />
         <EmergencyDebug />
       </body>
     </html>

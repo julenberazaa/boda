@@ -1153,7 +1153,7 @@ export default function TimelinePage() {
       {/* Main content - accessible to all devices */}
       <>
       {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-br from-terracotta to-sage overflow-hidden" style={{ height: 'var(--hero-height, 560px)' }}>
+      <section className="relative py-16 bg-gradient-to-br from-terracotta to-sage overflow-hidden" style={{ minHeight: '480px' }}>
         <div
           ref={heroRef}
           className="absolute inset-0 bg-cover bg-center opacity-20"
@@ -1203,14 +1203,13 @@ export default function TimelinePage() {
           opacity: 1
         }}
       >
-        {/* OVERLAY DE TEXTURA - Usando altura fija para evitar expansion del contenedor */}
+        {/* OVERLAY DE TEXTURA - Dinámico según contenido */}
         <div 
-          className="absolute pointer-events-none z-0"
+          className="absolute pointer-events-none z-0 timeline-texture-overlay"
           style={{
             top: 0,
             left: 0,
             width: '100%',
-            height: '3000px', // Altura fija razonable para cubrir contenido sin inflarlo
             backgroundImage: 'url("https://www.transparenttextures.com/patterns/sandpaper.png")',
             backgroundRepeat: 'repeat',
             backgroundSize: '35%',
@@ -1220,33 +1219,35 @@ export default function TimelinePage() {
           }}
         />
         
-        {/* Flores decorativas con posicionamiento fijo para evitar expansion */}
-        <img 
-          src="/flores/sup_izq.png" 
-          alt="" 
-          className="absolute z-10 pointer-events-none w-48 h-48 opacity-70"
-          style={{ top: '48px', left: '48px' }}
-        />
-        <img 
-          src="/flores/sup_der.png" 
-          alt="" 
-          className="absolute z-10 pointer-events-none w-48 h-48 opacity-70"
-          style={{ top: '48px', right: '48px' }}
-        />
-        <img 
-          src="/flores/inf_izq.png" 
-          alt="" 
-          className="absolute z-10 pointer-events-none w-48 h-48 opacity-70"
-          style={{ top: '2400px', left: '48px' }} /* Posición fija en lugar de bottom */
-        />
-        <img 
-          src="/flores/inf_der.png" 
-          alt="" 
-          className="absolute z-10 pointer-events-none w-48 h-48 opacity-70"
-          style={{ top: '2400px', right: '48px' }} /* Posición fija en lugar de bottom */
-        />
+        {/* Flores decorativas con posicionamiento relativo */}
+        <div className="absolute inset-0 pointer-events-none z-10">
+          <img 
+            src="/flores/sup_izq.png" 
+            alt="" 
+            className="absolute w-48 h-48 opacity-70"
+            style={{ top: '48px', left: '48px' }}
+          />
+          <img 
+            src="/flores/sup_der.png" 
+            alt="" 
+            className="absolute w-48 h-48 opacity-70"
+            style={{ top: '48px', right: '48px' }}
+          />
+          <img 
+            src="/flores/inf_izq.png" 
+            alt="" 
+            className="absolute w-48 h-48 opacity-70"
+            style={{ bottom: '48px', left: '48px' }}
+          />
+          <img 
+            src="/flores/inf_der.png" 
+            alt="" 
+            className="absolute w-48 h-48 opacity-70"
+            style={{ bottom: '48px', right: '48px' }}
+          />
+        </div>
         
-        <div className="max-w-7xl mx-auto px-4 py-16 relative z-20">
+        <div className="max-w-7xl mx-auto px-4 py-12 relative z-20">
         {/* 2010 - Conocidos - Chat Tuenti */}
         <section id="conocidos-2010" className="timeline-item mb-16 grid grid-cols-12 sm:grid-cols-12 gap-8 items-center opacity-0 translate-y-8 transition-all duration-1000 ease-in-out pt-24">
           <div className="col-span-6 pr-8">

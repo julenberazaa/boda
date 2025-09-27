@@ -73,14 +73,10 @@ export default function TimelinePage() {
       history.scrollRestoration = 'manual'
     }
 
-    // Standard scroll reset for all devices - usando scroll-root
-    const scroller = document.getElementById('scroll-root')
-    if (scroller) {
-      scroller.scrollTop = 0
-      scroller.scrollLeft = 0
-    }
-    // Fallback para el scroll de ventana
+    // Standard scroll reset - DEBUGGING SIN ZOOM SYSTEM
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+    document.body.scrollTop = 0
+    document.documentElement.scrollTop = 0
 
     // Scroll control is managed by the overlayVisible useEffect - no need to block here
     return () => {}
@@ -205,19 +201,11 @@ export default function TimelinePage() {
       // Simplified scroll effects for universal compatibility
     }
 
-    const scroller = document.getElementById('scroll-root')
-    if (scroller) {
-      scroller.addEventListener("scroll", handleScroll, { passive: true })
-    } else {
-      window.addEventListener("scroll", handleScroll, { passive: true })
-    }
+    // DEBUGGING SIN ZOOM SYSTEM - usar window directamente
+    window.addEventListener("scroll", handleScroll, { passive: true })
 
     return () => {
-      if (scroller) {
-        scroller.removeEventListener("scroll", handleScroll)
-      } else {
-        window.removeEventListener("scroll", handleScroll)
-      }
+      window.removeEventListener("scroll", handleScroll)
       observer.disconnect()
     }
   }, [overlayVisible])
@@ -242,23 +230,16 @@ export default function TimelinePage() {
     } catch {}
   }, [hasMounted])
 
-  // UNIFIED: Scroll control for all devices - usando el nuevo sistema de scroll
+  // Scroll control - DEBUGGING SIN ZOOM SYSTEM
   useEffect(() => {
-    const scroller = document.getElementById('scroll-root') as HTMLElement | null
-
     if (overlayVisible) {
       // Block scroll when overlay is visible
-      if (scroller) {
-        scroller.style.overflowY = 'hidden'
-      }
       document.body.style.overflow = 'hidden'
+      document.documentElement.style.overflow = 'hidden'
     } else {
-      // Restore scroll when overlay is hidden - usar el scroll-root
-      if (scroller) {
-        scroller.style.overflowY = 'auto'
-        scroller.style.height = '100vh'
-      }
-      document.body.style.overflow = 'hidden' // El body ya no scrollea, solo scroll-root
+      // Restore scroll when overlay is hidden
+      document.body.style.overflow = 'auto'
+      document.documentElement.style.overflow = 'auto'
     }
   }, [overlayVisible])
 
@@ -287,14 +268,9 @@ export default function TimelinePage() {
           setOverlayVisible(false)
           emergencyLog('info', 'overlayVisible set to false')
 
-          // Standard scroll reactivation - using scroll-root
+          // Standard scroll reactivation - DEBUGGING SIN ZOOM SYSTEM
           requestAnimationFrame(() => {
-            const scroller = document.getElementById('scroll-root')
-            if (scroller) {
-              scroller.dispatchEvent(new Event('scroll'))
-            } else {
-              window.dispatchEvent(new Event('scroll'))
-            }
+            window.dispatchEvent(new Event('scroll'))
           })
         }, 1000)
       } else {
@@ -1645,20 +1621,12 @@ export default function TimelinePage() {
             <button
               onClick={() => {
                 setShowVideo(true)
-                // UNIFIED: Standard smooth scroll using scroll-root
+                // Smooth scroll - DEBUGGING SIN ZOOM SYSTEM
                 setTimeout(() => {
-                  const scroller = document.getElementById('scroll-root')
-                  if (scroller) {
-                    scroller.scrollBy({
-                      top: 160,
-                      behavior: 'smooth'
-                    })
-                  } else {
-                    window.scrollBy({
-                      top: 160,
-                      behavior: 'smooth'
-                    })
-                  }
+                  window.scrollBy({
+                    top: 160,
+                    behavior: 'smooth'
+                  })
                 }, 750)
               }}
               className="bg-terracotta hover:bg-terracotta/90 text-ivory px-8 py-4 rounded-full font-semibold shadow-lg flex items-center gap-2 mx-auto"

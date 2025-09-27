@@ -40,62 +40,28 @@ export default function FixedZoom() {
         scrollRoot.style.overflowY = 'auto'
         scrollRoot.scrollTop = 0 // Reset scroll position
         
-        // INVESTIGACIÓN EXHAUSTIVA: ¿Qué está inflando la altura?
-        console.log('🔬 ANÁLISIS EXHAUSTIVO DE ALTURA:')
+        // VERIFICAR CORRECCIONES APLICADAS
+        const timelineWrapper = fixedLayout.querySelector('.w-full.relative')
+        const textureOverlay = fixedLayout.querySelector('.absolute.pointer-events-none.z-0')
         
-        // 1. Analizar secciones principales individualmente
-        const mainSections = [
-          { name: 'Hero Section', selector: 'section:first-of-type' },
-          { name: 'Timeline Wrapper', selector: '.w-full.relative' },
-          { name: 'Final Video Section', selector: '#final-video-section' }
-        ]
-        
-        let totalAccountedHeight = 0
-        
-        mainSections.forEach(({ name, selector }) => {
-          const element = fixedLayout.querySelector(selector)
-          if (element) {
-            const height = element.scrollHeight
-            totalAccountedHeight += height
-            console.log(`  ${name}: ${height}px`)
-          }
+        console.log('🔧 CORRECCIONES VERIFICADAS:', {
+          'Timeline Wrapper': timelineWrapper ? timelineWrapper.scrollHeight + 'px' : 'No encontrado',
+          'Texture Overlay': textureOverlay ? textureOverlay.style.height || 'Sin altura fija' : 'No encontrado',
+          'Altura total': unscaledHeight + 'px',
+          'Altura visual': scaledHeight + 'px', 
+          'Ratio actual': (scaledHeight / window.innerHeight).toFixed(1) + 'x',
+          'Meta objetivo': '2-3x'
         })
         
-        // 2. Buscar elementos "flotantes" que infletan la altura
-        const problematicSelectors = [
-          '.absolute',
-          '.fixed', 
-          '[style*="position: absolute"]',
-          '[style*="position: fixed"]',
-          '.timeline-item',
-          'iframe'
-        ]
-        
-        problematicSelectors.forEach(selector => {
-          const elements = Array.from(fixedLayout.querySelectorAll(selector))
-          elements.forEach((el, index) => {
-            const rect = el.getBoundingClientRect()
-            const height = el.scrollHeight || rect.height
-            if (height > 500) {
-              console.log(`  ${selector}[${index}]: ${height}px (${el.className.substring(0, 30)}...)`)
-            }
-          })
-        })
-        
-        // 3. Identificar "altura fantasma"
-        const heightDifference = unscaledHeight - totalAccountedHeight
-        console.log(`  💀 ALTURA FANTASMA: ${heightDifference}px (diferencia inexplicada)`)
-        
-        // 4. Métricas finales
-        console.log('📊 RESUMEN FINAL:', {
-          'altura total': unscaledHeight,
-          'altura contabilizada': totalAccountedHeight,
-          'altura fantasma': heightDifference,
-          'altura visual final': scaledHeight,
-          'debería ser máximo': (window.innerHeight * 3) + 'px',
-          'ratio actual': (scaledHeight / window.innerHeight).toFixed(1) + 'x',
-          'ratio objetivo': '2-3x'
-        })
+        // Verificar si logramos el objetivo
+        const ratio = scaledHeight / window.innerHeight
+        if (ratio <= 3) {
+          console.log('✅ OBJETIVO ALCANZADO: Ratio <= 3x')
+        } else if (ratio <= 5) {
+          console.log('🔶 MEJORA PARCIAL: Ratio reducido pero aún alto')
+        } else {
+          console.log('🔴 NECESITA MÁS TRABAJO: Ratio aún muy alto')
+        }
 
         // El body ya no necesita altura específica
         document.body.style.height = '100vh'

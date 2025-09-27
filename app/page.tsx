@@ -1203,10 +1203,14 @@ export default function TimelinePage() {
           opacity: 1
         }}
       >
-        {/* OVERLAY DE TEXTURA - Ahora con z-0 para que esté en el fondo */}
+        {/* OVERLAY DE TEXTURA - Usando altura fija para evitar expansion del contenedor */}
         <div 
-          className="absolute inset-0 pointer-events-none z-0"
+          className="absolute pointer-events-none z-0"
           style={{
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '3000px', // Altura fija razonable para cubrir contenido sin inflarlo
             backgroundImage: 'url("https://www.transparenttextures.com/patterns/sandpaper.png")',
             backgroundRepeat: 'repeat',
             backgroundSize: '35%',
@@ -1216,26 +1220,30 @@ export default function TimelinePage() {
           }}
         />
         
-        {/* Flores decorativas en las esquinas */}
+        {/* Flores decorativas con posicionamiento fijo para evitar expansion */}
         <img 
           src="/flores/sup_izq.png" 
           alt="" 
-          className="absolute top-12 left-12 w-48 h-48 opacity-70 z-10 pointer-events-none"
+          className="absolute z-10 pointer-events-none w-48 h-48 opacity-70"
+          style={{ top: '48px', left: '48px' }}
         />
         <img 
           src="/flores/sup_der.png" 
           alt="" 
-          className="absolute top-12 right-12 w-48 h-48 opacity-70 z-10 pointer-events-none"
+          className="absolute z-10 pointer-events-none w-48 h-48 opacity-70"
+          style={{ top: '48px', right: '48px' }}
         />
         <img 
           src="/flores/inf_izq.png" 
           alt="" 
-          className="absolute bottom-12 left-12 w-48 h-48 opacity-70 z-10 pointer-events-none"
+          className="absolute z-10 pointer-events-none w-48 h-48 opacity-70"
+          style={{ top: '2400px', left: '48px' }} /* Posición fija en lugar de bottom */
         />
         <img 
           src="/flores/inf_der.png" 
           alt="" 
-          className="absolute bottom-12 right-12 w-48 h-48 opacity-70 z-10 pointer-events-none"
+          className="absolute z-10 pointer-events-none w-48 h-48 opacity-70"
+          style={{ top: '2400px', right: '48px' }} /* Posición fija en lugar de bottom */
         />
         
         <div className="max-w-7xl mx-auto px-4 py-16 relative z-20">

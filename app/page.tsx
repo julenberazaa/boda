@@ -43,6 +43,7 @@ export default function TimelinePage() {
   const [isClosingMedia, setIsClosingMedia] = useState(false)
   const mediaVideoRefs = useRef<Record<number, HTMLVideoElement | null>>({})
   const [showVideo, setShowVideo] = useState(false)
+  const [loadVideoIframe, setLoadVideoIframe] = useState(false)
   const [modalImageIndex, setModalImageIndex] = useState(0)
   const [tuentiStarted, setTuentiStarted] = useState(false)
   // Simplified scroll handling - unified for all platforms
@@ -1646,6 +1647,8 @@ export default function TimelinePage() {
             <button
               onClick={() => {
                 setShowVideo(true)
+                // Cargar iframe solo cuando se hace click (evita warnings de Drive)
+                setTimeout(() => setLoadVideoIframe(true), 300)
                 // UNIFIED: Standard smooth scroll usando scroll-root corregido
                 setTimeout(() => {
                   const scroller = document.getElementById('scroll-root')
@@ -1672,14 +1675,25 @@ export default function TimelinePage() {
           <div className={`w-full max-w-4xl transition-all duration-700 ease-in-out ${showVideo ? 'max-h-[600px] mt-8' : 'max-h-0 overflow-hidden'}`}>
             <div className="p-6">
               <div className="overflow-hidden rounded-2xl custom-shadow-right-bottom-large hover:custom-shadow-right-bottom-large-hover transition-all duration-500">
-                <iframe
-                  ref={videoRef}
-                  src="https://drive.google.com/file/d/1MoYgCEV_2CkhkUU8jZjIK9ZU5WXqbFGN/preview"
-                  title="Video de la boda"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="w-full aspect-video"
-                ></iframe>
+                {loadVideoIframe ? (
+                  <iframe
+                    ref={videoRef}
+                    src="https://drive.google.com/file/d/1MoYgCEV_2CkhkUU8jZjIK9ZU5WXqbFGN/preview"
+                    title="Video de la boda"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer"
+                    className="w-full aspect-video"
+                  ></iframe>
+                ) : (
+                  <div className="w-full aspect-video bg-terracotta/10 flex items-center justify-center">
+                    <div className="text-terracotta/60">
+                      <Video className="w-12 h-12 mx-auto mb-2" />
+                      <p className="text-sm">Cargando video...</p>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

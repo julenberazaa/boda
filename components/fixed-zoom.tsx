@@ -39,10 +39,10 @@ export default function FixedZoom() {
         const unscaledHeight = fixedLayout.scrollHeight
         fixedLayout.style.transform = originalTransform
 
-        // 🔍 PREVENIR LOOPS: Solo actualizar si hay cambio significativo 
+        // 🔍 PREVENIR LOOPS: Tolerancia para cambios de pocos píxeles 
         const heightDiff = Math.abs(unscaledHeight - lastHeight)
-        if (source === 'content-changed' && heightDiff < 50) {
-          console.log(`⚠️ SKIP: cambio menor (${heightDiff}px) - no recalcular`)
+        if (source === 'content-changed' && heightDiff < 5) {
+          // Silencioso - no log para cambios menores de 5px
           return
         }
 
@@ -52,8 +52,9 @@ export default function FixedZoom() {
         // Calcular altura visual (escalada)
         const scaledHeight = unscaledHeight * newScale
         
-        // CLAVE: El scroll-spacer define el área de scroll = altura visual
-        scrollSpacer.style.height = `${scaledHeight}px`
+        // CLAVE: El scroll-spacer define el área de scroll = altura visual REDONDEADA
+        const roundedScaledHeight = Math.round(scaledHeight)
+        scrollSpacer.style.height = `${roundedScaledHeight}px`
         
         // Configurar contenedores
         wrapper.style.height = `${window.innerHeight}px`
@@ -69,45 +70,46 @@ export default function FixedZoom() {
         document.body.style.height = '100vh'
         document.body.style.minHeight = '100vh'
         
-        console.log(`🔧 FIXEDZOOM [${source}]:`, {
-          'altura DOM original': unscaledHeight + 'px',
-          'altura visual escalada': scaledHeight + 'px', 
-          'scroll area': scrollSpacer.style.height,
-          'escala': newScale,
-          'ventana': window.innerHeight + 'px',
-          'retry': retryCount,
-          'cambio altura': heightDiff + 'px'
-        })
+        // 📝 LOGGING: Solo mostrar cambios importantes  
+        if (source === 'initial' || source === 'resize' || heightDiff > 100) {
+          console.log(`🔧 FIXEDZOOM [${source}]:`, {
+            'altura DOM original': unscaledHeight + 'px',
+            'altura visual escalada': Math.round(scaledHeight) + 'px', 
+            'scroll area': scrollSpacer.style.height,
+            'escala': newScale.toFixed(3),
+            'ventana': window.innerHeight + 'px'
+          })
+        } else if (source !== 'retry') {
+          // Log compacto para cambios menores
+          console.log(`🔧 ${source}: ${heightDiff}px cambio`)
+        }
 
-        // 🔍 DEBUG ESPECIAL: Investigar "cosa blanca" al final
-        if (newScale < 0.3) { // Solo en móviles
+        // 🔍 DEBUG ESPECIAL: Solo en carga inicial de móviles si hay problemas
+        if (source === 'initial' && newScale < 0.3) {
           setTimeout(() => {
             const spacerHeight = parseInt(scrollSpacer.style.height)
             const actualScrollHeight = scrollRoot.scrollHeight
-            const maxScrollTop = scrollRoot.scrollHeight - scrollRoot.clientHeight
+            const heightDifference = Math.abs(actualScrollHeight - spacerHeight)
             
-            console.log(`🔍 DEBUG MÓVIL - "cosa blanca":`, {
-              'scroll-spacer height': spacerHeight + 'px',
-              'scroll-root scrollHeight': actualScrollHeight + 'px',
-              'scroll-root clientHeight': scrollRoot.clientHeight + 'px',
-              'max scroll possible': maxScrollTop + 'px',
-              'diferencia spacer vs real': (actualScrollHeight - spacerHeight) + 'px'
-            })
+            // Solo debuggear si hay diferencia significativa
+            if (heightDifference > 3) {
+              console.warn(`🔍 DIFERENCIA DETECTADA:`, {
+                'spacer': spacerHeight + 'px',
+                'real': actualScrollHeight + 'px', 
+                'diferencia': heightDifference + 'px'
+              })
 
-            // Buscar elementos que sobresalen
-            const overflowElements = Array.from(fixedLayout.querySelectorAll('*')).filter(el => {
-              const rect = el.getBoundingClientRect()
-              return rect.bottom > (spacerHeight + 100) // 100px margen
-            }).slice(0, 3) // Solo top 3
+              // Buscar elementos problemáticos
+              const problematicElements = Array.from(fixedLayout.querySelectorAll('*')).filter(el => {
+                const rect = el.getBoundingClientRect()
+                return rect.bottom > spacerHeight + 50
+              }).slice(0, 2)
 
-            if (overflowElements.length > 0) {
-              console.warn(`⚠️ ELEMENTOS QUE SOBRESALEN:`, overflowElements.map(el => ({
-                tag: el.tagName,
-                class: el.className.substring(0, 30),
-                bottom: el.getBoundingClientRect().bottom + 'px'
-              })))
+              if (problematicElements.length > 0) {
+                console.warn(`⚠️ ELEMENTOS PROBLEMÁTICOS:`, problematicElements.map(el => el.className.substring(0, 25)))
+              }
             }
-          }, 200)
+          }, 300)
         }
 
         // Actualizar altura guardada
@@ -116,11 +118,14 @@ export default function FixedZoom() {
         // 🔓 LIBERAR LOCK después de un momento
         setTimeout(() => setIsUpdating(false), 100)
 
-        // En móviles, verificar si necesitamos recalcular
-        if (source === 'initial' && newScale < 0.3 && retryCount < MAX_RETRIES) {
+        // En móviles, reintento silencioso si es necesario
+        if (source === 'initial' && newScale < 0.3 && retryCount < MAX_RETRIES && heightDiff > 10) {
           retryCount++
-          console.log(`📱 MÓVIL: Reintentando cálculo en 500ms (intento ${retryCount})`)
-          setTimeout(() => updateScale('retry'), 500)
+          // Reintento silencioso - solo log si es el último intento
+          if (retryCount >= MAX_RETRIES) {
+            console.log(`📱 MÓVIL: Último reintento (${retryCount}/${MAX_RETRIES})`)
+          }
+          setTimeout(() => updateScale('retry'), 300) // Más rápido
         }
       }
       
@@ -132,7 +137,7 @@ export default function FixedZoom() {
 
     // 1. Content loaded listener - para cuando imágenes estén cargadas
     const handleContentLoaded = () => {
-      console.log('📸 CONTENT LOADED: Recalculando altura después de cargar imágenes')
+      // Silencioso - recalcular sin log
       setTimeout(() => updateScale('content-loaded'), 100)
     }
 
@@ -172,7 +177,7 @@ export default function FixedZoom() {
       })
 
       if (relevantChanges) {
-        console.log(`📝 MUTATION: Cambio relevante detectado, recalculando en 800ms`)
+        // Silencioso - solo recalcular sin spam de logs
         lastMutationTime = now
         clearTimeout(mutationTimeout)
         mutationTimeout = setTimeout(() => updateScale('content-changed'), 800)

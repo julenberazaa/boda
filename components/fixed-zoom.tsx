@@ -42,7 +42,7 @@ export default function FixedZoom() {
         
         // VERIFICAR CORRECCIONES APLICADAS
         const timelineWrapper = fixedLayout.querySelector('.w-full.relative')
-        const textureOverlay = fixedLayout.querySelector('.absolute.pointer-events-none.z-0')
+        const textureOverlay = fixedLayout.querySelector('.absolute.pointer-events-none.z-0') as HTMLElement
         
         console.log('🔧 CORRECCIONES VERIFICADAS:', {
           'Timeline Wrapper': timelineWrapper ? timelineWrapper.scrollHeight + 'px' : 'No encontrado',

@@ -40,13 +40,42 @@ export default function FixedZoom() {
         scrollRoot.style.overflowY = 'auto'
         scrollRoot.scrollTop = 0 // Reset scroll position
         
+        // INVESTIGACIÓN ESPECÍFICA DEL TIMELINE PROBLEMÁTICO
+        console.log('🔬 ANÁLISIS DETALLADO DEL TIMELINE:')
+
+        const timelineContainer = fixedLayout.querySelector('.w-full.relative')
+        if (timelineContainer) {
+          // Analizar elementos internos del timeline
+          const timelineChildren = Array.from(timelineContainer.children)
+          let totalChildHeight = 0
+
+          console.log('  Elementos internos del timeline:')
+          timelineChildren.forEach((child, index) => {
+            const height = child.scrollHeight || child.getBoundingClientRect().height
+            const tag = child.tagName
+            const className = child.className.substring(0, 50)
+
+            console.log(`    ${index + 1}. ${tag}: ${height}px (${className}...)`)
+
+            if (height > 1000) {
+              console.warn(`      ⚠️ Elemento grande: ${tag} con ${height}px`)
+            }
+
+            totalChildHeight += height
+          })
+
+          console.log(`  Suma de alturas internas: ${totalChildHeight}px`)
+          console.log(`  Altura del contenedor timeline: ${timelineContainer.scrollHeight}px`)
+          console.log(`  Diferencia: ${timelineContainer.scrollHeight - totalChildHeight}px`)
+        }
+
         // INVESTIGACIÓN PROFUNDA: ¿Qué otros elementos inflan la altura total?
         console.log('🔬 INVESTIGACIÓN DE ALTURA REMANENTE:')
 
         // Analizar todas las secciones principales
         const sections = [
           { name: 'Hero Section', element: fixedLayout.querySelector('section:first-of-type') },
-          { name: 'Timeline Container', element: fixedLayout.querySelector('.w-full.relative') },
+          { name: 'Timeline Container', element: timelineContainer },
           { name: 'Final Video Section', element: fixedLayout.querySelector('#final-video-section') },
           { name: 'Whole Content', element: fixedLayout }
         ]

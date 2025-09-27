@@ -9,6 +9,20 @@ export default function FixedZoom() {
 
   useEffect(() => {
     setIsClient(true)
+
+    // TEMPORARY: Disable FixedZoom completely for iOS to prevent conflicts
+    const isIOSSafari = () => {
+      const userAgent = navigator.userAgent
+      return /iPad|iPhone|iPod/.test(userAgent) && !(window as any).MSStream
+    }
+
+    if (isIOSSafari()) {
+      console.log('FixedZoom: Disabled for iOS Safari to prevent conflicts')
+      // Dispatch ready event immediately for iOS
+      ;(window as any).__fixedZoomReady = true
+      window.dispatchEvent(new CustomEvent('fixed-zoom-ready'))
+      return
+    }
     
     const BASE_WIDTH = 1920
     const DESIGN_MAGNIFY = 1.21 // ~21% total más grande

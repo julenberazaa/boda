@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import { Heart, Plane, MapPin, Camera, Video, Sun, Star, Ship, BellRingIcon as Ring, BookOpen, PartyPopper, X, PawPrint, Eye, EyeOff, ChevronLeft, ChevronRight } from "lucide-react"
-import ImageCarousel from "@/components/image-carousel"
+import ImageCarousel from "@/components/image-carousel-unified"
 // import FramesOverlay from "@/components/frames-overlay" // DEPRECATED: Replaced with frames inside carousels
 import { getFrameConfig } from "@/lib/local-frame-config"
 import { iOSDebugLog } from "@/components/ios-debug-logger"

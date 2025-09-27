@@ -1546,8 +1546,8 @@ export default function TimelinePage() {
       <section 
         id="final-video-section"
         ref={finalSectionRef}
-        className="relative py-32 bg-midnight text-center overflow-hidden"
-        style={{ minHeight: '600px' }}
+        className="relative py-16 bg-midnight text-center overflow-hidden"
+        style={{ minHeight: '500px' }}
       >
         <div
           ref={finalSectionImageRef}

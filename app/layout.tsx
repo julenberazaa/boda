@@ -52,7 +52,6 @@ export default function RootLayout({
             
             #fixed-layout {
               width: 1920px;
-              min-height: 100vh;
               transform-origin: top left;
               position: relative;
             }

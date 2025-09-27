@@ -17,15 +17,48 @@ export default function FixedZoom() {
       if (fixedLayout) {
         fixedLayout.style.transform = `scale(${newScale})`
         
-        // Calcular altura de forma más precisa para evitar espacio extra
+        // INVESTIGACIÓN DEL PROBLEMA - Debug temporal
         const actualContentHeight = fixedLayout.scrollHeight
         const scaledHeight = actualContentHeight * newScale
         
-        // Solo establecer minHeight si es necesario, evitar espacio extra
+        console.log('🔍 DEBUG FixedZoom:', {
+          'scrollHeight (altura real del contenido)': actualContentHeight,
+          'escala aplicada': newScale,
+          'altura calculada (scaledHeight)': scaledHeight,
+          'altura de ventana': window.innerHeight,
+          'altura final que se va a aplicar': Math.max(window.innerHeight, scaledHeight)
+        })
+        
+        // PROBLEMA POTENCIAL: ¿El scrollHeight está siendo excesivo?
+        if (actualContentHeight > 10000) {
+          console.warn('⚠️ ALTURA SOSPECHOSA:', actualContentHeight, 'px - esto podría estar causando el espacio extra')
+        }
+        
+        // INVESTIGACIÓN ADICIONAL: verificar si hay elementos problemáticos
+        const allElements = fixedLayout.querySelectorAll('*')
+        let maxBottom = 0
+        let problematicElement = null
+        
+        allElements.forEach(el => {
+          const rect = el.getBoundingClientRect()
+          const elementBottom = rect.bottom
+          if (elementBottom > maxBottom) {
+            maxBottom = elementBottom
+            problematicElement = el
+          }
+        })
+        
+        if (maxBottom > window.innerHeight + 2000) {
+          console.warn('🚨 ELEMENTO PROBLEMÁTICO ENCONTRADO:', {
+            elemento: problematicElement,
+            'posición bottom': maxBottom,
+            'altura de ventana': window.innerHeight,
+            'diferencia excesiva': maxBottom - window.innerHeight
+          })
+        }
+        
         document.body.style.minHeight = `${Math.max(window.innerHeight, scaledHeight)}px`
         document.body.style.height = 'auto'
-        
-        // Debug removido - cálculo optimizado para evitar espacio extra
       }
       
       setScale(newScale)

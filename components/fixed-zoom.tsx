@@ -7,7 +7,10 @@ const DESIGN_WIDTH = 1920
 export default function FixedZoom() {
   const [scale, setScale] = useState(1)
   const [lastHeight, setLastHeight] = useState(0)
+  const [lastScaledHeight, setLastScaledHeight] = useState(0)
+  const [lastScale, setLastScale] = useState(1)
   const [isUpdating, setIsUpdating] = useState(false)
+  const [recalcCount, setRecalcCount] = useState(0)
 
   useEffect(() => {
     let retryCount = 0
@@ -39,19 +42,32 @@ export default function FixedZoom() {
         const unscaledHeight = fixedLayout.scrollHeight
         fixedLayout.style.transform = originalTransform
 
-        // 🔍 PREVENIR LOOPS: Tolerancia para cambios de pocos píxeles 
+        // 🔍 PREVENIR LOOPS AGRESIVAMENTE: Histeresis fuerte
         const heightDiff = Math.abs(unscaledHeight - lastHeight)
-        if (source === 'content-changed' && heightDiff < 5) {
-          // Silencioso - no log para cambios menores de 5px
-          return
+        const scaledHeight = unscaledHeight * newScale
+        const scaleDiff = Math.abs(newScale - lastScale)
+        const scaledHeightDiff = Math.abs(scaledHeight - lastScaledHeight)
+        
+        // ❌ BLOQUEAR si valores son prácticamente idénticos
+        if (source !== 'initial' && source !== 'resize') {
+          if (heightDiff < 3 && scaleDiff < 0.001 && scaledHeightDiff < 2) {
+            setRecalcCount(prev => prev + 1)
+            if (recalcCount > 10) {
+              console.warn(`🛑 BUCLE DETECTADO: Bloqueando recálculos (${recalcCount} intentos)`)
+              return
+            }
+            return // Silencioso para cambios idénticos
+          }
+        }
+
+        // Reset counter si hay cambio real
+        if (heightDiff > 10 || scaleDiff > 0.01) {
+          setRecalcCount(0)
         }
 
         // 🔒 MARCAR COMO ACTUALIZANDO
         setIsUpdating(true)
 
-        // Calcular altura visual (escalada)
-        const scaledHeight = unscaledHeight * newScale
-        
         // CLAVE: El scroll-spacer define el área de scroll = altura visual REDONDEADA
         const roundedScaledHeight = Math.round(scaledHeight)
         scrollSpacer.style.height = `${roundedScaledHeight}px`
@@ -61,9 +77,18 @@ export default function FixedZoom() {
         scrollRoot.style.height = `${window.innerHeight}px`
         scrollRoot.style.overflowY = 'auto'
         
-        // Reset scroll position solo en carga inicial
+        // 🚫 PREVENIR OVER-SCROLL: Limitar scroll máximo
+        const maxScroll = Math.max(0, roundedScaledHeight - window.innerHeight)
+        scrollRoot.addEventListener('scroll', function limitScroll() {
+          if (scrollRoot.scrollTop > maxScroll) {
+            scrollRoot.scrollTop = maxScroll
+          }
+        }, { passive: true })
+        
+        // Reset scroll position solo en carga inicial o resize
         if (source === 'initial' || source === 'resize') {
           scrollRoot.scrollTop = 0
+          console.log(`📱 POSICIÓN INICIAL: scroll reset a 0`)
         }
         
         // Body no necesita altura específica
@@ -112,11 +137,13 @@ export default function FixedZoom() {
           }, 300)
         }
 
-        // Actualizar altura guardada
+        // Actualizar valores guardados para histeresis
         setLastHeight(unscaledHeight)
+        setLastScaledHeight(scaledHeight)
+        setLastScale(newScale)
         
         // 🔓 LIBERAR LOCK después de un momento
-        setTimeout(() => setIsUpdating(false), 100)
+        setTimeout(() => setIsUpdating(false), 200) // Más tiempo para evitar overlap
 
         // En móviles, reintento silencioso si es necesario
         if (source === 'initial' && newScale < 0.3 && retryCount < MAX_RETRIES && heightDiff > 10) {
@@ -149,38 +176,46 @@ export default function FixedZoom() {
       window.addEventListener('load', handleContentLoaded)
     }
 
-    // 2. Mutation Observer - detectar cambios dinámicos EN CONTENIDO (no en contenedores)
+    // 2. Mutation Observer - DEBOUNCE AGRESIVO para evitar bucles
     let mutationTimeout: NodeJS.Timeout
     let lastMutationTime = 0
+    let mutationCount = 0
     const observer = new MutationObserver((mutations) => {
-      // 🚫 PREVENIR SPAM: Throttle agresivo
+      // 🚫 PREVENIR SPAM: Throttle súper agresivo
       const now = Date.now()
-      if (now - lastMutationTime < 1000) { // 1 segundo mínimo entre cambios
+      if (now - lastMutationTime < 2000) { // 2 segundos mínimo entre cambios
         return
       }
 
-      // 🚫 FILTRAR: Ignorar cambios en elementos que FixedZoom controla
+      // 🛑 LIMITAR MUTATIONS: Máximo 5 por minuto
+      mutationCount++
+      if (mutationCount > 5) {
+        console.warn(`🛑 MUTATION LIMIT: Demasiadas mutaciones (${mutationCount}), pausando observer`)
+        setTimeout(() => { mutationCount = 0 }, 60000) // Reset en 1 minuto
+        return
+      }
+
+      // 🚫 FILTRAR: Solo cambios realmente importantes
       const relevantChanges = mutations.some(mutation => {
         const target = mutation.target as Element
-        // Ignorar cambios en scroll-spacer, scroll-root, wrapper
-        if (target.id?.includes('scroll') || target.id?.includes('layout-wrapper')) {
+        // Ignorar todos los contenedores de layout
+        if (target.id?.includes('scroll') || target.id?.includes('layout') || target.id?.includes('fixed')) {
           return false
         }
-        // Ignorar cambios de transform (que hace FixedZoom)
-        if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-          const element = target as HTMLElement
-          if (element.style.transform?.includes('scale')) {
-            return false
-          }
+        // Solo interesar por adición de nuevos elementos (imágenes)
+        if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+          return Array.from(mutation.addedNodes).some(node => {
+            return node.nodeName === 'IMG' || node.nodeName === 'VIDEO' || node.nodeName === 'IFRAME'
+          })
         }
-        return true
+        return false
       })
 
       if (relevantChanges) {
-        // Silencioso - solo recalcular sin spam de logs
         lastMutationTime = now
         clearTimeout(mutationTimeout)
-        mutationTimeout = setTimeout(() => updateScale('content-changed'), 800)
+        // Debounce MUY agresivo
+        mutationTimeout = setTimeout(() => updateScale('content-changed'), 1500)
       }
     })
     

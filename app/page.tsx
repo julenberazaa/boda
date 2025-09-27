@@ -74,13 +74,7 @@ export default function TimelinePage() {
       history.scrollRestoration = 'manual'
     }
 
-    // Standard scroll reset - usando scroll-root corregido
-    const scroller = document.getElementById('scroll-root')
-    if (scroller) {
-      scroller.scrollTop = 0
-      scroller.scrollLeft = 0
-    }
-    // Fallback para el scroll de ventana
+    // Standard scroll reset
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
 
     // Scroll control is managed by the overlayVisible useEffect - no need to block here
@@ -201,25 +195,16 @@ export default function TimelinePage() {
       observer.observe(item)
     })
 
-    // Unified scroll behavior - using scroll-root
+    // Standard scroll behavior
     const handleScroll = () => {
       // Simplified scroll effects for universal compatibility
     }
 
-    // Unified scroll behavior - using scroll-root corregido
-    const scroller = document.getElementById('scroll-root')
-    if (scroller) {
-      scroller.addEventListener("scroll", handleScroll, { passive: true })
-    } else {
-      window.addEventListener("scroll", handleScroll, { passive: true })
-    }
+    // Standard scroll behavior
+    window.addEventListener("scroll", handleScroll, { passive: true })
 
     return () => {
-      if (scroller) {
-        scroller.removeEventListener("scroll", handleScroll)
-      } else {
-        window.removeEventListener("scroll", handleScroll)
-      }
+      window.removeEventListener("scroll", handleScroll)
       observer.disconnect()
     }
   }, [overlayVisible])
@@ -244,23 +229,16 @@ export default function TimelinePage() {
     } catch {}
   }, [hasMounted])
 
-  // UNIFIED: Scroll control usando el sistema de zoom corregido
+  // Standard scroll control
   useEffect(() => {
-    const scroller = document.getElementById('scroll-root') as HTMLElement | null
-
     if (overlayVisible) {
       // Block scroll when overlay is visible
-      if (scroller) {
-        scroller.style.overflowY = 'hidden'
-      }
       document.body.style.overflow = 'hidden'
+      document.documentElement.style.overflow = 'hidden'
     } else {
-      // Restore scroll when overlay is hidden - usar el scroll-root
-      if (scroller) {
-        scroller.style.overflowY = 'auto'
-        scroller.style.height = '100vh'
-      }
-      document.body.style.overflow = 'hidden' // El body ya no scrollea, solo scroll-root
+      // Restore scroll when overlay is hidden
+      document.body.style.overflow = 'auto'
+      document.documentElement.style.overflow = 'auto'
     }
   }, [overlayVisible])
 
@@ -289,14 +267,9 @@ export default function TimelinePage() {
           setOverlayVisible(false)
           emergencyLog('info', 'overlayVisible set to false')
 
-          // Standard scroll reactivation - using scroll-root corregido
+          // Standard scroll reactivation
           requestAnimationFrame(() => {
-            const scroller = document.getElementById('scroll-root')
-            if (scroller) {
-              scroller.dispatchEvent(new Event('scroll'))
-            } else {
-              window.dispatchEvent(new Event('scroll'))
-            }
+            window.dispatchEvent(new Event('scroll'))
           })
         }, 1000)
       } else {
@@ -460,20 +433,7 @@ export default function TimelinePage() {
 
   // Standard viewport handling
   const getCurrentScale = (): number => {
-    const fixedLayout = document.getElementById('fixed-layout')
-    if (!fixedLayout) return 1
-    
-    const computedStyle = window.getComputedStyle(fixedLayout)
-    const transform = computedStyle.transform
-    
-    if (transform && transform !== 'none') {
-      // Parse matrix(scaleX, 0, 0, scaleY, translateX, translateY)
-      const values = transform.match(/matrix\(([^)]+)\)/)
-      if (values) {
-        const matrix = values[1].split(',').map(v => parseFloat(v.trim()))
-        return matrix[0] // scaleX value
-      }
-    }
+    // Since we removed fixed-zoom, always return 1 (no scaling)
     return 1
   }
 
@@ -1649,20 +1609,12 @@ export default function TimelinePage() {
                 setShowVideo(true)
                 // Cargar iframe solo cuando se hace click (evita warnings de Drive)
                 setTimeout(() => setLoadVideoIframe(true), 300)
-                // UNIFIED: Standard smooth scroll usando scroll-root corregido
+                // Standard smooth scroll
                 setTimeout(() => {
-                  const scroller = document.getElementById('scroll-root')
-                  if (scroller) {
-                    scroller.scrollBy({
-                      top: 160,
-                      behavior: 'smooth'
-                    })
-                  } else {
-                    window.scrollBy({
-                      top: 160,
-                      behavior: 'smooth'
-                    })
-                  }
+                  window.scrollBy({
+                    top: 160,
+                    behavior: 'smooth'
+                  })
                 }, 750)
               }}
               className="bg-terracotta hover:bg-terracotta/90 text-ivory px-8 py-4 rounded-full font-semibold shadow-lg flex items-center gap-2 mx-auto"

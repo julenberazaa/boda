@@ -4,6 +4,7 @@ import { Heart } from "lucide-react"
 
 export default function Hero() {
   return (
+    
     <section className="relative h-screen flex items-center justify-center overflow-hidden bg-gradient-radial from-terracotta to-ivory">
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-80"

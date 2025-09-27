@@ -31,11 +31,7 @@ export default function FixedZoom() {
     let observerTimeout: NodeJS.Timeout | null = null
     let resizeObserver: ResizeObserver | null = null
 
-    // Detección específica de iOS Safari + iPhone específico
-    const isIOSSafari = () => {
-      const userAgent = navigator.userAgent
-      return /iPad|iPhone|iPod/.test(userAgent) && !(window as any).MSStream
-    }
+    // Detección específica de iPhone específico
 
     const isIPhone = () => {
       const userAgent = navigator.userAgent

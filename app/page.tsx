@@ -6,7 +6,7 @@ import { Heart, Plane, MapPin, Camera, Video, Sun, Star, Ship, BellRingIcon as R
 import ImageCarousel from "@/components/image-carousel-unified"
 // import FramesOverlay from "@/components/frames-overlay" // DEPRECATED: Replaced with frames inside carousels
 import { getFrameConfig } from "@/lib/local-frame-config"
-import { iOSDebugLog } from "@/components/ios-debug-logger"
+// import { iOSDebugLog } from "@/components/ios-debug-logger" // REMOVED: No iOS differences
 import { emergencyLog } from "@/components/emergency-debug"
 
 interface ImageState {
@@ -63,92 +63,38 @@ export default function TimelinePage() {
     emergencyLog('info', 'hasMounted set to true')
   }, [])
   
-  // iPhone-specific blocking - Simplified to avoid hydration mismatch
-  // No more device blocking - removed for iPhone support
-
-
-  // iPhone: Usar detección ultra-temprana para posicionamiento inmediato
+  // UNIFIED: Standard page initialization for all devices
   useEffect(() => {
     // Wait until content is mounted
     if (!hasMounted) return
-    
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream
-    const isIPhone = (window as any).__isIPhone || /iPhone/.test(navigator.userAgent) && !(window as any).MSStream
-    
-    iOSDebugLog('info', 'Page initialization started', 'TimelinePage', { 
-      isIOS, 
-      isIPhone, 
-      ultraEarlyDetection: !!(window as any).__isIPhone 
-    })
-    
+
     // Evitar que el navegador restaure la posición de scroll anterior
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual'
-      iOSDebugLog('info', 'Scroll restoration set to manual', 'TimelinePage')
-    }
-    
-    // iPhone: Posicionamiento ultra-agresivo para prevenir bouncing
-    if (isIPhone) {
-      // iPhone: Multi-approach scroll reset
-      window.scrollTo(0, 0)
-      document.documentElement.scrollTop = 0
-      document.body.scrollTop = 0
-      
-      // Forzar también en el next tick
-      setTimeout(() => {
-        window.scrollTo(0, 0)
-        document.documentElement.scrollTop = 0
-        document.body.scrollTop = 0
-      }, 0)
-      
-      iOSDebugLog('dom', 'iPhone: Ultra-aggressive scroll reset to top', 'TimelinePage')
-    } else {
-      // Otros dispositivos: comportamiento original
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
-      document.documentElement.scrollTop = 0
-      document.body.scrollTop = 0
-      iOSDebugLog('dom', 'Standard scroll to top', 'TimelinePage')
     }
 
-    // Bloquear scroll durante overlay - iPhone usa enfoque diferente
+    // Standard scroll reset for all devices
+    window.scrollTo(0, 0)
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+    
+    // Standard scroll initialization for all devices
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+
+    // Block scroll during overlay - unified approach
     const prevHtmlOverflowY = document.documentElement.style.overflowY
     const prevBodyOverflowY = document.body.style.overflowY
-    
-    if (!isIPhone) {
-      // Desktop/Android: bloqueo original
-      document.documentElement.style.overflowY = 'hidden'
-      document.body.style.overflowY = 'hidden'
-      iOSDebugLog('dom', 'Standard scroll blocked during overlay', 'TimelinePage')
-    } else {
-      // iPhone: el scroll ya está manejado por CSS nativo
-      iOSDebugLog('dom', 'iPhone: Using native scroll - no manual blocking', 'TimelinePage')
-    }
-    
-    // iPhone: Timeout ultra-conservador para estabilizar scroll
-    let unlockDelay = 1000
-    if (isIPhone) {
-      unlockDelay = 2500  // iPhone necesita más tiempo
-    } else if (isIOS) {
-      unlockDelay = 1500  // iPad moderado
-    }
-    
-    iOSDebugLog('info', `Setting unlock delay: ${unlockDelay}ms (iPhone: ${isIPhone})`, 'TimelinePage')
-    
-    // iPhone: No usar unlock timeout - el scroll nativo ya está manejado
-    if (isIPhone) {
-      iOSDebugLog('info', 'iPhone: Skipping unlock timeout - using native scroll', 'TimelinePage')
-      return () => {} // Return empty cleanup
-    } else {
-      // Otros dispositivos: lógica original de unlock
-      const unlock = setTimeout(() => {
-        if (!overlayVisibleRef.current) {
-          document.documentElement.style.overflowY = prevHtmlOverflowY || ''
-          document.body.style.overflowY = prevBodyOverflowY || ''
-          iOSDebugLog('dom', 'Scroll unlocked after timeout', 'TimelinePage')
-        } else {
-          iOSDebugLog('info', 'Scroll unlock skipped - overlay still visible', 'TimelinePage')
-        }
-      }, unlockDelay)
+
+    document.documentElement.style.overflowY = 'hidden'
+    document.body.style.overflowY = 'hidden'
+
+    // Standard unlock timeout for all devices
+    const unlock = setTimeout(() => {
+      if (!overlayVisibleRef.current) {
+        document.documentElement.style.overflowY = prevHtmlOverflowY || ''
+        document.body.style.overflowY = prevBodyOverflowY || ''
+      }
+    }, 1000)
       
       return () => clearTimeout(unlock)
     }
@@ -269,45 +215,9 @@ export default function TimelinePage() {
       observer.observe(item)
     })
 
-    // Zoom effect for hero on scroll
+    // iOS-SAFE: No scroll effects to prevent compatibility issues
     const handleScroll = () => {
-      if (heroRef.current) {
-        const scrolled = window.pageYOffset
-        // iPhone: Escala más conservadora + throttling
-        const isCurrentIPhone = /iPhone/.test(navigator.userAgent) && !(window as any).MSStream
-        
-        if (isCurrentIPhone) {
-          // iPhone: Throttling del hero scaling para reducir redraws
-          const now = Date.now()
-          if (!(heroRef.current as any).__lastUpdate || now - (heroRef.current as any).__lastUpdate > 100) {
-            const scaleMultiplier = 0.0001  // Escala muy conservadora
-            const scale = 1 + scrolled * scaleMultiplier
-            heroRef.current.style.transform = `scale(${scale})`
-            ;(heroRef.current as any).__lastUpdate = now
-          }
-        } else {
-          // Otros dispositivos: comportamiento original
-          const scaleMultiplier = 0.0005
-          const scale = 1 + scrolled * scaleMultiplier
-          heroRef.current.style.transform = `scale(${scale})`
-        }
-      }
-
-      if (finalSectionRef.current && finalSectionBgRef.current && finalSectionImageRef.current) {
-        const rect = finalSectionRef.current.getBoundingClientRect();
-        const viewportHeight = window.innerHeight;
-
-        if (rect.top <= viewportHeight && rect.bottom >= 0) {
-          const scrollProgress = Math.max(0, Math.min(1, (viewportHeight - rect.top) / (viewportHeight + rect.height)));
-          
-          const gradientScale = 1 + scrollProgress * 0.3;
-          const translateX = -50 + scrollProgress * 100;
-          finalSectionBgRef.current.style.transform = `scale(${gradientScale}) translateX(${translateX}px)`;
-
-          const imageScale = 2 - scrollProgress;
-          finalSectionImageRef.current.style.transform = `scale(${imageScale})`;
-        }
-      }
+      // All scroll effects disabled for maximum iOS compatibility
     }
 
     window.addEventListener("scroll", handleScroll, { passive: true })
@@ -338,101 +248,59 @@ export default function TimelinePage() {
     } catch {}
   }, [hasMounted])
 
-  // iPhone-específico: Control de scroll más conservador
+  // UNIFIED: Scroll control for all devices
   useEffect(() => {
-    const isIPhone = /iPhone/.test(navigator.userAgent) && !(window as any).MSStream
     const scroller = document.getElementById('scroll-root') as HTMLElement | null
-    
-    if (!scroller && !isIPhone) {
-      iOSDebugLog('error', 'Critical: #scroll-root element not found', 'TimelinePage')
-      return
-    }
-    
+
     if (overlayVisible) {
-      if (isIPhone) {
-        // iPhone: Bloquear scroll en el documento principal
-        document.body.style.overflow = 'hidden'
-        document.documentElement.style.overflow = 'hidden'
-        iOSDebugLog('dom', 'iPhone: Document scroll blocked - overlay visible', 'TimelinePage')
-      } else if (scroller) {
-        // Otros dispositivos: Usar #scroll-root
+      // Block scroll when overlay is visible
+      document.body.style.overflow = 'hidden'
+      document.documentElement.style.overflow = 'hidden'
+      if (scroller) {
         scroller.style.overflowY = 'hidden'
-        iOSDebugLog('dom', 'Scroll blocked - overlay visible', 'TimelinePage')
       }
     } else {
-      if (isIPhone) {
-        // iPhone: Restaurar scroll nativo
-        document.body.style.overflow = ''
-        document.documentElement.style.overflow = ''
-        iOSDebugLog('warning', '🚨 iPhone OVERLAY HIDDEN - Native scroll restored', 'TimelinePage')
-      } else if (scroller) {
-        // Otros dispositivos: Restaurar #scroll-root
+      // Restore scroll when overlay is hidden
+      document.body.style.overflow = ''
+      document.documentElement.style.overflow = ''
+      if (scroller) {
         scroller.style.overflowY = 'auto'
-        iOSDebugLog('warning', '🚨 OVERLAY NOW HIDDEN - Scroll reactivated (CRITICAL TRANSITION)', 'TimelinePage', {
-          scrollerElement: !!scroller,
-          scrollerOverflow: scroller.style.overflowY,
-          documentOverflow: document.documentElement.style.overflowY,
-          bodyOverflow: document.body.style.overflowY
-        })
       }
     }
   }, [overlayVisible])
 
   const handleOverlaySubmit = async (e?: React.FormEvent) => {
     if (e) e.preventDefault()
-    
-    iOSDebugLog('info', 'Password submit initiated', 'TimelinePage', { 
-      overlayVisible, inputPassLength: inputPass.length 
-    })
-    
+
     try {
       const res = await fetch('/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ pass: inputPass })
       })
-      
-      iOSDebugLog('info', `Password verification response: ${res.status}`, 'TimelinePage')
-      
+
       if (res.ok) {
         setOverlayError('')
         setFadeToBlack(true)
-        
-        iOSDebugLog('info', 'Password correct - starting fade to black', 'TimelinePage')
-        
+
         setTimeout(() => {
-          try { 
-            localStorage.setItem('access-granted', '1') 
-            iOSDebugLog('info', 'localStorage access-granted set', 'TimelinePage')
+          try {
+            localStorage.setItem('access-granted', '1')
           } catch (e) {
-            iOSDebugLog('error', `localStorage failed: ${e}`, 'TimelinePage')
+            console.warn('localStorage failed:', e)
           }
-          
-          iOSDebugLog('warning', 'About to hide overlay - CRITICAL POINT', 'TimelinePage')
+
           emergencyLog('warn', 'About to set overlayVisible to false - showing main content')
           setOverlayVisible(false)
           emergencyLog('info', 'overlayVisible set to false')
-          
-          // iPhone-específico: Reactivación inmediata sin requestAnimationFrame
-          const isCurrentIPhone = /iPhone/.test(navigator.userAgent) && !(window as any).MSStream
-          
-          if (isCurrentIPhone) {
-            // iPhone: Reactivación inmediata sin delays
-            iOSDebugLog('dom', 'iPhone: Immediate native document scroll reactivation', 'TimelinePage')
-            document.documentElement.style.overflow = ''
-            document.body.style.overflow = ''
-            iOSDebugLog('info', 'iPhone: Scroll reactivation completed immediately', 'TimelinePage')
-          } else {
-            // Otros dispositivos: Lógica original con requestAnimationFrame
-            requestAnimationFrame(() => {
-              iOSDebugLog('dom', 'Reactivating scroll after overlay hidden', 'TimelinePage')
-              document.documentElement.style.overflowY = ''
-              document.body.style.overflowY = ''
-              window.dispatchEvent(new Event('scroll'))
-              iOSDebugLog('info', 'Scroll reactivation completed', 'TimelinePage')
-            })
-          }
-        }, 1000) // Mantener fade 1s completo
+
+          // UNIFIED: Standard scroll reactivation for all devices
+          requestAnimationFrame(() => {
+            document.documentElement.style.overflowY = ''
+            document.body.style.overflowY = ''
+            window.dispatchEvent(new Event('scroll'))
+          })
+        }, 1000)
       } else {
         setOverlayError('Contraseña incorrecta')
         setIsShakingOverlay(true)
@@ -850,9 +718,7 @@ export default function TimelinePage() {
 
   // Render debugging - only if window exists
   if (typeof window !== 'undefined') {
-    iOSDebugLog('info', '🎨 RENDER: Component rendering', 'TimelinePage', {
-      hasMounted
-    })
+    // Debug logging removed for unified behavior
   }
 
   // Emergency log before render
@@ -863,7 +729,7 @@ export default function TimelinePage() {
 
   return (
     <div className="bg-ivory text-midnight overflow-x-hidden relative">
-      {/* iPhone blocking overlay - Fixed background and perfect centering */}
+      {/* Password overlay - Fixed background and perfect centering */}
       
       {/* Overlay inline SSR (antes del montaje) para evitar FOUC */}
       {!hasMounted && (
@@ -892,7 +758,7 @@ export default function TimelinePage() {
                     <button
                       type="button"
                       onClick={() => setShowPassword((v) => !v)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-midnight/60 hover:text-midnight active:scale-95 hover:scale-110 transition-all focus:outline-none"
+                      className="absolute right-3 top-1/2 text-midnight/60 hover:text-midnight focus:outline-none"
                       aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
                     >
                       {showPassword ? (
@@ -904,10 +770,10 @@ export default function TimelinePage() {
                   </div>
                   <button
                     type="button"
-                    className="ml-2 bg-terracotta text-ivory rounded-full w-12 h-12 flex items-center justify-center active:scale-95 hover:scale-110 transition-transform focus:outline-none"
+                    className="ml-2 bg-terracotta text-ivory rounded-full w-12 h-12 flex items-center justify-center focus:outline-none"
                     aria-label="Entrar"
                   >
-                    <Heart className="w-6 h-6 -ml-1 hover:scale-125 transition-transform" />
+                    <Heart className="w-6 h-6 -ml-1" />
                   </button>
                 </div>
               </div>
@@ -918,11 +784,7 @@ export default function TimelinePage() {
           </div>
           <style jsx>{`
             @keyframes shakeX {
-              0%, 100% { transform: translateX(0); }
-              20% { transform: translateX(-10px); }
-              40% { transform: translateX(10px); }
-              60% { transform: translateX(-8px); }
-              80% { transform: translateX(8px); }
+              /* Shake animation disabled for iOS compatibility */
             }
             .animate-shake-x { animation: shakeX 0.6s ease; }
           `}</style>
@@ -963,7 +825,7 @@ export default function TimelinePage() {
                     <button
                       type="button"
                       onClick={() => setShowPassword((v) => !v)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-midnight/60 hover:text-midnight active:scale-95 hover:scale-110 transition-all focus:outline-none"
+                      className="absolute right-3 top-1/2 text-midnight/60 hover:text-midnight focus:outline-none"
                       aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
                     >
                       {showPassword ? (
@@ -976,10 +838,10 @@ export default function TimelinePage() {
                   {/* Botón circular */}
                   <button
                     type="submit"
-                    className="ml-2 bg-terracotta text-ivory rounded-full w-12 h-12 flex items-center justify-center active:scale-95 hover:scale-110 transition-transform focus:outline-none"
+                    className="ml-2 bg-terracotta text-ivory rounded-full w-12 h-12 flex items-center justify-center focus:outline-none"
                     aria-label="Entrar"
                   >
-                    <Heart className="w-6 h-6 -ml-1 hover:scale-125 transition-transform" />
+                    <Heart className="w-6 h-6 -ml-1" />
                   </button>
                 </div>
               </div>
@@ -992,11 +854,7 @@ export default function TimelinePage() {
           {/* Animaciones locales */}
           <style jsx>{`
             @keyframes shakeX {
-              0%, 100% { transform: translateX(0); }
-              20% { transform: translateX(-10px); }
-              40% { transform: translateX(10px); }
-              60% { transform: translateX(-8px); }
-              80% { transform: translateX(8px); }
+              /* Shake animation disabled for iOS compatibility */
             }
             .animate-shake-x { animation: shakeX 0.6s ease; }
           `}</style>
@@ -1076,7 +934,8 @@ export default function TimelinePage() {
                   style={{
                     top: '50%',
                     left: '20px',
-                    transform: 'translateY(-50%)',
+                    top: '50%',
+                    marginTop: '-25%',
                     zIndex: 101
                   }}
                 >
@@ -1090,7 +949,8 @@ export default function TimelinePage() {
                   style={{
                     top: '50%',
                     right: '20px',
-                    transform: 'translateY(-50%)',
+                    top: '50%',
+                    marginTop: '-25%',
                     zIndex: 101
                   }}
                 >
@@ -1205,7 +1065,8 @@ export default function TimelinePage() {
                     style={{
                       top: '50%',
                       left: '20px',
-                      transform: 'translateY(-50%)',
+                      top: '50%',
+                    marginTop: '-25%',
                       zIndex: 101
                     }}
                   >
@@ -1219,7 +1080,8 @@ export default function TimelinePage() {
                     style={{
                       top: '50%',
                       right: '20px',
-                      transform: 'translateY(-50%)',
+                      top: '50%',
+                    marginTop: '-25%',
                       zIndex: 101
                     }}
                   >
@@ -1719,26 +1581,16 @@ export default function TimelinePage() {
             <button 
               onClick={() => {
                 setShowVideo(true)
-                // iPhone: Scroll inmediato sin animación
-                const isCurrentIPhone = /iPhone/.test(navigator.userAgent) && !(window as any).MSStream
-                
-                if (isCurrentIPhone) {
-                  // iPhone: Scroll inmediato para evitar animaciones complejas
+                // UNIFIED: Standard smooth scroll for all devices
+                setTimeout(() => {
                   window.scrollBy({
                     top: 160,
-                    behavior: 'auto'  // Sin animación en iPhone
-                  })
-                } else {
-                  // Otros dispositivos: animación original
-                  setTimeout(() => {
-                    window.scrollBy({
-                      top: 160,
-                      behavior: 'smooth'
+                    behavior: 'smooth'
                     })
                   }, 750)
                 }
               }}
-              className="bg-terracotta hover:bg-terracotta/90 text-ivory px-8 py-4 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center gap-2 mx-auto"
+              className="bg-terracotta hover:bg-terracotta/90 text-ivory px-8 py-4 rounded-full font-semibold shadow-lg flex items-center gap-2 mx-auto"
             >
               <Video className="w-6 h-6" />
               Ver Video

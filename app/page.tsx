@@ -724,15 +724,46 @@ export default function TimelinePage() {
     <div className="bg-ivory text-midnight overflow-x-hidden relative">
       {/* Password overlay - Fixed background and perfect centering */}
       
-      {/* Overlay inline SSR (antes del montaje) para evitar FOUC */}
+      {/* Overlay inline SSR (antes del montaje) para evitar FOUC - también con viewport dimensions */}
       {!hasMounted && (
-        <div className={`fixed inset-0 z-[1000] ${fadeToBlack ? 'pointer-events-none' : ''}`}>
+        <div 
+          className={`fixed z-[1000] ${fadeToBlack ? 'pointer-events-none' : ''}`}
+          style={{ 
+            top: 0, 
+            left: 0, 
+            width: '100vw', 
+            height: '100vh' 
+          }}
+        >
           <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url('/a12.jpg')` }}
+            className="absolute bg-cover bg-center"
+            style={{ 
+              backgroundImage: `url('/a12.jpg')`,
+              top: 0, 
+              left: 0, 
+              width: '100%', 
+              height: '100%' 
+            }}
           />
-          <div className="absolute inset-0 bg-[linear-gradient(to_bottom_right,_#E2A17A,_#BB8269,_#936357,_#432534)] opacity-90" />
-          <div className="absolute inset-0 bg-black transition-opacity duration-1000" style={{ opacity: fadeToBlack ? 1 : 0.1 }} />
+          <div 
+            className="absolute bg-[linear-gradient(to_bottom_right,_#E2A17A,_#BB8269,_#936357,_#432534)] opacity-90" 
+            style={{ 
+              top: 0, 
+              left: 0, 
+              width: '100%', 
+              height: '100%' 
+            }}
+          />
+          <div 
+            className="absolute bg-black transition-opacity duration-1000" 
+            style={{ 
+              opacity: fadeToBlack ? 1 : 0.1,
+              top: 0, 
+              left: 0, 
+              width: '100%', 
+              height: '100%' 
+            }} 
+          />
           <div className="relative z-10 w-full h-full flex items-center justify-center px-6 transition-opacity duration-1000" style={{ opacity: fadeToBlack ? 0 : 1 }}>
             <form
               onSubmit={(e) => { e.preventDefault() }}
@@ -783,17 +814,49 @@ export default function TimelinePage() {
           `}</style>
         </div>
       )}
+      {/* SOLUCION: Usar dimensiones de viewport en lugar de inset-0 para evitar espacio extra */}
       {overlayVisible && hasMounted && createPortal((
-        <div className={`fixed inset-0 z-[1000] ${fadeToBlack ? 'pointer-events-none' : ''}`}>
+        <div 
+          className={`fixed z-[1000] ${fadeToBlack ? 'pointer-events-none' : ''}`}
+          style={{ 
+            top: 0, 
+            left: 0, 
+            width: '100vw', 
+            height: '100vh' 
+          }}
+        >
           {/* Fondo imagen adaptativo */}
           <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url('/a12.jpg')` }}
+            className="absolute bg-cover bg-center"
+            style={{ 
+              backgroundImage: `url('/a12.jpg')`,
+              top: 0, 
+              left: 0, 
+              width: '100%', 
+              height: '100%' 
+            }}
           />
           {/* Gradiente como en la sección final */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_bottom_right,_#E2A17A,_#BB8269,_#936357,_#432534)] opacity-90" />
+          <div 
+            className="absolute bg-[linear-gradient(to_bottom_right,_#E2A17A,_#BB8269,_#936357,_#432534)] opacity-90" 
+            style={{ 
+              top: 0, 
+              left: 0, 
+              width: '100%', 
+              height: '100%' 
+            }}
+          />
           {/* Capa negra con fade de 1s completo */}
-          <div className="absolute inset-0 bg-black transition-opacity duration-1000" style={{ opacity: fadeToBlack ? 1 : 0.1 }} />
+          <div 
+            className="absolute bg-black transition-opacity duration-1000" 
+            style={{ 
+              opacity: fadeToBlack ? 1 : 0.1,
+              top: 0, 
+              left: 0, 
+              width: '100%', 
+              height: '100%' 
+            }} 
+          />
 
           {/* Contenido central */}
           <div className="relative z-10 w-full h-full flex items-center justify-center px-6 transition-opacity duration-1000" style={{ opacity: fadeToBlack ? 0 : 1 }}>

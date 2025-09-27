@@ -17,9 +17,11 @@ export default function FixedZoom() {
       if (fixedLayout) {
         fixedLayout.style.transform = `scale(${newScale})`
         
-        // Ajustar la altura del body para evitar scroll innecesario
+        // Ajustar la altura del body para permitir scroll vertical cuando sea necesario
         const scaledHeight = fixedLayout.scrollHeight * newScale
-        document.body.style.height = `${scaledHeight}px`
+        document.body.style.minHeight = `${scaledHeight}px`
+        // Permitir que el body crezca si el contenido es más alto
+        document.body.style.height = 'auto'
       }
       
       setScale(newScale)

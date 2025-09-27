@@ -263,9 +263,13 @@ export default function TimelinePage() {
         scroller.style.overflowY = 'hidden'
       }
     } else {
-      // Restore scroll when overlay is hidden
-      document.body.style.overflow = ''
-      document.documentElement.style.overflow = ''
+      // Restore scroll when overlay is hidden - explicitly allow vertical scroll
+      document.body.style.overflow = 'visible'
+      document.body.style.overflowX = 'hidden'
+      document.body.style.overflowY = 'auto'
+      document.documentElement.style.overflow = 'visible'
+      document.documentElement.style.overflowX = 'hidden'
+      document.documentElement.style.overflowY = 'auto'
       if (scroller) {
         scroller.style.overflowY = 'auto'
       }

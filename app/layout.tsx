@@ -34,6 +34,7 @@ export default function RootLayout({
             /* Sistema de zoom fijo - CSS base */
             html {
               overflow-x: hidden;
+              overflow-y: auto;
               margin: 0;
               padding: 0;
             }
@@ -42,6 +43,7 @@ export default function RootLayout({
               margin: 0;
               padding: 0;
               overflow-x: hidden;
+              overflow-y: auto;
               width: 100vw;
               font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
               -webkit-font-smoothing: antialiased;

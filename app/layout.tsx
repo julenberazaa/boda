@@ -59,8 +59,12 @@ export default function RootLayout({
         }} />
       </head>
       <body>
-        <div id="fixed-layout">
-          {children}
+        <div id="fixed-layout-wrapper" style={{ overflow: 'hidden', position: 'relative' }}>
+          <div id="scroll-root" style={{ overflow: 'auto', height: '100vh' }}>
+            <div id="fixed-layout">
+              {children}
+            </div>
+          </div>
         </div>
         <FixedZoom />
         <EmergencyDebug />

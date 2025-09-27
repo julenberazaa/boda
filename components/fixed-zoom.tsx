@@ -13,35 +13,44 @@ export default function FixedZoom() {
       const newScale = windowWidth / DESIGN_WIDTH
       
       // Aplicar el factor de escala al contenedor
+      const wrapper = document.getElementById('fixed-layout-wrapper')
       const fixedLayout = document.getElementById('fixed-layout')
-      if (fixedLayout) {
+      const scrollRoot = document.getElementById('scroll-root')
+      if (wrapper && fixedLayout && scrollRoot) {
         fixedLayout.style.transform = `scale(${newScale})`
-        
-        // SOLUCION: Obtener altura sin escalar y aplicar escala manualmente
-        // Temporal: remover transform para obtener altura real
+
+        // Obtener altura sin escalar
         const originalTransform = fixedLayout.style.transform
         fixedLayout.style.transform = ''
-        
         const unscaledHeight = fixedLayout.scrollHeight
-        
-        // Restaurar transform
         fixedLayout.style.transform = originalTransform
+
+        // Calcular altura escalada real
+        const scaledHeight = unscaledHeight * newScale
         
-        // Aplicar escala manualmente a la altura real
-        const correctScaledHeight = unscaledHeight * newScale
+        // Configurar el wrapper y scroll root para el scroll correcto
+        wrapper.style.height = `${window.innerHeight}px`
+        scrollRoot.style.height = `${window.innerHeight}px`
         
-        console.log('🔧 CORRECCIÓN FixedZoom:', {
-          'altura sin escalar': unscaledHeight,
-          'escala aplicada': newScale,
-          'altura correcta escalada': correctScaledHeight,
-          'altura de ventana': window.innerHeight,
-          'altura anterior (incorrecta)': fixedLayout.getBoundingClientRect().height
+        // El contenido escalado debe tener la altura correcta dentro del scroll container
+        const contentHeight = scaledHeight
+        fixedLayout.style.height = `${unscaledHeight}px` // Mantener altura original para el contenido
+        
+        // Configurar el scroll root para que tenga la altura correcta de scroll
+        scrollRoot.style.overflowY = 'auto'
+        scrollRoot.scrollTop = 0 // Reset scroll position
+        
+        console.log('📏 NUEVO SISTEMA SCROLL:', {
+          'altura original': unscaledHeight,
+          'altura escalada': scaledHeight,
+          'altura ventana': window.innerHeight,
+          'escala': newScale,
+          'necesita scroll': scaledHeight > window.innerHeight
         })
 
-        const finalHeight = Math.max(window.innerHeight, correctScaledHeight)
-
-        document.body.style.minHeight = `${finalHeight}px`
-        document.body.style.height = `${finalHeight}px`
+        // El body ya no necesita altura específica
+        document.body.style.height = '100vh'
+        document.body.style.minHeight = '100vh'
       }
       
       setScale(newScale)

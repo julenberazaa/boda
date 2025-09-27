@@ -73,17 +73,13 @@ export default function TimelinePage() {
       history.scrollRestoration = 'manual'
     }
 
-    // Standard scroll reset for all devices - iOS-safe approach
-    window.scrollTo(0, 0)
-    // Safe DOM manipulation - avoid null reference errors
-    if (document.documentElement) {
-      document.documentElement.scrollTop = 0
+    // Standard scroll reset for all devices - usando scroll-root
+    const scroller = document.getElementById('scroll-root')
+    if (scroller) {
+      scroller.scrollTop = 0
+      scroller.scrollLeft = 0
     }
-    if (document.body) {
-      document.body.scrollTop = 0
-    }
-
-    // Standard scroll initialization for all devices
+    // Fallback para el scroll de ventana
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
 
     // Scroll control is managed by the overlayVisible useEffect - no need to block here
@@ -204,15 +200,24 @@ export default function TimelinePage() {
       observer.observe(item)
     })
 
-    // Unified scroll behavior - same for all platforms
+    // Unified scroll behavior - using scroll-root
     const handleScroll = () => {
       // Simplified scroll effects for universal compatibility
     }
 
-    window.addEventListener("scroll", handleScroll, { passive: true })
+    const scroller = document.getElementById('scroll-root')
+    if (scroller) {
+      scroller.addEventListener("scroll", handleScroll, { passive: true })
+    } else {
+      window.addEventListener("scroll", handleScroll, { passive: true })
+    }
 
     return () => {
-      window.removeEventListener("scroll", handleScroll)
+      if (scroller) {
+        scroller.removeEventListener("scroll", handleScroll)
+      } else {
+        window.removeEventListener("scroll", handleScroll)
+      }
       observer.disconnect()
     }
   }, [overlayVisible])
@@ -237,28 +242,23 @@ export default function TimelinePage() {
     } catch {}
   }, [hasMounted])
 
-  // UNIFIED: Scroll control for all devices
+  // UNIFIED: Scroll control for all devices - usando el nuevo sistema de scroll
   useEffect(() => {
     const scroller = document.getElementById('scroll-root') as HTMLElement | null
 
     if (overlayVisible) {
       // Block scroll when overlay is visible
-      document.body.style.overflow = 'hidden'
-      document.documentElement.style.overflow = 'hidden'
       if (scroller) {
         scroller.style.overflowY = 'hidden'
       }
+      document.body.style.overflow = 'hidden'
     } else {
-      // Restore scroll when overlay is hidden - explicitly allow vertical scroll
-      document.body.style.overflow = 'visible'
-      document.body.style.overflowX = 'hidden'
-      document.body.style.overflowY = 'auto'
-      document.documentElement.style.overflow = 'visible'
-      document.documentElement.style.overflowX = 'hidden'
-      document.documentElement.style.overflowY = 'auto'
+      // Restore scroll when overlay is hidden - usar el scroll-root
       if (scroller) {
         scroller.style.overflowY = 'auto'
+        scroller.style.height = '100vh'
       }
+      document.body.style.overflow = 'hidden' // El body ya no scrollea, solo scroll-root
     }
   }, [overlayVisible])
 
@@ -287,11 +287,14 @@ export default function TimelinePage() {
           setOverlayVisible(false)
           emergencyLog('info', 'overlayVisible set to false')
 
-          // Standard scroll reactivation - universal approach
+          // Standard scroll reactivation - using scroll-root
           requestAnimationFrame(() => {
-            document.documentElement.style.overflowY = ''
-            document.body.style.overflowY = ''
-            window.dispatchEvent(new Event('scroll'))
+            const scroller = document.getElementById('scroll-root')
+            if (scroller) {
+              scroller.dispatchEvent(new Event('scroll'))
+            } else {
+              window.dispatchEvent(new Event('scroll'))
+            }
           })
         }, 1000)
       } else {
@@ -1633,12 +1636,20 @@ export default function TimelinePage() {
             <button
               onClick={() => {
                 setShowVideo(true)
-                // UNIFIED: Standard smooth scroll for all devices
+                // UNIFIED: Standard smooth scroll using scroll-root
                 setTimeout(() => {
-                  window.scrollBy({
-                    top: 160,
-                    behavior: 'smooth'
-                  })
+                  const scroller = document.getElementById('scroll-root')
+                  if (scroller) {
+                    scroller.scrollBy({
+                      top: 160,
+                      behavior: 'smooth'
+                    })
+                  } else {
+                    window.scrollBy({
+                      top: 160,
+                      behavior: 'smooth'
+                    })
+                  }
                 }, 750)
               }}
               className="bg-terracotta hover:bg-terracotta/90 text-ivory px-8 py-4 rounded-full font-semibold shadow-lg flex items-center gap-2 mx-auto"

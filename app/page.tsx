@@ -77,7 +77,7 @@ export default function TimelinePage() {
     window.scrollTo(0, 0)
     document.documentElement.scrollTop = 0
     document.body.scrollTop = 0
-    
+
     // Standard scroll initialization for all devices
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
 
@@ -95,10 +95,9 @@ export default function TimelinePage() {
         document.body.style.overflowY = prevBodyOverflowY || ''
       }
     }, 1000)
-      
-      return () => clearTimeout(unlock)
-    }
-  }, [])
+
+    return () => clearTimeout(unlock)
+  }, [hasMounted])
 
   // HARD CUT: La lógica de corte de scroll ahora está en FixedZoom.
   // El documento se corta físicamente a la altura del video, eliminando scroll extra.

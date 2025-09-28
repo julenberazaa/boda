@@ -193,17 +193,6 @@ export default function RootLayout({
                   line-height: 15px !important;
                 }
 
-                /* HERO SECTION EXCEPTIONS - Override for hero text */
-                section[style*="minHeight: '480px'"] h1 {
-                  font-size: 16px !important;
-                  line-height: 18px !important;
-                }
-
-                section[style*="minHeight: '480px'"] p {
-                  font-size: 12px !important;
-                  line-height: 14px !important;
-                }
-
                 /* FORCE ALL ICONS/IMAGES TO BE SMALL */
                 svg {
                   width: 12px !important;
@@ -582,6 +571,17 @@ export default function RootLayout({
             @media (max-width: 768px) {
               section[style*="minHeight: '480px'"] {
                 min-height: 524px !important;
+              }
+
+              /* HERO TEXT OVERRIDES - Must come AFTER aggressive CSS to have priority */
+              section[style*="minHeight: '480px'"] .relative.z-10 .inline-block h1.text-7xl.font-bold.font-elegant {
+                font-size: 16px !important;
+                line-height: 18px !important;
+              }
+
+              section[style*="minHeight: '480px'"] .relative.z-10 .inline-block p.text-xl.hero-intro-text {
+                font-size: 12px !important;
+                line-height: 14px !important;
               }
             }
           `

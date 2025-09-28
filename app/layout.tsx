@@ -274,9 +274,59 @@ export default function RootLayout({
                   margin-right: 10% !important;
                 }
 
-                /* Tuenti chat header title */
+                /* Triangle-bubble gap reduction to 4px */
+                .tuenti-message-bubble::before {
+                  margin-top: 4px !important;
+                  margin-bottom: 4px !important;
+                }
+
+                /* Compact header area (blue background) */
+                .tc-header {
+                  padding: 4px 8px !important;
+                  margin: 0 !important;
+                  min-height: auto !important;
+                  height: auto !important;
+                }
+
                 .tc-title {
                   font-size: 10px !important;
+                  margin: 0 !important;
+                  padding: 0 !important;
+                  line-height: 1.2 !important;
+                }
+
+                .tc-window-controls {
+                  padding: 0 !important;
+                  margin: 0 !important;
+                }
+
+                .tc-btn {
+                  padding: 2px 4px !important;
+                  margin: 0 1px !important;
+                  font-size: 8px !important;
+                  line-height: 1 !important;
+                }
+
+                .tc-status {
+                  margin: 0 !important;
+                  width: 6px !important;
+                  height: 6px !important;
+                }
+
+                /* Remove excess whitespace below chat - tight body */
+                .tc-body {
+                  padding: 6px !important;
+                  margin: 0 !important;
+                  min-height: auto !important;
+                  height: auto !important;
+                  padding-bottom: 8px !important;
+                }
+
+                /* Tuenti chat container - no excess height */
+                .tuenti-chat {
+                  height: auto !important;
+                  min-height: auto !important;
+                  overflow: visible !important;
                 }
               }
             }

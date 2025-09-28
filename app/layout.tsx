@@ -392,22 +392,22 @@ export default function RootLayout({
                   display: none !important;
                 }
 
-                /* New triangles - same size as old ones (8px border) */
+                /* New triangles - smaller size (4px border) */
                 .tuenti-message.incoming .tuenti-message-bubble::after {
                   position: absolute !important;
                   content: '' !important;
-                  top: calc(50% - 2px) !important;
+                  top: calc(50% + 2px) !important;
                   transform: translateY(-50%) !important;
-                  left: -8px !important;
+                  left: -4px !important;
                   width: 0 !important;
                   height: 0 !important;
                   border-style: solid !important;
-                  border-width: 8px 8px 8px 0 !important;
+                  border-width: 4px 4px 4px 0 !important;
                   border-color: transparent #0096D6 transparent transparent !important;
                 }
 
-                /* Hide the new triangle for last message (keep old one) */
-                .tuenti-chat .tc-body .tuenti-message:nth-child(4).tuenti-message.outgoing .tuenti-message-bubble::before {
+                /* Hide only the LARGE triangle for last message (keep original small one) */
+                .tuenti-chat .tc-body .tuenti-message:nth-child(4).tuenti-message.outgoing .tuenti-message-bubble::after {
                   display: none !important;
                 }
 
@@ -471,22 +471,22 @@ export default function RootLayout({
                   right: 12px !important;
                 }
 
-                /* MOBILE-ONLY triangle positioning - NEW triangles with better positioning */
+                /* MOBILE-ONLY triangle positioning - CORRECTED positioning */
                 .tuenti-chat .tc-body .tuenti-message:nth-child(1).tuenti-message.incoming .tuenti-message-bubble::after {
-                  top: calc(50% - 20px) !important;
-                  left: -6px !important;
+                  top: calc(50% + 4px) !important;
+                  left: -3px !important;
                   transform: translateY(-50%) !important;
                 }
 
                 .tuenti-chat .tc-body .tuenti-message:nth-child(2).tuenti-message.incoming .tuenti-message-bubble::after {
-                  top: calc(50% - 18px) !important;
-                  left: -6px !important;
+                  top: calc(50% + 4px) !important;
+                  left: -3px !important;
                   transform: translateY(-50%) !important;
                 }
 
                 .tuenti-chat .tc-body .tuenti-message:nth-child(3).tuenti-message.incoming .tuenti-message-bubble::after {
-                  top: calc(50% - 16px) !important;
-                  left: -6px !important;
+                  top: calc(50% + 4px) !important;
+                  left: -3px !important;
                   transform: translateY(-50%) !important;
                 }
               }

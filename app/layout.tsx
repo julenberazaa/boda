@@ -248,6 +248,34 @@ export default function RootLayout({
                 padding: 1px !important; /* Contenedores de imagen aún más pequeños */
               }
 
+              /* CAROUSEL SPACING CONSISTENCY - Match Tuenti structure */
+              /* Make image carousels have same spacing as Tuenti chat */
+              .timeline-item div.col-span-6 div.p-6.flex.justify-center {
+                /* Remove flex centering that adds extra space */
+                display: block !important;
+                justify-content: unset !important;
+              }
+
+              /* Remove extra wrapper spacing from image containers */
+              .timeline-item div.col-span-6 div.p-6 div.relative[style*="width: 96%"] {
+                width: 100% !important; /* Remove 96% constraint that adds margins */
+                margin: 0 !important;
+                padding: 0 !important;
+              }
+
+              /* Standardize image container dimensions */
+              .timeline-item div.col-span-6 div.p-6 div[style*="height: calc(384px"] {
+                margin: 0 !important;
+                padding: 0 !important;
+              }
+
+              /* Ensure all carousel containers match Tuenti's clean structure */
+              .timeline-item div.col-span-6 div.p-6 {
+                /* Match Tuenti's simple container */
+                display: block !important;
+                justify-content: unset !important;
+              }
+
               /* Timeline images */
               .timeline-mobile-container img {
                 width: 100% !important;

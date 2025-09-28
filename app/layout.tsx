@@ -432,6 +432,7 @@ export default function RootLayout({
                 /* Mobile-only Tuenti section layout override */
                 #conocidos-2010 {
                   gap: 0 !important;
+                  margin-top: 12px !important;
                 }
 
                 #conocidos-2010 > div:first-child {
@@ -442,6 +443,32 @@ export default function RootLayout({
                 #conocidos-2010 > div:last-child {
                   grid-column: span 5 !important;
                   padding-left: 1rem !important;
+                }
+
+                /* Plantas decorativas - tamaño reducido y más en las esquinas para móviles */
+                .absolute.inset-0.pointer-events-none.z-10 img {
+                  width: 96px !important;
+                  height: 96px !important;
+                }
+
+                .absolute.inset-0.pointer-events-none.z-10 img:nth-child(1) {
+                  top: 12px !important;
+                  left: 12px !important;
+                }
+
+                .absolute.inset-0.pointer-events-none.z-10 img:nth-child(2) {
+                  top: 12px !important;
+                  right: 12px !important;
+                }
+
+                .absolute.inset-0.pointer-events-none.z-10 img:nth-child(3) {
+                  bottom: 12px !important;
+                  left: 12px !important;
+                }
+
+                .absolute.inset-0.pointer-events-none.z-10 img:nth-child(4) {
+                  bottom: 12px !important;
+                  right: 12px !important;
                 }
 
                 /* MOBILE-ONLY triangle positioning - NEW triangles with better positioning */

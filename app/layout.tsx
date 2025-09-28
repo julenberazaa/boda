@@ -243,37 +243,25 @@ export default function RootLayout({
                 padding: 2px !important; /* De 24px (p-6) → 2px */
               }
 
-              /* Content wrapper additional padding reduction */
-              .timeline-item div.col-span-6 div.p-6.flex.justify-center {
-                padding: 1px !important; /* Contenedores de imagen aún más pequeños */
-              }
-
-              /* CAROUSEL SPACING CONSISTENCY - Match Tuenti structure */
-              /* Make image carousels have same spacing as Tuenti chat */
-              .timeline-item div.col-span-6 div.p-6.flex.justify-center {
-                /* Remove flex centering that adds extra space */
+              /* CAROUSEL SPACING CONSISTENCY - Single unified approach */
+              /* All image/media containers get consistent structure */
+              .timeline-item div[class*="col-span"] div.p-6 {
+                padding: 1px !important;
                 display: block !important;
                 justify-content: unset !important;
               }
 
-              /* Remove extra wrapper spacing from image containers */
-              .timeline-item div.col-span-6 div.p-6 div.relative[style*="width: 96%"] {
-                width: 100% !important; /* Remove 96% constraint that adds margins */
+              /* Remove extra wrapper spacing - width constraint */
+              .timeline-item div.p-6 div.relative[style*="width: 96%"] {
+                width: 100% !important;
                 margin: 0 !important;
                 padding: 0 !important;
               }
 
-              /* Standardize image container dimensions */
-              .timeline-item div.col-span-6 div.p-6 div[style*="height: calc(384px"] {
+              /* Remove height container extra spacing */
+              .timeline-item div.p-6 div[style*="height: calc(384px"] {
                 margin: 0 !important;
                 padding: 0 !important;
-              }
-
-              /* Ensure all carousel containers match Tuenti's clean structure */
-              .timeline-item div.col-span-6 div.p-6 {
-                /* Match Tuenti's simple container */
-                display: block !important;
-                justify-content: unset !important;
               }
 
               /* Timeline images */
@@ -478,14 +466,29 @@ export default function RootLayout({
                   margin-top: 24px !important;
                 }
 
+                /* BALANCED MOBILE LAYOUT - All timeline sections */
+                /* Better distribution: 40% media, 60% text */
+                .timeline-item > div:first-child,
                 #conocidos-2010 > div:first-child {
-                  grid-column: span 7 !important;
-                  padding-right: 1rem !important;
+                  grid-column: span 4 !important;  /* 4/12 = 33% */
+                  padding-right: 2px !important;
                 }
 
+                .timeline-item > div:last-child,
                 #conocidos-2010 > div:last-child {
-                  grid-column: span 5 !important;
-                  padding-left: 1rem !important;
+                  grid-column: span 8 !important;  /* 8/12 = 67% para texto */
+                  padding-left: 2px !important;
+                }
+
+                /* Apply same distribution to all timeline sections */
+                section.timeline-item > div.col-span-6:first-child {
+                  grid-column: span 4 !important;
+                  padding-right: 2px !important;
+                }
+
+                section.timeline-item > div.col-span-6:last-child {
+                  grid-column: span 8 !important;
+                  padding-left: 2px !important;
                 }
 
                 /* Plantas decorativas - mucho más pequeñas y en las esquinas para móviles */

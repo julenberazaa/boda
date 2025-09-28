@@ -112,10 +112,19 @@ export default function RootLayout({
               h1.text-7xl.font-bold.mb-4.font-elegant,
               .inline-block h1.text-7xl,
               h1.font-elegant {
-                font-size: 16px !important;
-                line-height: 18px !important;
+                font-size: 18px !important;
+                line-height: 20px !important;
                 margin-bottom: 6px !important;
                 font-weight: 700 !important;
+              }
+
+              /* HERO SECTION TEXT - Target the paragraph */
+              p.text-xl.max-w-3xl.mx-auto.font-manuscript.hero-intro-text,
+              .inline-block p.text-xl,
+              p.hero-intro-text {
+                font-size: 14px !important;
+                line-height: 16px !important;
+                margin-bottom: 8px !important;
               }
 
               /* TIMELINE SECTIONS - Target real classes */
@@ -167,6 +176,26 @@ export default function RootLayout({
                 font-size: 10px !important;
                 line-height: 11px !important;
                 margin-bottom: 2px !important;
+              }
+
+              /* TIMELINE HISTORIA SECTIONS - Target real elements */
+              /* Timeline titles: h3.text-5xl.font-script */
+              h3.text-5xl.font-script,
+              .timeline-item h3.text-5xl,
+              h3.font-script {
+                font-size: 14px !important;
+                line-height: 15px !important;
+                margin-bottom: 4px !important;
+                font-weight: 700 !important;
+              }
+
+              /* Timeline text paragraphs: p.text-xl.font-semibold */
+              p.text-xl.font-semibold.leading-relaxed.text-midnight\\/80.text-justify.font-manuscript,
+              .timeline-item p.text-xl.font-semibold,
+              .timeline-item p.font-manuscript {
+                font-size: 10px !important;
+                line-height: 11px !important;
+                margin-bottom: 4px !important;
               }
 
               /* Timeline images */

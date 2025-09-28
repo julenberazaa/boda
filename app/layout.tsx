@@ -437,34 +437,34 @@ export default function RootLayout({
                 /* ULTRA-HIGH SPECIFICITY: Override globals.css triangles for mobile */
                 /* Incoming messages (1st, 2nd, 3rd) - Override globals.css ::before */
                 body #main-content .tuenti-chat .tc-body .tuenti-message:nth-child(1).tuenti-message.incoming .tuenti-message-bubble::before {
-                  border: 4px solid transparent !important;
+                  border: 3px solid transparent !important;
                   border-right-color: #0096D6 !important;
-                  left: -4px !important;
-                  bottom: 8px !important;
+                  left: 4px !important;
+                  bottom: 4px !important;
                   border-left: 0 !important;
                 }
 
                 body #main-content .tuenti-chat .tc-body .tuenti-message:nth-child(2).tuenti-message.incoming .tuenti-message-bubble::before {
-                  border: 4px solid transparent !important;
+                  border: 3px solid transparent !important;
                   border-right-color: #0096D6 !important;
-                  left: -4px !important;
-                  bottom: 8px !important;
+                  left: 4px !important;
+                  bottom: 4px !important;
                   border-left: 0 !important;
                 }
 
                 body #main-content .tuenti-chat .tc-body .tuenti-message:nth-child(3).tuenti-message.incoming .tuenti-message-bubble::before {
-                  border: 4px solid transparent !important;
+                  border: 3px solid transparent !important;
                   border-right-color: #0096D6 !important;
-                  left: -4px !important;
+                  left: 4px !important;
                   bottom: 8px !important;
                   border-left: 0 !important;
                 }
 
                 /* Outgoing message (4th) - Keep only original triangle, ensure no duplicates */
                 body #main-content .tuenti-chat .tc-body .tuenti-message:nth-child(4).tuenti-message.outgoing .tuenti-message-bubble::after {
-                  border: 4px solid transparent !important;
+                  border: 3px solid transparent !important;
                   border-left-color: #0096D6 !important;
-                  right: -4px !important;
+                  right: 4px !important;
                   bottom: 8px !important;
                   border-right: 0 !important;
                 }

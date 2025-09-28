@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import './globals.css'
 // Simplified layout - no platform-specific components needed
 import EmergencyDebug from '@/components/emergency-debug'
-import MobileDebug from '@/components/mobile-debug'
 
 export const metadata: Metadata = {
   title: 'Boda J&M',
@@ -176,43 +175,67 @@ export default function RootLayout({
                 line-height: 9px !important;
               }
 
-              /* CSS FALLBACK MOBILE - Ultra aggressive */
+              /* MOBILE LAYOUT - Readable sizes */
               @media screen and (max-width: 768px) {
-                /* FORCE ALL TEXT TO BE TINY */
-                * {
-                  font-size: 6px !important;
-                  line-height: 7px !important;
+                /* Hero section */
+                .hero-mobile-container h1 {
+                  font-size: 20px !important;
+                  line-height: 22px !important;
+                  margin-bottom: 8px !important;
                 }
 
-                h1, h2, h3, h4, h5, h6 {
-                  font-size: 8px !important;
-                  line-height: 9px !important;
+                .hero-mobile-container p {
+                  font-size: 12px !important;
+                  line-height: 14px !important;
+                  margin-bottom: 12px !important;
                 }
 
-                /* FORCE ALL ELEMENTS TO BE TINY */
-                svg, img {
-                  width: 8px !important;
-                  height: 8px !important;
-                  max-width: 8px !important;
-                  max-height: 8px !important;
+                .hero-mobile-container svg {
+                  width: 16px !important;
+                  height: 16px !important;
                 }
 
-                /* OVERRIDE EVERYTHING */
-                .relative.z-10.text-center * {
-                  font-size: 6px !important;
+                /* Timeline grid layout */
+                .timeline-mobile-container {
+                  display: grid !important;
+                  grid-template-columns: 1fr 1fr !important;
+                  gap: 8px !important;
+                  padding: 8px !important;
+                  align-items: start !important;
                 }
 
-                /* Show CSS indicator */
-                body::before {
-                  content: "CSS MOBILE ACTIVE";
-                  position: fixed;
-                  top: 0;
-                  left: 0;
-                  background: blue;
-                  color: white;
-                  padding: 5px;
-                  z-index: 99999;
+                /* Timeline text sizes */
+                .timeline-mobile-container h2 {
+                  font-size: 14px !important;
+                  line-height: 16px !important;
+                  margin-bottom: 4px !important;
+                }
+
+                .timeline-mobile-container p {
                   font-size: 10px !important;
+                  line-height: 12px !important;
+                  margin-bottom: 2px !important;
+                }
+
+                /* Age circles */
+                .timeline-mobile-container .age-circle {
+                  width: 20px !important;
+                  height: 20px !important;
+                  font-size: 10px !important;
+                }
+
+                /* Year text */
+                .timeline-mobile-container .year-text {
+                  font-size: 9px !important;
+                  line-height: 10px !important;
+                }
+
+                /* Images in timeline */
+                .timeline-mobile-container img {
+                  width: 100% !important;
+                  height: auto !important;
+                  max-height: 100px !important;
+                  object-fit: cover !important;
                 }
               }
             }
@@ -220,7 +243,6 @@ export default function RootLayout({
         }} />
       </head>
       <body>
-        <MobileDebug />
         <div id="main-content">
           {children}
         </div>

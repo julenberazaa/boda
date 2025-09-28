@@ -16,66 +16,16 @@ export default function Hero() {
         }}
       />
 
-      {/* Mobile detection indicator */}
-      <div
-        style={{
-          position: 'absolute',
-          top: '50px',
-          right: '10px',
-          backgroundColor: isMobile ? 'lime' : 'red',
-          color: 'black',
-          padding: '5px',
-          fontSize: '12px',
-          fontWeight: 'bold',
-          zIndex: 10000,
-          border: '2px solid black'
-        }}
-      >
-        {isMobile ? 'MOBILE DETECTED' : 'DESKTOP MODE'}
-      </div>
-
-      <div className="relative z-10 text-center text-midnight px-4" data-aos="zoom-in">
-        <div
-          className={isMobile ? "" : "mb-4 md:mb-8"}
-          style={isMobile ? { marginBottom: '4px' } : {}}
-        >
-          <Heart
-            className={isMobile ? "mx-auto text-terracotta" : "md:w-16 md:h-16 mx-auto mb-2 md:mb-4 text-terracotta"}
-            style={isMobile ? {
-              width: '8px',
-              height: '8px',
-              marginBottom: '2px',
-              display: 'block',
-              margin: '0 auto 2px auto'
-            } : {}}
-          />
+<div className={`relative z-10 text-center text-midnight px-4 ${isMobile ? 'hero-mobile-container' : ''}`} data-aos="zoom-in">
+        <div className="mb-4 md:mb-8">
+          <Heart className="mx-auto mb-2 md:mb-4 text-terracotta md:w-16 md:h-16" />
         </div>
 
-        <h1
-          className={isMobile ? "font-playfair font-bold text-center" : "font-playfair md:text-6xl lg:text-8xl font-bold mb-4"}
-          style={isMobile ? {
-            fontSize: '12px',
-            lineHeight: '14px',
-            marginBottom: '4px',
-            fontWeight: '700',
-            textAlign: 'center'
-          } : {}}
-        >
+        <h1 className="font-playfair font-bold mb-4 md:text-6xl lg:text-8xl">
           Julen & Maitane
         </h1>
 
-        <p
-          className={isMobile ? "font-light text-center" : "md:text-xl lg:text-2xl font-light mb-8 max-w-2xl mx-auto"}
-          style={isMobile ? {
-            fontSize: '8px',
-            lineHeight: '10px',
-            marginBottom: '8px',
-            maxWidth: '200px',
-            fontWeight: '300',
-            textAlign: 'center',
-            margin: '0 auto 8px auto'
-          } : {}}
-        >
+        <p className="font-light mb-8 max-w-2xl mx-auto md:text-xl lg:text-2xl">
           Una historia de amor que comenzó con 7 años y culminará en 2025
         </p>
 

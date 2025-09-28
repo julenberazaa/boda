@@ -113,130 +113,54 @@ export default function TimelineSection({
           </div>
         </div>
 
-        {/* Mobile layout: inline styles only */}
-        {isMobile ? (
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: '3px',
-              padding: '3px',
-              margin: '0',
-              width: '100%',
-              boxSizing: 'border-box'
-            }}
-          >
-            {/* Columna de medios */}
-            <div style={{ order: isReversed ? 2 : 1, padding: '1px' }}>
-              <div style={{ position: 'relative', overflow: 'hidden', borderRadius: '4px' }}>
-                <Image
-                  src={imageUrl || "/placeholder.svg"}
-                  alt={`${title} - ${year}`}
-                  width={150}
-                  height={100}
-                  style={{
-                    width: '100%',
-                    height: 'auto',
-                    maxHeight: '60px',
-                    objectFit: 'cover',
-                    display: 'block'
-                  }}
-                />
+        {/* Mobile layout: simplified with CSS classes */}
+        <div className={`${isMobile ? 'timeline-mobile-container' : 'hidden'}`}>
+          {/* Columna de medios */}
+          <div className={isReversed ? 'order-2' : 'order-1'}>
+            <div className="relative overflow-hidden rounded-lg shadow-lg">
+              <Image
+                src={imageUrl || "/placeholder.svg"}
+                alt={`${title} - ${year}`}
+                width={200}
+                height={150}
+                className="w-full h-auto object-cover"
+              />
+            </div>
+            {icon && (
+              <div className="absolute -top-1 -right-1 w-4 h-4 bg-terracotta rounded-full flex items-center justify-center text-ivory text-xs">
+                {icon}
               </div>
-              {icon && (
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: '-2px',
-                    right: '-2px',
-                    width: '12px',
-                    height: '12px',
-                    backgroundColor: '#E67E5B',
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '6px',
-                    color: '#FFF8F5'
-                  }}
-                >
-                  {icon}
-                </div>
-              )}
+            )}
+          </div>
+
+          {/* Columna de contenido */}
+          <div className={isReversed ? 'order-1' : 'order-2'}>
+            {/* Header */}
+            <div className="flex items-center gap-2 mb-2">
+              <div className="age-circle bg-sage rounded-full flex items-center justify-center text-midnight font-bold">
+                {age}
+              </div>
+              <div>
+                <div className="year-text text-terracotta font-medium">{year}</div>
+                <div className="w-3 h-px bg-terracotta mt-1" />
+              </div>
             </div>
 
-            {/* Columna de contenido */}
-            <div style={{ order: isReversed ? 1 : 2, padding: '1px' }}>
-              {/* Header */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '2px', marginBottom: '2px' }}>
-                <div
-                  style={{
-                    width: '12px',
-                    height: '12px',
-                    backgroundColor: '#A8B5A0',
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '6px',
-                    fontWeight: 'bold',
-                    color: '#2C3E3F'
-                  }}
-                >
-                  {age}
-                </div>
-                <div>
-                  <div
-                    style={{
-                      fontSize: '6px',
-                      lineHeight: '7px',
-                      color: '#E67E5B',
-                      fontWeight: '500'
-                    }}
-                  >
-                    {year}
-                  </div>
-                  <div style={{ width: '4px', height: '1px', backgroundColor: '#E67E5B' }} />
-                </div>
-              </div>
+            {/* Título */}
+            <h2 className="font-playfair font-bold text-midnight mb-2">
+              {title}
+            </h2>
 
-              {/* Título */}
-              <h2
-                style={{
-                  fontSize: '8px',
-                  lineHeight: '9px',
-                  marginBottom: '2px',
-                  fontWeight: '700',
-                  color: '#2C3E3F',
-                  fontFamily: 'Playfair Display, serif'
-                }}
-              >
-                {title}
-              </h2>
-
-              {/* Contenido */}
-              <div style={{ fontSize: '6px', lineHeight: '7px', color: 'rgba(44, 62, 63, 0.8)' }}>
-                {content.split("\n").map((paragraph, i) => (
-                  <p
-                    key={i}
-                    style={{
-                      fontSize: '6px',
-                      lineHeight: '7px',
-                      marginBottom: '1px',
-                      textAlign: 'justify'
-                    }}
-                  >
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
+            {/* Contenido */}
+            <div className="text-midnight/80 leading-relaxed text-justify">
+              {content.split("\n").map((paragraph, i) => (
+                <p key={i} className="mb-1 last:mb-0">
+                  {paragraph}
+                </p>
+              ))}
             </div>
           </div>
-        ) : (
-          <div className="block md:hidden mobile-timeline-grid">
-            {/* Desktop fallback - keep existing */}
-          </div>
-        )}
+        </div>
       </div>
     </section>
   )

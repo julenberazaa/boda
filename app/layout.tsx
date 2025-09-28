@@ -58,10 +58,12 @@ export default function RootLayout({
               min-height: 100vh;
             }
 
-            /* MOBILE OVERRIDES - TARGETING REAL HTML ELEMENTS */
+            /* MOBILE OVERRIDES - MAXIMUM SPECIFICITY FOR HERO */
             @media (max-width: 767px) {
-              /* HERO SECTION - Override Tailwind classes directly */
-              .hero-mobile-container h1.font-playfair.font-bold.mb-4,
+              /* HERO SECTION - Ultra high specificity overrides */
+              section.relative.h-screen div.hero-mobile-container h1.font-playfair.font-bold.mb-4,
+              section.relative div.hero-mobile-container h1,
+              div.hero-mobile-container h1,
               .hero-mobile-container h1 {
                 font-size: 16px !important;
                 line-height: 18px !important;
@@ -69,7 +71,9 @@ export default function RootLayout({
                 font-weight: 700 !important;
               }
 
-              .hero-mobile-container p.font-light.mb-8,
+              section.relative.h-screen div.hero-mobile-container p.font-light.mb-8,
+              section.relative div.hero-mobile-container p,
+              div.hero-mobile-container p,
               .hero-mobile-container p {
                 font-size: 12px !important;
                 line-height: 14px !important;
@@ -85,6 +89,23 @@ export default function RootLayout({
                 min-height: 12px !important;
                 max-width: 12px !important;
                 max-height: 12px !important;
+              }
+
+              /* FALLBACK OVERRIDES - Direct targeting without class dependency */
+              section.relative.h-screen div.relative.z-10 h1,
+              section.relative.h-screen .relative.z-10 h1 {
+                font-size: 16px !important;
+                line-height: 18px !important;
+                margin-bottom: 6px !important;
+                font-weight: 700 !important;
+              }
+
+              section.relative.h-screen div.relative.z-10 p,
+              section.relative.h-screen .relative.z-10 p {
+                font-size: 12px !important;
+                line-height: 14px !important;
+                margin-bottom: 8px !important;
+                font-weight: 300 !important;
               }
 
               /* TIMELINE SECTIONS - Target real classes */
@@ -166,8 +187,8 @@ export default function RootLayout({
                 margin-bottom: 2px !important;
               }
 
-              /* ADDITIONAL MOBILE OVERRIDES */
-              @media screen and (max-width: 768px) {
+              /* ADDITIONAL MOBILE OVERRIDES - SAME BREAKPOINT */
+              @media screen and (max-width: 767px) {
                 /* Ensure hero overrides have maximum priority */
                 section.relative.h-screen .hero-mobile-container h1 {
                   font-size: 16px !important;
@@ -501,7 +522,7 @@ export default function RootLayout({
             }
 
               /* Hero section responsive height - Better mobile experience */
-              @media (max-width: 768px) {
+              @media (max-width: 767px) {
                 section[style*="minHeight: '480px'"] {
                   min-height: 524px !important;
                 }

@@ -510,12 +510,12 @@ export default function RootLayout({
             .tuenti-message.incoming .tuenti-message-bubble::before {
               content: '' !important;
               position: absolute !important;
-              left: -6px !important;
+              left: -4px !important;
               top: 50% !important;
               transform: translateY(-50%) !important;
               width: 0 !important;
               height: 0 !important;
-              border: 6px solid transparent !important;
+              border: 9px solid transparent !important;
               border-right-color: #0096D6 !important;
               border-left: 0 !important;
               z-index: 1000 !important;
@@ -525,12 +525,12 @@ export default function RootLayout({
             .tuenti-message.outgoing .tuenti-message-bubble::after {
               content: '' !important;
               position: absolute !important;
-              right: -6px !important;
+              right: -4px !important;
               top: 50% !important;
               transform: translateY(-50%) !important;
               width: 0 !important;
               height: 0 !important;
-              border: 6px solid transparent !important;
+              border: 9px solid transparent !important;
               border-left-color: #0096D6 !important;
               border-right: 0 !important;
               z-index: 1000 !important;
@@ -543,14 +543,21 @@ export default function RootLayout({
                 border: 4px solid transparent !important;
                 border-right-color: #0096D6 !important;
                 border-left: 0 !important;
-                left: -4px !important;
+                left: -2px !important;
               }
 
               .tuenti-message.outgoing .tuenti-message-bubble::after {
                 border: 4px solid transparent !important;
                 border-left-color: #0096D6 !important;
                 border-right: 0 !important;
-                right: -4px !important;
+                right: -2px !important;
+              }
+            }
+
+            /* Hero section responsive height - 24px taller on mobile */
+            @media (max-width: 768px) {
+              section[style*="minHeight: '480px'"] {
+                min-height: 504px !important;
               }
             }
           `

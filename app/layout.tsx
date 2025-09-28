@@ -112,8 +112,8 @@ export default function RootLayout({
               h1.text-7xl.font-bold.mb-4.font-elegant,
               .inline-block h1.text-7xl,
               h1.font-elegant {
-                font-size: 24px !important;
-                line-height: 26px !important;
+                font-size: 38px !important;
+                line-height: 40px !important;
                 margin-bottom: 6px !important;
                 font-weight: 700 !important;
               }
@@ -183,8 +183,8 @@ export default function RootLayout({
               h3.text-5xl.font-script,
               .timeline-item h3.text-5xl,
               h3.font-script {
-                font-size: 18px !important;
-                line-height: 19px !important;
+                font-size: 20px !important;
+                line-height: 21px !important;
                 margin-bottom: 4px !important;
                 font-weight: 700 !important;
               }
@@ -193,8 +193,8 @@ export default function RootLayout({
               p.text-xl.font-semibold.leading-relaxed.text-midnight\\/80.text-justify.font-manuscript,
               .timeline-item p.text-xl.font-semibold,
               .timeline-item p.font-manuscript {
-                font-size: 14px !important;
-                line-height: 15px !important;
+                font-size: 16px !important;
+                line-height: 17px !important;
                 margin-bottom: 4px !important;
               }
 
@@ -256,15 +256,15 @@ export default function RootLayout({
                   padding: 4px 8px !important;
                   border-radius: 12px !important;
                   margin: 2px 0 !important;
-                  font-size: 8px !important;
-                  line-height: 9px !important;
+                  font-size: 10px !important;
+                  line-height: 11px !important;
                 }
 
-                /* Tuenti message text content - 4px smaller */
+                /* Tuenti message text content - updated size */
                 .tuenti-message-bubble span,
                 .tuenti-sender-name {
-                  font-size: 8px !important;
-                  line-height: 9px !important;
+                  font-size: 10px !important;
+                  line-height: 11px !important;
                 }
 
                 .tuenti-message {

@@ -429,81 +429,70 @@ export default function RootLayout({
                   right: 4px !important;
                 }
 
-                /* NUEVO SISTEMA DE TRIANGULOS - AISLADO COMPLETAMENTE */
-                /* Reset total de pseudo-elementos existentes */
-                html body #main-content .tuenti-chat .tc-body .tuenti-message .tuenti-message-bubble::before,
-                html body #main-content .tuenti-chat .tc-body .tuenti-message .tuenti-message-bubble::after {
-                  display: none !important;
-                  content: none !important;
-                  border: none !important;
-                  width: 0 !important;
-                  height: 0 !important;
+                /* TRIANGULOS MÓVILES - SISTEMA SIMPLE Y DIRECTO */
+                /* Forzar posicionamiento relativo en burbujas */
+                .tuenti-chat .tc-body .tuenti-message .tuenti-message-bubble {
+                  position: relative !important;
                 }
 
-                /* Triangulos completamente nuevos con especificidad máxima */
                 /* Primer mensaje - triángulo pequeño, 8px más cerca, 4px más abajo */
-                html body #main-content .tuenti-chat .tc-body .tuenti-message:nth-child(1).tuenti-message.incoming .tuenti-message-bubble::before {
-                  display: block !important;
+                .tuenti-chat .tc-body .tuenti-message:nth-child(1).tuenti-message.incoming .tuenti-message-bubble::before {
                   content: '' !important;
                   position: absolute !important;
                   left: -3px !important;
                   bottom: 2px !important;
                   width: 0 !important;
                   height: 0 !important;
-                  border: 3px solid transparent !important;
-                  border-right: 3px solid #0096D6 !important;
-                  border-left: 0 !important;
-                  z-index: 999 !important;
+                  border-style: solid !important;
+                  border-width: 3px 3px 3px 0 !important;
+                  border-color: transparent #0096D6 transparent transparent !important;
+                  display: block !important;
+                  z-index: 1000 !important;
                 }
 
                 /* Segundo mensaje - triángulo pequeño, 8px más cerca, 4px más abajo */
-                html body #main-content .tuenti-chat .tc-body .tuenti-message:nth-child(2).tuenti-message.incoming .tuenti-message-bubble::before {
-                  display: block !important;
+                .tuenti-chat .tc-body .tuenti-message:nth-child(2).tuenti-message.incoming .tuenti-message-bubble::before {
                   content: '' !important;
                   position: absolute !important;
                   left: -3px !important;
                   bottom: 2px !important;
                   width: 0 !important;
                   height: 0 !important;
-                  border: 3px solid transparent !important;
-                  border-right: 3px solid #0096D6 !important;
-                  border-left: 0 !important;
-                  z-index: 999 !important;
+                  border-style: solid !important;
+                  border-width: 3px 3px 3px 0 !important;
+                  border-color: transparent #0096D6 transparent transparent !important;
+                  display: block !important;
+                  z-index: 1000 !important;
                 }
 
                 /* Tercer mensaje - triángulo pequeño, 8px más cerca, posición normal */
-                html body #main-content .tuenti-chat .tc-body .tuenti-message:nth-child(3).tuenti-message.incoming .tuenti-message-bubble::before {
-                  display: block !important;
+                .tuenti-chat .tc-body .tuenti-message:nth-child(3).tuenti-message.incoming .tuenti-message-bubble::before {
                   content: '' !important;
                   position: absolute !important;
                   left: -3px !important;
                   bottom: 6px !important;
                   width: 0 !important;
                   height: 0 !important;
-                  border: 3px solid transparent !important;
-                  border-right: 3px solid #0096D6 !important;
-                  border-left: 0 !important;
-                  z-index: 999 !important;
+                  border-style: solid !important;
+                  border-width: 3px 3px 3px 0 !important;
+                  border-color: transparent #0096D6 transparent transparent !important;
+                  display: block !important;
+                  z-index: 1000 !important;
                 }
 
                 /* Cuarto mensaje (outgoing) - triángulo pequeño, 8px más cerca */
-                html body #main-content .tuenti-chat .tc-body .tuenti-message:nth-child(4).tuenti-message.outgoing .tuenti-message-bubble::after {
-                  display: block !important;
+                .tuenti-chat .tc-body .tuenti-message:nth-child(4).tuenti-message.outgoing .tuenti-message-bubble::after {
                   content: '' !important;
                   position: absolute !important;
                   right: -3px !important;
                   bottom: 6px !important;
                   width: 0 !important;
                   height: 0 !important;
-                  border: 3px solid transparent !important;
-                  border-left: 3px solid #0096D6 !important;
-                  border-right: 0 !important;
-                  z-index: 999 !important;
-                }
-
-                /* Asegurar posicionamiento relativo en burbujas */
-                html body #main-content .tuenti-chat .tc-body .tuenti-message .tuenti-message-bubble {
-                  position: relative !important;
+                  border-style: solid !important;
+                  border-width: 3px 0 3px 3px !important;
+                  border-color: transparent transparent transparent #0096D6 !important;
+                  display: block !important;
+                  z-index: 1000 !important;
                 }
 
               }

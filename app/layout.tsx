@@ -391,36 +391,49 @@ export default function RootLayout({
                   display: none !important;
                 }
 
-                /* New centered triangles with correct colors */
+                /* New centered triangles with correct colors - better positioning */
                 .tuenti-message.outgoing .tuenti-message-bubble::before {
                   position: absolute !important;
                   content: '' !important;
-                  top: 50% !important;
+                  top: calc(50% - 2px) !important;
                   transform: translateY(-50%) !important;
-                  right: -4px !important;
+                  right: -6px !important;
                   width: 0 !important;
                   height: 0 !important;
                   border-style: solid !important;
-                  border-width: 4px 0 4px 6px !important;
+                  border-width: 5px 0 5px 8px !important;
                   border-color: transparent transparent transparent #0096D6 !important;
                 }
 
                 .tuenti-message.incoming .tuenti-message-bubble::after {
                   position: absolute !important;
                   content: '' !important;
-                  top: 50% !important;
+                  top: calc(50% - 2px) !important;
                   transform: translateY(-50%) !important;
-                  left: -4px !important;
+                  left: -6px !important;
                   width: 0 !important;
                   height: 0 !important;
                   border-style: solid !important;
-                  border-width: 4px 6px 4px 0 !important;
+                  border-width: 5px 8px 5px 0 !important;
                   border-color: transparent #0096D6 transparent transparent !important;
                 }
 
                 /* Ensure bubbles have relative positioning for triangles */
                 .tuenti-message-bubble {
                   position: relative !important;
+                }
+
+                /* Mobile-specific triangle adjustments */
+                .tuenti-message.outgoing .tuenti-message-bubble::before {
+                  top: calc(50% - 1px) !important;
+                  right: -5px !important;
+                  border-width: 4px 0 4px 6px !important;
+                }
+
+                .tuenti-message.incoming .tuenti-message-bubble::after {
+                  top: calc(50% - 1px) !important;
+                  left: -5px !important;
+                  border-width: 4px 6px 4px 0 !important;
                 }
               }
             }

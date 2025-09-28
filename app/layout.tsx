@@ -552,6 +552,19 @@ export default function RootLayout({
                 border-right: 0 !important;
                 right: -2px !important;
               }
+
+              /* GLOBOS MÓVILES - 2px menos radio de borde */
+              .tuenti-message-bubble {
+                border-radius: 13px !important;
+              }
+
+              .tuenti-message.incoming .tuenti-message-bubble {
+                border-bottom-left-radius: 3px !important;
+              }
+
+              .tuenti-message.outgoing .tuenti-message-bubble {
+                border-bottom-right-radius: 3px !important;
+              }
             }
 
             /* Hero section responsive height - 24px taller on mobile */

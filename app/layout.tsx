@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 // Simplified layout - no platform-specific components needed
 import EmergencyDebug from '@/components/emergency-debug'
+import MobileDebug from '@/components/mobile-debug'
 
 export const metadata: Metadata = {
   title: 'Boda J&M',
@@ -175,36 +176,43 @@ export default function RootLayout({
                 line-height: 9px !important;
               }
 
-              /* Additional mobile-first targeting */
+              /* CSS FALLBACK MOBILE - Ultra aggressive */
               @media screen and (max-width: 768px) {
-                .mobile-hero-icon {
-                  width: 12px !important;
-                  height: 12px !important;
+                /* FORCE ALL TEXT TO BE TINY */
+                * {
+                  font-size: 6px !important;
+                  line-height: 7px !important;
                 }
-                .mobile-hero-title {
-                  font-size: 16px !important;
-                  line-height: 18px !important;
-                }
-                .mobile-hero-subtitle {
-                  font-size: 10px !important;
-                  line-height: 12px !important;
-                }
-                .mobile-timeline-grid {
-                  display: grid !important;
-                  grid-template-columns: 1fr 1fr !important;
-                  gap: 4px !important;
-                }
-                .mobile-age-circle {
-                  width: 16px !important;
-                  height: 16px !important;
+
+                h1, h2, h3, h4, h5, h6 {
                   font-size: 8px !important;
+                  line-height: 9px !important;
                 }
-                .mobile-timeline-title {
+
+                /* FORCE ALL ELEMENTS TO BE TINY */
+                svg, img {
+                  width: 8px !important;
+                  height: 8px !important;
+                  max-width: 8px !important;
+                  max-height: 8px !important;
+                }
+
+                /* OVERRIDE EVERYTHING */
+                .relative.z-10.text-center * {
+                  font-size: 6px !important;
+                }
+
+                /* Show CSS indicator */
+                body::before {
+                  content: "CSS MOBILE ACTIVE";
+                  position: fixed;
+                  top: 0;
+                  left: 0;
+                  background: blue;
+                  color: white;
+                  padding: 5px;
+                  z-index: 99999;
                   font-size: 10px !important;
-                  line-height: 11px !important;
-                }
-                .mobile-image {
-                  max-height: 80px !important;
                 }
               }
             }
@@ -212,6 +220,7 @@ export default function RootLayout({
         }} />
       </head>
       <body>
+        <MobileDebug />
         <div id="main-content">
           {children}
         </div>

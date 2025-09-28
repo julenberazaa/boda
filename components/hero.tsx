@@ -5,6 +5,7 @@ import { useMobileDetection } from "@/hooks/use-mobile-detection"
 
 export default function Hero() {
   const isMobile = useMobileDetection()
+
   return (
     
     <section className="relative h-screen flex items-center justify-center overflow-hidden bg-gradient-radial from-terracotta to-ivory">
@@ -14,6 +15,24 @@ export default function Hero() {
           backgroundImage: `url('/placeholder.svg?height=1080&width=1920')`,
         }}
       />
+
+      {/* Mobile detection indicator */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '50px',
+          right: '10px',
+          backgroundColor: isMobile ? 'lime' : 'red',
+          color: 'black',
+          padding: '5px',
+          fontSize: '12px',
+          fontWeight: 'bold',
+          zIndex: 10000,
+          border: '2px solid black'
+        }}
+      >
+        {isMobile ? 'MOBILE DETECTED' : 'DESKTOP MODE'}
+      </div>
 
       <div className="relative z-10 text-center text-midnight px-4" data-aos="zoom-in">
         <div

@@ -569,8 +569,8 @@ export default function RootLayout({
 
             /* Hero section responsive height - 24px taller on mobile */
             @media (max-width: 768px) {
-              section[style*="minHeight: '480px'"] {
-                min-height: 504px !important;
+              section[style*="minHeight: '500px'"] {
+                min-height: 524px !important;
               }
             }
           `

@@ -498,65 +498,41 @@ export default function RootLayout({
               }
             }
 
-            /* PRUEBA: TRIANGULOS FUERA DE MEDIA QUERY PARA PROBAR */
-            .tuenti-chat .tc-body .tuenti-message .tuenti-message-bubble {
+            /* TRIANGULOS DE PRUEBA - TODOS LOS ELEMENTOS */
+            .tuenti-message-bubble {
               position: relative !important;
             }
 
-            .tuenti-chat .tc-body .tuenti-message:nth-child(1).tuenti-message.incoming .tuenti-message-bubble::before {
+            /* PRUEBA SIMPLE: todos los mensajes incoming tendrán triángulo */
+            .tuenti-message.incoming .tuenti-message-bubble::before {
               content: '' !important;
               position: absolute !important;
-              left: -3px !important;
-              bottom: 2px !important;
+              left: -10px !important;
+              top: 50% !important;
+              transform: translateY(-50%) !important;
               width: 0 !important;
               height: 0 !important;
-              border-style: solid !important;
-              border-width: 3px 3px 3px 0 !important;
-              border-color: transparent #0096D6 transparent transparent !important;
-              display: block !important;
+              border: 10px solid transparent !important;
+              border-right-color: #0096D6 !important;
+              border-left: 0 !important;
               z-index: 1000 !important;
+              display: block !important;
             }
 
-            .tuenti-chat .tc-body .tuenti-message:nth-child(2).tuenti-message.incoming .tuenti-message-bubble::before {
+            /* PRUEBA SIMPLE: todos los mensajes outgoing tendrán triángulo */
+            .tuenti-message.outgoing .tuenti-message-bubble::after {
               content: '' !important;
               position: absolute !important;
-              left: -3px !important;
-              bottom: 2px !important;
+              right: -10px !important;
+              top: 50% !important;
+              transform: translateY(-50%) !important;
               width: 0 !important;
               height: 0 !important;
-              border-style: solid !important;
-              border-width: 3px 3px 3px 0 !important;
-              border-color: transparent #0096D6 transparent transparent !important;
-              display: block !important;
+              border: 10px solid transparent !important;
+              border-left-color: #0096D6 !important;
+              border-right: 0 !important;
               z-index: 1000 !important;
-            }
-
-            .tuenti-chat .tc-body .tuenti-message:nth-child(3).tuenti-message.incoming .tuenti-message-bubble::before {
-              content: '' !important;
-              position: absolute !important;
-              left: -3px !important;
-              bottom: 6px !important;
-              width: 0 !important;
-              height: 0 !important;
-              border-style: solid !important;
-              border-width: 3px 3px 3px 0 !important;
-              border-color: transparent #0096D6 transparent transparent !important;
               display: block !important;
-              z-index: 1000 !important;
-            }
-
-            .tuenti-chat .tc-body .tuenti-message:nth-child(4).tuenti-message.outgoing .tuenti-message-bubble::after {
-              content: '' !important;
-              position: absolute !important;
-              right: -3px !important;
-              bottom: 6px !important;
-              width: 0 !important;
-              height: 0 !important;
-              border-style: solid !important;
-              border-width: 3px 0 3px 3px !important;
-              border-color: transparent transparent transparent #0096D6 !important;
-              display: block !important;
-              z-index: 1000 !important;
             }
           `
         }} />

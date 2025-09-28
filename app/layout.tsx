@@ -183,8 +183,8 @@ export default function RootLayout({
               h3.text-5xl.font-script,
               .timeline-item h3.text-5xl,
               h3.font-script {
-                font-size: 20px !important;
-                line-height: 21px !important;
+                font-size: 14px !important;
+                line-height: 15px !important;
                 margin-bottom: 4px !important;
                 font-weight: 700 !important;
               }
@@ -193,9 +193,30 @@ export default function RootLayout({
               p.text-xl.font-semibold.leading-relaxed.text-midnight\\/80.text-justify.font-manuscript,
               .timeline-item p.text-xl.font-semibold,
               .timeline-item p.font-manuscript {
-                font-size: 16px !important;
-                line-height: 17px !important;
+                font-size: 10px !important;
+                line-height: 11px !important;
                 margin-bottom: 4px !important;
+              }
+
+              /* TIMELINE COLUMN SPACING - Override restrictive CSS */
+              /* Target all timeline sections with grid layout */
+              section.timeline-item.mb-16.grid.grid-cols-12,
+              section.timeline-item.grid.grid-cols-12,
+              #conocidos-2010 {
+                gap: 8px !important; /* Tu tamaño deseado: 8px */
+              }
+
+              /* Remove excessive lateral padding */
+              section.timeline-item div.col-span-6.pr-8,
+              section.timeline-item div.col-span-6.pr-12,
+              #conocidos-2010 > div:first-child {
+                padding-right: 4px !important; /* Reduce padding */
+              }
+
+              section.timeline-item div.col-span-6.pl-8,
+              section.timeline-item div.col-span-6.pl-12,
+              #conocidos-2010 > div:last-child {
+                padding-left: 4px !important; /* Reduce padding */
               }
 
               /* Timeline images */

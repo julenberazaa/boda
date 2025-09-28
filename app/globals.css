@@ -102,10 +102,10 @@
   /* Asegurar que los círculos de iconos mantengan su forma perfecta */
   .timeline-icon-circle {
     aspect-ratio: 1 / 1;
-    min-width: 2rem;
-    min-height: 2rem;
-    max-width: 2rem;
-    max-height: 2rem;
+    min-width: 3rem;
+    min-height: 3rem;
+    max-width: 3rem;
+    max-height: 3rem;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -531,6 +531,14 @@
 @media (max-width: 767px) {
   .timeline-item {
     gap: 0.125rem !important; /* 2px */
+  }
+
+  /* Círculos más pequeños solo en móviles */
+  .timeline-icon-circle {
+    min-width: 2rem !important;
+    min-height: 2rem !important;
+    max-width: 2rem !important;
+    max-height: 2rem !important;
   }
 }
 

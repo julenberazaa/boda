@@ -103,7 +103,16 @@ export default function TimelineSection({
         </div>
 
         {/* Mobile layout: dos columnas, alternando posición - Proporcionalmente escalado */}
-        <div className="block md:hidden mobile-timeline-grid">
+        <div
+          className="block md:hidden mobile-timeline-grid"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: '4px',
+            padding: '4px',
+            margin: '0'
+          }}
+        >
           {/* Columna de medios (carruseles/marcos) - posición alterna */}
           <div className={`mobile-timeline-media ${isReversed ? 'order-2' : 'order-1'}`}>
             <div className="relative overflow-hidden rounded-lg shadow-lg">
@@ -113,10 +122,25 @@ export default function TimelineSection({
                 width={300}
                 height={200}
                 className="mobile-image md:w-full md:h-auto md:object-cover md:aspect-[3/2]"
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  maxHeight: '80px',
+                  objectFit: 'cover'
+                }}
               />
             </div>
             {icon && (
-              <div className="absolute -top-1 -right-1 mobile-age-circle bg-terracotta rounded-full flex items-center justify-center">
+              <div
+                className="absolute -top-1 -right-1 mobile-age-circle bg-terracotta rounded-full flex items-center justify-center"
+                style={{
+                  width: '16px',
+                  height: '16px',
+                  minWidth: '16px',
+                  minHeight: '16px',
+                  fontSize: '8px'
+                }}
+              >
                 <div className="flex items-center justify-center text-ivory">
                   {icon}
                 </div>
@@ -128,22 +152,51 @@ export default function TimelineSection({
           <div className={`mobile-timeline-content ${isReversed ? 'order-1' : 'order-2'}`}>
             {/* Header compacto proporcionalmente escalado */}
             <div className="flex items-center gap-1 mb-1">
-              <div className="mobile-age-circle bg-sage rounded-full flex items-center justify-center">
-                <span className="text-midnight font-bold" style={{fontSize: '6px'}}>{age}</span>
+              <div
+                className="mobile-age-circle bg-sage rounded-full flex items-center justify-center"
+                style={{
+                  width: '16px',
+                  height: '16px',
+                  minWidth: '16px',
+                  minHeight: '16px'
+                }}
+              >
+                <span className="text-midnight font-bold" style={{fontSize: '8px'}}>{age}</span>
               </div>
               <div>
-                <div className="text-terracotta font-medium mobile-year-text">{year}</div>
+                <div className="text-terracotta font-medium mobile-year-text" style={{fontSize: '7px', lineHeight: '8px'}}>{year}</div>
                 <div className="w-2 h-px bg-terracotta mt-px" />
               </div>
             </div>
 
             {/* Título compacto proporcionalmente escalado */}
-            <h2 className="font-playfair mobile-timeline-title font-bold text-midnight mb-1">{title}</h2>
+            <h2
+              className="font-playfair mobile-timeline-title font-bold text-midnight mb-1"
+              style={{
+                fontSize: '10px',
+                lineHeight: '11px',
+                marginBottom: '2px',
+                fontWeight: '700'
+              }}
+            >
+              {title}
+            </h2>
 
             {/* Contenido compacto proporcionalmente escalado */}
-            <div className="text-midnight/80 mobile-timeline-content leading-tight text-justify">
+            <div
+              className="text-midnight/80 mobile-timeline-content leading-tight text-justify"
+              style={{ fontSize: '8px', lineHeight: '9px', padding: '2px' }}
+            >
               {content.split("\n").map((paragraph, i) => (
-                <p key={i} className="mb-px last:mb-0" style={{fontSize: '7px', lineHeight: '8px'}}>
+                <p
+                  key={i}
+                  className="mb-px last:mb-0"
+                  style={{
+                    fontSize: '8px',
+                    lineHeight: '9px',
+                    marginBottom: '2px'
+                  }}
+                >
                   {paragraph}
                 </p>
               ))}

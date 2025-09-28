@@ -53,74 +53,159 @@ export default function RootLayout({
               min-height: 100vh;
             }
 
-            /* Mobile responsive utilities - Much smaller aggressive sizing */
+            /* NUCLEAR MOBILE OVERRIDES - Maximum specificity */
             @media (max-width: 767px) {
-              /* Hero - much smaller */
+              /* HERO SECTION - Ultra specific targeting */
+              section.relative.h-screen .relative.z-10.text-center svg.mobile-hero-icon,
               .mobile-hero-icon {
-                width: 20px !important;
-                height: 20px !important;
+                width: 12px !important;
+                height: 12px !important;
+                min-width: 12px !important;
+                min-height: 12px !important;
+                max-width: 12px !important;
+                max-height: 12px !important;
               }
+
+              section.relative.h-screen .relative.z-10.text-center h1.mobile-hero-title,
               .mobile-hero-title {
-                font-size: 18px !important;
-                line-height: 1.1;
+                font-size: 16px !important;
+                line-height: 18px !important;
+                margin-bottom: 6px !important;
+                font-weight: 700 !important;
               }
+
+              section.relative.h-screen .relative.z-10.text-center p.mobile-hero-subtitle,
               .mobile-hero-subtitle {
                 font-size: 10px !important;
-                line-height: 1.2;
+                line-height: 12px !important;
+                margin-bottom: 12px !important;
+                max-width: 280px !important;
+                font-weight: 300 !important;
               }
 
-              /* Timeline sections - compact grid */
+              /* TIMELINE SECTIONS - Nuclear overrides */
               .mobile-timeline-grid {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 4px;
-                align-items: start;
-                width: 100%;
-                padding: 4px;
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 4px !important;
+                align-items: start !important;
+                width: 100% !important;
+                padding: 4px !important;
+                margin: 0 !important;
+                box-sizing: border-box !important;
               }
 
-              .mobile-timeline-content {
-                padding: 3px;
-                font-size: 7px !important;
-                line-height: 1.1;
+              /* Mobile timeline content - All text super small */
+              .mobile-timeline-content,
+              .mobile-timeline-content * {
+                font-size: 8px !important;
+                line-height: 9px !important;
+                padding: 2px !important;
+                margin: 1px 0 !important;
               }
 
               .mobile-timeline-media {
-                padding: 2px;
+                padding: 1px !important;
               }
 
-              /* Age circle - tiny */
-              .mobile-age-circle {
-                width: 12px !important;
-                height: 12px !important;
-                font-size: 6px !important;
-                min-width: 12px;
-              }
-
-              /* Timeline title - small */
-              .mobile-timeline-title {
+              /* Age circles - Tiny */
+              .mobile-age-circle,
+              div.mobile-age-circle,
+              .mobile-timeline-content .mobile-age-circle,
+              .mobile-timeline-media .mobile-age-circle {
+                width: 16px !important;
+                height: 16px !important;
+                min-width: 16px !important;
+                min-height: 16px !important;
+                max-width: 16px !important;
+                max-height: 16px !important;
                 font-size: 8px !important;
-                line-height: 1.1;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+              }
+
+              /* Timeline titles */
+              .mobile-timeline-title,
+              h2.mobile-timeline-title {
+                font-size: 10px !important;
+                line-height: 11px !important;
+                margin-bottom: 2px !important;
+                font-weight: 700 !important;
+              }
+
+              /* Year text */
+              .mobile-year-text {
+                font-size: 7px !important;
+                line-height: 8px !important;
+              }
+
+              /* Section spacing */
+              section.mobile-section {
+                padding: 8px !important;
+                min-height: 140px !important;
+              }
+
+              /* Images - Very small */
+              .mobile-image,
+              .mobile-timeline-media img {
+                width: 100% !important;
+                height: auto !important;
+                max-height: 80px !important;
+                object-fit: cover !important;
+                border-radius: 4px !important;
+              }
+
+              /* Overrides for ALL mobile content */
+              .block.md\\:hidden,
+              .block.md\\:hidden * {
+                font-size: 8px !important;
+                line-height: 9px !important;
+              }
+
+              /* Specific element targeting */
+              .block.md\\:hidden p {
+                font-size: 8px !important;
+                line-height: 9px !important;
                 margin-bottom: 2px !important;
               }
 
-              /* Year text - tiny */
-              .mobile-year-text {
-                font-size: 6px !important;
+              .block.md\\:hidden div {
+                font-size: 8px !important;
+                line-height: 9px !important;
               }
 
-              /* Section padding reduction */
-              .mobile-section {
-                padding: 8px 4px !important;
-                min-height: auto !important;
-              }
-
-              /* Image scaling */
-              .mobile-image {
-                width: 100%;
-                height: auto;
-                max-height: 80px;
-                object-fit: cover;
+              /* Additional mobile-first targeting */
+              @media screen and (max-width: 768px) {
+                .mobile-hero-icon {
+                  width: 12px !important;
+                  height: 12px !important;
+                }
+                .mobile-hero-title {
+                  font-size: 16px !important;
+                  line-height: 18px !important;
+                }
+                .mobile-hero-subtitle {
+                  font-size: 10px !important;
+                  line-height: 12px !important;
+                }
+                .mobile-timeline-grid {
+                  display: grid !important;
+                  grid-template-columns: 1fr 1fr !important;
+                  gap: 4px !important;
+                }
+                .mobile-age-circle {
+                  width: 16px !important;
+                  height: 16px !important;
+                  font-size: 8px !important;
+                }
+                .mobile-timeline-title {
+                  font-size: 10px !important;
+                  line-height: 11px !important;
+                }
+                .mobile-image {
+                  max-height: 80px !important;
+                }
               }
             }
           `

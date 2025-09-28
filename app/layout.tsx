@@ -313,20 +313,74 @@ export default function RootLayout({
                   height: 6px !important;
                 }
 
-                /* Remove excess whitespace below chat - tight body */
+                /* Static chat body size - not dynamic */
                 .tc-body {
                   padding: 6px !important;
                   margin: 0 !important;
-                  min-height: auto !important;
-                  height: auto !important;
+                  min-height: 120px !important;
+                  height: 120px !important;
                   padding-bottom: 8px !important;
+                  overflow: hidden !important;
                 }
 
-                /* Tuenti chat container - no excess height */
+                /* Tuenti chat container - fixed static size */
                 .tuenti-chat {
-                  height: auto !important;
-                  min-height: auto !important;
-                  overflow: visible !important;
+                  height: 160px !important;
+                  min-height: 160px !important;
+                  max-height: 160px !important;
+                  overflow: hidden !important;
+                }
+
+                /* Header element positioning - buttons left, name right */
+                .tc-header {
+                  display: flex !important;
+                  justify-content: space-between !important;
+                  align-items: center !important;
+                  position: relative !important;
+                }
+
+                .tc-window-controls {
+                  order: 1 !important;
+                  padding: 0 !important;
+                  margin: 0 !important;
+                  margin-left: 4px !important;
+                }
+
+                .tc-title {
+                  order: 2 !important;
+                  font-size: 10px !important;
+                  margin: 0 !important;
+                  padding: 0 !important;
+                  line-height: 1.2 !important;
+                  margin-left: 8px !important;
+                  flex-grow: 1 !important;
+                  text-align: left !important;
+                }
+
+                .tc-status {
+                  order: 3 !important;
+                  margin: 0 !important;
+                  margin-right: 4px !important;
+                  width: 6px !important;
+                  height: 6px !important;
+                }
+
+                /* Smaller button hover size */
+                .tc-btn {
+                  padding: 2px 4px !important;
+                  margin: 0 1px !important;
+                  font-size: 8px !important;
+                  line-height: 1 !important;
+                  width: 14px !important;
+                  height: 14px !important;
+                  display: inline-flex !important;
+                  align-items: center !important;
+                  justify-content: center !important;
+                }
+
+                .tc-btn:hover {
+                  transform: scale(0.9) !important;
+                  padding: 1px 3px !important;
                 }
               }
             }

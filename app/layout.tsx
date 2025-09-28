@@ -184,13 +184,24 @@ export default function RootLayout({
               @media screen and (max-width: 768px) {
                 /* FORCE ALL TEXT TO BE SMALL */
                 * {
-                  font-size: 8px !important;
-                  line-height: 9px !important;
+                  font-size: 10px !important;
+                  line-height: 11px !important;
                 }
 
                 h1, h2, h3, h4, h5, h6 {
+                  font-size: 14px !important;
+                  line-height: 15px !important;
+                }
+
+                /* HERO SECTION EXCEPTIONS - Override for hero text */
+                section[style*="minHeight: '480px'"] h1 {
+                  font-size: 16px !important;
+                  line-height: 18px !important;
+                }
+
+                section[style*="minHeight: '480px'"] p {
                   font-size: 12px !important;
-                  line-height: 13px !important;
+                  line-height: 14px !important;
                 }
 
                 /* FORCE ALL ICONS/IMAGES TO BE SMALL */
@@ -567,24 +578,10 @@ export default function RootLayout({
               }
             }
 
-            /* Hero section responsive changes - taller and larger text on mobile */
+            /* Hero section responsive height - 44px taller on mobile */
             @media (max-width: 768px) {
               section[style*="minHeight: '480px'"] {
                 min-height: 524px !important;
-              }
-
-              /* Override aggressive mobile text reduction for hero section */
-              section[style*="minHeight: '480px'"] .relative.z-10 h1.text-7xl.font-bold.font-elegant {
-                font-size: 4.5rem !important;
-                line-height: 1 !important;
-                margin-bottom: 1rem !important;
-              }
-
-              section[style*="minHeight: '480px'"] .relative.z-10 p.text-xl.hero-intro-text {
-                font-size: 1.5rem !important;
-                line-height: 2rem !important;
-                margin-top: 2.25rem !important;
-                margin-bottom: 4.5rem !important;
               }
             }
           `

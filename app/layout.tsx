@@ -53,68 +53,74 @@ export default function RootLayout({
               min-height: 100vh;
             }
 
-            /* Mobile responsive utilities - Proportionally scaled to match desktop visual appearance */
+            /* Mobile responsive utilities - Much smaller aggressive sizing */
             @media (max-width: 767px) {
-              /* Proportional scaling factor: mobile_width / desktop_width = 375/1536 = 0.244 */
-
-              /* Content container scaled to maintain 83.3% width ratio */
-              .mobile-container {
-                width: 83.3vw;
-                margin: 0 auto;
-                padding: 0 8.4vw; /* Equivalent to desktop 128px padding scaled */
-              }
-
-              /* Hero proportionally scaled fonts */
+              /* Hero - much smaller */
               .mobile-hero-icon {
-                width: 4.15vw; /* 64px * 0.244 = 15.6px ≈ 4.15vw at 375px */
-                height: 4.15vw;
+                width: 20px !important;
+                height: 20px !important;
               }
               .mobile-hero-title {
-                font-size: 7.5vw; /* 115.2px * 0.244 = 28.1px ≈ 7.5vw at 375px */
-                line-height: 1.2;
+                font-size: 18px !important;
+                line-height: 1.1;
               }
               .mobile-hero-subtitle {
-                font-size: 1.87vw; /* 28.8px * 0.244 = 7px ≈ 1.87vw at 375px */
-                line-height: 1.4;
+                font-size: 10px !important;
+                line-height: 1.2;
               }
 
-              /* Timeline sections scaled */
+              /* Timeline sections - compact grid */
               .mobile-timeline-grid {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
-                gap: 2vw; /* Proportionally scaled gap */
+                gap: 4px;
                 align-items: start;
                 width: 100%;
-                max-width: 83.3vw;
-                margin: 0 auto;
+                padding: 4px;
               }
 
               .mobile-timeline-content {
-                padding: 1.2vw;
-                font-size: 2.4vw; /* Scaled text size */
-                line-height: 1.3;
+                padding: 3px;
+                font-size: 7px !important;
+                line-height: 1.1;
               }
 
               .mobile-timeline-media {
-                padding: 0.6vw;
+                padding: 2px;
               }
 
-              /* Age circle scaled */
+              /* Age circle - tiny */
               .mobile-age-circle {
-                width: 3.2vw;
-                height: 3.2vw;
-                font-size: 1.6vw;
+                width: 12px !important;
+                height: 12px !important;
+                font-size: 6px !important;
+                min-width: 12px;
               }
 
-              /* Timeline title scaled */
+              /* Timeline title - small */
               .mobile-timeline-title {
-                font-size: 3.2vw;
-                line-height: 1.2;
+                font-size: 8px !important;
+                line-height: 1.1;
+                margin-bottom: 2px !important;
               }
 
-              /* Year text scaled */
+              /* Year text - tiny */
               .mobile-year-text {
-                font-size: 1.8vw;
+                font-size: 6px !important;
+              }
+
+              /* Section padding reduction */
+              .mobile-section {
+                padding: 8px 4px !important;
+                min-height: auto !important;
+              }
+
+              /* Image scaling */
+              .mobile-image {
+                width: 100%;
+                height: auto;
+                max-height: 80px;
+                object-fit: cover;
               }
             }
           `

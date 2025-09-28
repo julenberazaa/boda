@@ -44,7 +44,7 @@ export default function TimelineSection({
   }, [])
 
   return (
-    <section ref={sectionRef} className={`min-h-screen flex items-center py-8 md:py-20 px-2 md:px-4 ${background}`}>
+    <section ref={sectionRef} className={`min-h-screen md:min-h-screen flex items-center mobile-section md:py-20 px-2 md:px-4 ${background}`}>
       <div className="max-w-7xl mx-auto w-full">
         {/* Desktop layout: mantiene el diseño original */}
         <div className="hidden md:block">
@@ -112,7 +112,7 @@ export default function TimelineSection({
                 alt={`${title} - ${year}`}
                 width={300}
                 height={200}
-                className="w-full h-auto object-cover aspect-[3/2]"
+                className="mobile-image md:w-full md:h-auto md:object-cover md:aspect-[3/2]"
               />
             </div>
             {icon && (
@@ -129,11 +129,11 @@ export default function TimelineSection({
             {/* Header compacto proporcionalmente escalado */}
             <div className="flex items-center gap-1 mb-1">
               <div className="mobile-age-circle bg-sage rounded-full flex items-center justify-center">
-                <span className="text-midnight font-bold mobile-age-circle">{age}</span>
+                <span className="text-midnight font-bold" style={{fontSize: '6px'}}>{age}</span>
               </div>
               <div>
                 <div className="text-terracotta font-medium mobile-year-text">{year}</div>
-                <div className="w-3 h-0.5 bg-terracotta mt-0.5" />
+                <div className="w-2 h-px bg-terracotta mt-px" />
               </div>
             </div>
 
@@ -143,7 +143,7 @@ export default function TimelineSection({
             {/* Contenido compacto proporcionalmente escalado */}
             <div className="text-midnight/80 mobile-timeline-content leading-tight text-justify">
               {content.split("\n").map((paragraph, i) => (
-                <p key={i} className="mb-0.5 last:mb-0">
+                <p key={i} className="mb-px last:mb-0" style={{fontSize: '7px', lineHeight: '8px'}}>
                   {paragraph}
                 </p>
               ))}

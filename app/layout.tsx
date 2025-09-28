@@ -573,15 +573,18 @@ export default function RootLayout({
                 min-height: 524px !important;
               }
 
-              /* Larger hero text on mobile */
-              section[style*="minHeight: '480px'"] h1.font-elegant {
-                font-size: calc(9rem * var(--font-scale)) !important;
+              /* Override aggressive mobile text reduction for hero section */
+              section[style*="minHeight: '480px'"] .relative.z-10 h1.text-7xl.font-bold.font-elegant {
+                font-size: 4.5rem !important;
                 line-height: 1 !important;
+                margin-bottom: 1rem !important;
               }
 
-              section[style*="minHeight: '480px'"] p.hero-intro-text {
-                font-size: calc(2.25rem * var(--font-scale)) !important;
-                line-height: 2.5rem !important;
+              section[style*="minHeight: '480px'"] .relative.z-10 p.text-xl.hero-intro-text {
+                font-size: 1.5rem !important;
+                line-height: 2rem !important;
+                margin-top: 2.25rem !important;
+                margin-bottom: 4.5rem !important;
               }
             }
           `

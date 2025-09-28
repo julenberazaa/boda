@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 // Simplified layout - no platform-specific components needed
 import EmergencyDebug from '@/components/emergency-debug'
+import DimensionLogger from '@/components/dimension-logger'
 
 export const metadata: Metadata = {
   title: 'Boda J&M',
@@ -90,6 +91,7 @@ export default function RootLayout({
         <div id="main-content">
           {children}
         </div>
+        <DimensionLogger />
         <EmergencyDebug />
       </body>
     </html>

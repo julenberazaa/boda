@@ -55,7 +55,6 @@ export default function RootLayout({
 
             /* Mobile responsive utilities */
             @media (max-width: 767px) {
-
               /* Compact text for mobile */
               .mobile-text-xs { font-size: 0.625rem; line-height: 0.75rem; }
               .mobile-text-sm { font-size: 0.75rem; line-height: 1rem; }

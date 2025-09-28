@@ -44,7 +44,7 @@ export default function TimelineSection({
   }, [])
 
   return (
-    <section ref={sectionRef} className={`min-h-screen md:min-h-screen flex items-center py-8 md:py-20 px-2 md:px-4 ${background}`}>
+    <section ref={sectionRef} className={`min-h-screen flex items-center py-8 md:py-20 px-2 md:px-4 ${background}`}>
       <div className="max-w-7xl mx-auto w-full">
         {/* Desktop layout: mantiene el diseño original */}
         <div className="hidden md:block">

@@ -530,7 +530,7 @@
 /* Reducir espacio entre columnas en móviles */
 @media (max-width: 767px) {
   .timeline-item {
-    gap: 0.5rem !important; /* 8px */
+    gap: 0.125rem !important; /* 2px */
   }
 }
 

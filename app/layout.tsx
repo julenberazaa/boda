@@ -112,8 +112,8 @@ export default function RootLayout({
               h1.text-7xl.font-bold.mb-4.font-elegant,
               .inline-block h1.text-7xl,
               h1.font-elegant {
-                font-size: 38px !important;
-                line-height: 40px !important;
+                font-size: 44px !important;
+                line-height: 46px !important;
                 margin-bottom: 6px !important;
                 font-weight: 700 !important;
               }

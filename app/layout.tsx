@@ -385,39 +385,30 @@ export default function RootLayout({
                   padding: 1px 3px !important;
                 }
 
-                /* Override original triangles with maximum specificity */
-                .tuenti-chat .tuenti-message.incoming .tuenti-message-bubble::before,
-                .tuenti-chat .tuenti-message.outgoing .tuenti-message-bubble::after {
-                  bottom: auto !important;
-                  top: 50% !important;
-                  transform: translateY(-50%) !important;
+                /* Hide old triangles for first 3 messages only */
+                .tuenti-chat .tc-body .tuenti-message:nth-child(1).tuenti-message.incoming .tuenti-message-bubble::before,
+                .tuenti-chat .tc-body .tuenti-message:nth-child(2).tuenti-message.incoming .tuenti-message-bubble::before,
+                .tuenti-chat .tc-body .tuenti-message:nth-child(3).tuenti-message.incoming .tuenti-message-bubble::before {
+                  display: none !important;
                 }
 
-                /* New centered triangles with correct colors - better positioning */
-                .tuenti-message.outgoing .tuenti-message-bubble::before {
-                  position: absolute !important;
-                  content: '' !important;
-                  top: calc(50% - 2px) !important;
-                  transform: translateY(-50%) !important;
-                  right: -6px !important;
-                  width: 0 !important;
-                  height: 0 !important;
-                  border-style: solid !important;
-                  border-width: 5px 0 5px 8px !important;
-                  border-color: transparent transparent transparent #0096D6 !important;
-                }
-
+                /* New triangles - same size as old ones (8px border) */
                 .tuenti-message.incoming .tuenti-message-bubble::after {
                   position: absolute !important;
                   content: '' !important;
                   top: calc(50% - 2px) !important;
                   transform: translateY(-50%) !important;
-                  left: -6px !important;
+                  left: -8px !important;
                   width: 0 !important;
                   height: 0 !important;
                   border-style: solid !important;
-                  border-width: 5px 8px 5px 0 !important;
+                  border-width: 8px 8px 8px 0 !important;
                   border-color: transparent #0096D6 transparent transparent !important;
+                }
+
+                /* Hide the new triangle for last message (keep old one) */
+                .tuenti-chat .tc-body .tuenti-message:nth-child(4).tuenti-message.outgoing .tuenti-message-bubble::before {
+                  display: none !important;
                 }
 
                 /* Ensure bubbles have relative positioning for triangles */
@@ -453,28 +444,22 @@ export default function RootLayout({
                   padding-left: 1rem !important;
                 }
 
-                /* MOBILE-ONLY triangle positioning - ULTRA HIGH SPECIFICITY */
-                .tuenti-chat .tc-body .tuenti-message:nth-child(1).tuenti-message.incoming .tuenti-message-bubble::before {
-                  bottom: auto !important;
+                /* MOBILE-ONLY triangle positioning - NEW triangles with better positioning */
+                .tuenti-chat .tc-body .tuenti-message:nth-child(1).tuenti-message.incoming .tuenti-message-bubble::after {
                   top: calc(50% - 20px) !important;
+                  left: -6px !important;
                   transform: translateY(-50%) !important;
                 }
 
-                .tuenti-chat .tc-body .tuenti-message:nth-child(2).tuenti-message.incoming .tuenti-message-bubble::before {
-                  bottom: auto !important;
+                .tuenti-chat .tc-body .tuenti-message:nth-child(2).tuenti-message.incoming .tuenti-message-bubble::after {
                   top: calc(50% - 18px) !important;
+                  left: -6px !important;
                   transform: translateY(-50%) !important;
                 }
 
-                .tuenti-chat .tc-body .tuenti-message:nth-child(3).tuenti-message.incoming .tuenti-message-bubble::before {
-                  bottom: auto !important;
+                .tuenti-chat .tc-body .tuenti-message:nth-child(3).tuenti-message.incoming .tuenti-message-bubble::after {
                   top: calc(50% - 16px) !important;
-                  transform: translateY(-50%) !important;
-                }
-
-                .tuenti-chat .tc-body .tuenti-message:nth-child(4).tuenti-message.outgoing .tuenti-message-bubble::after {
-                  bottom: auto !important;
-                  top: calc(50% - 12px) !important;
+                  left: -6px !important;
                   transform: translateY(-50%) !important;
                 }
               }

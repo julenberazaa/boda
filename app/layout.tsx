@@ -108,6 +108,16 @@ export default function RootLayout({
                 font-weight: 300 !important;
               }
 
+              /* TARGET THE MAIN PAGE H1 - This is what's showing in DevTools */
+              h1.text-7xl.font-bold.mb-4.font-elegant,
+              .inline-block h1.text-7xl,
+              h1.font-elegant {
+                font-size: 16px !important;
+                line-height: 18px !important;
+                margin-bottom: 6px !important;
+                font-weight: 700 !important;
+              }
+
               /* TIMELINE SECTIONS - Target real classes */
               .timeline-mobile-container {
                 display: grid !important;

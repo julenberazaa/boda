@@ -203,20 +203,49 @@ export default function RootLayout({
               section.timeline-item.mb-16.grid.grid-cols-12,
               section.timeline-item.grid.grid-cols-12,
               #conocidos-2010 {
-                gap: 8px !important; /* Tu tamaño deseado: 8px */
+                gap: 4px !important; /* Reducido a 4px como solicitado */
               }
 
               /* Remove excessive lateral padding */
               section.timeline-item div.col-span-6.pr-8,
               section.timeline-item div.col-span-6.pr-12,
               #conocidos-2010 > div:first-child {
-                padding-right: 4px !important; /* Reduce padding */
+                padding-right: 2px !important; /* Reducido aún más */
               }
 
               section.timeline-item div.col-span-6.pl-8,
               section.timeline-item div.col-span-6.pl-12,
               #conocidos-2010 > div:last-child {
-                padding-left: 4px !important; /* Reduce padding */
+                padding-left: 2px !important; /* Reducido aún más */
+              }
+
+              /* TIMELINE INTERNAL SPACING - Minimize without accumulation */
+              /* Section spacing between timeline items */
+              section.timeline-item.mb-16 {
+                margin-bottom: 6px !important; /* De 64px (mb-16) → 6px */
+              }
+
+              /* Header elements spacing */
+              .timeline-item div.flex.items-center.mb-6,
+              .timeline-item .flex.items-center.mb-6 {
+                margin-bottom: 3px !important; /* De 24px (mb-6) → 3px */
+              }
+
+              /* Icon circle margin */
+              .timeline-item .timeline-icon-circle.mr-4,
+              .timeline-item div.timeline-icon-circle.mr-4 {
+                margin-right: 2px !important; /* De 16px (mr-4) → 2px */
+              }
+
+              /* Content container padding */
+              .timeline-item div.p-6,
+              .timeline-item .p-6 {
+                padding: 2px !important; /* De 24px (p-6) → 2px */
+              }
+
+              /* Content wrapper additional padding reduction */
+              .timeline-item div.col-span-6 div.p-6.flex.justify-center {
+                padding: 1px !important; /* Contenedores de imagen aún más pequeños */
               }
 
               /* Timeline images */

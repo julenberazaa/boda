@@ -175,67 +175,80 @@ export default function RootLayout({
                 line-height: 9px !important;
               }
 
-              /* MOBILE LAYOUT - Readable sizes */
+              /* AGGRESSIVE MOBILE OVERRIDE - SMALL SIZES */
               @media screen and (max-width: 768px) {
-                /* Hero section */
+                /* FORCE ALL TEXT TO BE SMALL */
+                * {
+                  font-size: 8px !important;
+                  line-height: 9px !important;
+                }
+
+                h1, h2, h3, h4, h5, h6 {
+                  font-size: 12px !important;
+                  line-height: 13px !important;
+                }
+
+                /* FORCE ALL ICONS/IMAGES TO BE SMALL */
+                svg {
+                  width: 12px !important;
+                  height: 12px !important;
+                  max-width: 12px !important;
+                  max-height: 12px !important;
+                }
+
+                img {
+                  max-height: 80px !important;
+                }
+
+                /* Hero specific overrides */
                 .hero-mobile-container h1 {
-                  font-size: 20px !important;
-                  line-height: 22px !important;
-                  margin-bottom: 8px !important;
+                  font-size: 16px !important;
+                  line-height: 18px !important;
+                  margin-bottom: 6px !important;
                 }
 
                 .hero-mobile-container p {
-                  font-size: 12px !important;
-                  line-height: 14px !important;
-                  margin-bottom: 12px !important;
+                  font-size: 10px !important;
+                  line-height: 12px !important;
+                  margin-bottom: 8px !important;
                 }
 
-                .hero-mobile-container svg {
-                  width: 16px !important;
-                  height: 16px !important;
-                }
-
-                /* Timeline grid layout */
+                /* Timeline specific overrides */
                 .timeline-mobile-container {
                   display: grid !important;
                   grid-template-columns: 1fr 1fr !important;
-                  gap: 8px !important;
-                  padding: 8px !important;
+                  gap: 6px !important;
+                  padding: 6px !important;
                   align-items: start !important;
                 }
 
-                /* Timeline text sizes */
                 .timeline-mobile-container h2 {
-                  font-size: 14px !important;
-                  line-height: 16px !important;
-                  margin-bottom: 4px !important;
+                  font-size: 10px !important;
+                  line-height: 11px !important;
+                  margin-bottom: 3px !important;
                 }
 
                 .timeline-mobile-container p {
-                  font-size: 10px !important;
-                  line-height: 12px !important;
+                  font-size: 8px !important;
+                  line-height: 9px !important;
                   margin-bottom: 2px !important;
                 }
 
-                /* Age circles */
                 .timeline-mobile-container .age-circle {
-                  width: 20px !important;
-                  height: 20px !important;
-                  font-size: 10px !important;
+                  width: 16px !important;
+                  height: 16px !important;
+                  font-size: 8px !important;
                 }
 
-                /* Year text */
                 .timeline-mobile-container .year-text {
-                  font-size: 9px !important;
-                  line-height: 10px !important;
+                  font-size: 7px !important;
+                  line-height: 8px !important;
                 }
 
-                /* Images in timeline */
-                .timeline-mobile-container img {
-                  width: 100% !important;
-                  height: auto !important;
-                  max-height: 100px !important;
-                  object-fit: cover !important;
+                /* Section spacing tight */
+                section {
+                  padding: 6px 4px !important;
+                  min-height: 120px !important;
                 }
               }
             }

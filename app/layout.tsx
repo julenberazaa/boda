@@ -497,6 +497,40 @@ export default function RootLayout({
               }
             }
 
+            /* TRIANGULOS GLOBALES (TODAS LAS PANTALLAS) */
+            .tuenti-message-bubble {
+              position: relative !important;
+            }
+
+            .tuenti-message.incoming .tuenti-message-bubble::before {
+              content: '' !important;
+              position: absolute !important;
+              left: -3px !important;
+              top: 50% !important;
+              transform: translateY(-50%) !important;
+              width: 0 !important;
+              height: 0 !important;
+              border: 3px solid transparent !important;
+              border-right-color: #0096D6 !important;
+              border-left: 0 !important;
+              z-index: 1000 !important;
+              display: block !important;
+            }
+
+            .tuenti-message.outgoing .tuenti-message-bubble::after {
+              content: '' !important;
+              position: absolute !important;
+              right: -3px !important;
+              top: 50% !important;
+              transform: translateY(-50%) !important;
+              width: 0 !important;
+              height: 0 !important;
+              border: 3px solid transparent !important;
+              border-left-color: #0096D6 !important;
+              border-right: 0 !important;
+              z-index: 1000 !important;
+              display: block !important;
+            }
           `
         }} />
       </head>

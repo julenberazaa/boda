@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from "react"
 import Image from "next/image"
 import type { TimelineItem } from "@/lib/timeline-data"
+import { useMobileDetection } from "@/hooks/use-mobile-detection"
 
 interface TimelineSectionProps extends TimelineItem {
   index: number
@@ -23,6 +24,7 @@ export default function TimelineSection({
   isReversed,
 }: TimelineSectionProps) {
   const sectionRef = useRef<HTMLElement>(null)
+  const isMobile = useMobileDetection()
 
   useEffect(() => {
     const section = sectionRef.current
@@ -44,7 +46,16 @@ export default function TimelineSection({
   }, [])
 
   return (
-    <section ref={sectionRef} className={`min-h-screen md:min-h-screen flex items-center mobile-section md:py-20 px-2 md:px-4 ${background}`}>
+    <section
+      ref={sectionRef}
+      className={isMobile ? `flex items-center ${background}` : `min-h-screen md:min-h-screen flex items-center mobile-section md:py-20 px-2 md:px-4 ${background}`}
+      style={isMobile ? {
+        minHeight: '120px',
+        padding: '6px 4px',
+        display: 'flex',
+        alignItems: 'center'
+      } : {}}
+    >
       <div className="max-w-7xl mx-auto w-full">
         {/* Desktop layout: mantiene el diseño original */}
         <div className="hidden md:block">
@@ -102,107 +113,130 @@ export default function TimelineSection({
           </div>
         </div>
 
-        {/* Mobile layout: dos columnas, alternando posición - Proporcionalmente escalado */}
-        <div
-          className="block md:hidden mobile-timeline-grid"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '4px',
-            padding: '4px',
-            margin: '0'
-          }}
-        >
-          {/* Columna de medios (carruseles/marcos) - posición alterna */}
-          <div className={`mobile-timeline-media ${isReversed ? 'order-2' : 'order-1'}`}>
-            <div className="relative overflow-hidden rounded-lg shadow-lg">
-              <Image
-                src={imageUrl || "/placeholder.svg"}
-                alt={`${title} - ${year}`}
-                width={300}
-                height={200}
-                className="mobile-image md:w-full md:h-auto md:object-cover md:aspect-[3/2]"
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                  maxHeight: '80px',
-                  objectFit: 'cover'
-                }}
-              />
-            </div>
-            {icon && (
-              <div
-                className="absolute -top-1 -right-1 mobile-age-circle bg-terracotta rounded-full flex items-center justify-center"
-                style={{
-                  width: '16px',
-                  height: '16px',
-                  minWidth: '16px',
-                  minHeight: '16px',
-                  fontSize: '8px'
-                }}
-              >
-                <div className="flex items-center justify-center text-ivory">
-                  {icon}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Columna de contenido - posición alterna */}
-          <div className={`mobile-timeline-content ${isReversed ? 'order-1' : 'order-2'}`}>
-            {/* Header compacto proporcionalmente escalado */}
-            <div className="flex items-center gap-1 mb-1">
-              <div
-                className="mobile-age-circle bg-sage rounded-full flex items-center justify-center"
-                style={{
-                  width: '16px',
-                  height: '16px',
-                  minWidth: '16px',
-                  minHeight: '16px'
-                }}
-              >
-                <span className="text-midnight font-bold" style={{fontSize: '8px'}}>{age}</span>
-              </div>
-              <div>
-                <div className="text-terracotta font-medium mobile-year-text" style={{fontSize: '7px', lineHeight: '8px'}}>{year}</div>
-                <div className="w-2 h-px bg-terracotta mt-px" />
-              </div>
-            </div>
-
-            {/* Título compacto proporcionalmente escalado */}
-            <h2
-              className="font-playfair mobile-timeline-title font-bold text-midnight mb-1"
-              style={{
-                fontSize: '10px',
-                lineHeight: '11px',
-                marginBottom: '2px',
-                fontWeight: '700'
-              }}
-            >
-              {title}
-            </h2>
-
-            {/* Contenido compacto proporcionalmente escalado */}
-            <div
-              className="text-midnight/80 mobile-timeline-content leading-tight text-justify"
-              style={{ fontSize: '8px', lineHeight: '9px', padding: '2px' }}
-            >
-              {content.split("\n").map((paragraph, i) => (
-                <p
-                  key={i}
-                  className="mb-px last:mb-0"
+        {/* Mobile layout: inline styles only */}
+        {isMobile ? (
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: '3px',
+              padding: '3px',
+              margin: '0',
+              width: '100%',
+              boxSizing: 'border-box'
+            }}
+          >
+            {/* Columna de medios */}
+            <div style={{ order: isReversed ? 2 : 1, padding: '1px' }}>
+              <div style={{ position: 'relative', overflow: 'hidden', borderRadius: '4px' }}>
+                <Image
+                  src={imageUrl || "/placeholder.svg"}
+                  alt={`${title} - ${year}`}
+                  width={150}
+                  height={100}
                   style={{
-                    fontSize: '8px',
-                    lineHeight: '9px',
-                    marginBottom: '2px'
+                    width: '100%',
+                    height: 'auto',
+                    maxHeight: '60px',
+                    objectFit: 'cover',
+                    display: 'block'
+                  }}
+                />
+              </div>
+              {icon && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '-2px',
+                    right: '-2px',
+                    width: '12px',
+                    height: '12px',
+                    backgroundColor: '#E67E5B',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '6px',
+                    color: '#FFF8F5'
                   }}
                 >
-                  {paragraph}
-                </p>
-              ))}
+                  {icon}
+                </div>
+              )}
+            </div>
+
+            {/* Columna de contenido */}
+            <div style={{ order: isReversed ? 1 : 2, padding: '1px' }}>
+              {/* Header */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '2px', marginBottom: '2px' }}>
+                <div
+                  style={{
+                    width: '12px',
+                    height: '12px',
+                    backgroundColor: '#A8B5A0',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '6px',
+                    fontWeight: 'bold',
+                    color: '#2C3E3F'
+                  }}
+                >
+                  {age}
+                </div>
+                <div>
+                  <div
+                    style={{
+                      fontSize: '6px',
+                      lineHeight: '7px',
+                      color: '#E67E5B',
+                      fontWeight: '500'
+                    }}
+                  >
+                    {year}
+                  </div>
+                  <div style={{ width: '4px', height: '1px', backgroundColor: '#E67E5B' }} />
+                </div>
+              </div>
+
+              {/* Título */}
+              <h2
+                style={{
+                  fontSize: '8px',
+                  lineHeight: '9px',
+                  marginBottom: '2px',
+                  fontWeight: '700',
+                  color: '#2C3E3F',
+                  fontFamily: 'Playfair Display, serif'
+                }}
+              >
+                {title}
+              </h2>
+
+              {/* Contenido */}
+              <div style={{ fontSize: '6px', lineHeight: '7px', color: 'rgba(44, 62, 63, 0.8)' }}>
+                {content.split("\n").map((paragraph, i) => (
+                  <p
+                    key={i}
+                    style={{
+                      fontSize: '6px',
+                      lineHeight: '7px',
+                      marginBottom: '1px',
+                      textAlign: 'justify'
+                    }}
+                  >
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div className="block md:hidden mobile-timeline-grid">
+            {/* Desktop fallback - keep existing */}
+          </div>
+        )}
       </div>
     </section>
   )

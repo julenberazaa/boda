@@ -1,8 +1,10 @@
 "use client"
 
 import { Heart } from "lucide-react"
+import { useMobileDetection } from "@/hooks/use-mobile-detection"
 
 export default function Hero() {
+  const isMobile = useMobileDetection()
   return (
     
     <section className="relative h-screen flex items-center justify-center overflow-hidden bg-gradient-radial from-terracotta to-ivory">
@@ -14,39 +16,46 @@ export default function Hero() {
       />
 
       <div className="relative z-10 text-center text-midnight px-4" data-aos="zoom-in">
-        <div className="mb-4 md:mb-8">
+        <div
+          className={isMobile ? "" : "mb-4 md:mb-8"}
+          style={isMobile ? { marginBottom: '4px' } : {}}
+        >
           <Heart
-            className="mobile-hero-icon md:w-16 md:h-16 mx-auto mb-2 md:mb-4 text-terracotta"
-            style={{
-              width: '12px',
-              height: '12px',
-              minWidth: '12px',
-              minHeight: '12px'
-            }}
+            className={isMobile ? "mx-auto text-terracotta" : "md:w-16 md:h-16 mx-auto mb-2 md:mb-4 text-terracotta"}
+            style={isMobile ? {
+              width: '8px',
+              height: '8px',
+              marginBottom: '2px',
+              display: 'block',
+              margin: '0 auto 2px auto'
+            } : {}}
           />
         </div>
 
         <h1
-          className="font-playfair mobile-hero-title md:text-6xl lg:text-8xl font-bold mb-4"
-          style={{
-            fontSize: '16px',
-            lineHeight: '18px',
-            marginBottom: '6px',
-            fontWeight: '700'
-          }}
+          className={isMobile ? "font-playfair font-bold text-center" : "font-playfair md:text-6xl lg:text-8xl font-bold mb-4"}
+          style={isMobile ? {
+            fontSize: '12px',
+            lineHeight: '14px',
+            marginBottom: '4px',
+            fontWeight: '700',
+            textAlign: 'center'
+          } : {}}
         >
           Julen & Maitane
         </h1>
 
         <p
-          className="mobile-hero-subtitle md:text-xl lg:text-2xl font-light mb-8 max-w-2xl mx-auto"
-          style={{
-            fontSize: '10px',
-            lineHeight: '12px',
-            marginBottom: '12px',
-            maxWidth: '280px',
-            fontWeight: '300'
-          }}
+          className={isMobile ? "font-light text-center" : "md:text-xl lg:text-2xl font-light mb-8 max-w-2xl mx-auto"}
+          style={isMobile ? {
+            fontSize: '8px',
+            lineHeight: '10px',
+            marginBottom: '8px',
+            maxWidth: '200px',
+            fontWeight: '300',
+            textAlign: 'center',
+            margin: '0 auto 8px auto'
+          } : {}}
         >
           Una historia de amor que comenzó con 7 años y culminará en 2025
         </p>

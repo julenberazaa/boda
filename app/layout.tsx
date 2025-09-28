@@ -313,21 +313,21 @@ export default function RootLayout({
                   height: 6px !important;
                 }
 
-                /* Static chat body size - 12px taller */
+                /* Static chat body size - 6px shorter */
                 .tc-body {
                   padding: 6px !important;
                   margin: 0 !important;
-                  min-height: 132px !important;
-                  height: 132px !important;
-                  padding-bottom: 8px !important;
+                  min-height: 126px !important;
+                  height: 126px !important;
+                  padding-bottom: 2px !important;
                   overflow: hidden !important;
                 }
 
-                /* Tuenti chat container - 12px taller */
+                /* Tuenti chat container - 6px shorter */
                 .tuenti-chat {
-                  height: 172px !important;
-                  min-height: 172px !important;
-                  max-height: 172px !important;
+                  height: 166px !important;
+                  min-height: 166px !important;
+                  max-height: 166px !important;
                   overflow: hidden !important;
                 }
 
@@ -567,10 +567,21 @@ export default function RootLayout({
               }
             }
 
-            /* Hero section responsive height - 24px taller on mobile */
+            /* Hero section responsive changes - taller and larger text on mobile */
             @media (max-width: 768px) {
-              section[style*="minHeight: '500px'"] {
+              section[style*="minHeight: '480px'"] {
                 min-height: 524px !important;
+              }
+
+              /* Larger hero text on mobile */
+              section[style*="minHeight: '480px'"] h1.font-elegant {
+                font-size: calc(8rem * var(--font-scale)) !important;
+                line-height: 1 !important;
+              }
+
+              section[style*="minHeight: '480px'"] p.hero-intro-text {
+                font-size: calc(1.875rem * var(--font-scale)) !important;
+                line-height: 2rem !important;
               }
             }
           `

@@ -385,8 +385,14 @@ export default function RootLayout({
                   padding: 1px 3px !important;
                 }
 
-                /* Triangle positioning - closer and more centered */
+                /* Override original triangles and create new centered ones */
+                .tuenti-message.incoming .tuenti-message-bubble::before,
                 .tuenti-message.outgoing .tuenti-message-bubble::after {
+                  display: none !important;
+                }
+
+                /* New centered triangles with correct colors */
+                .tuenti-message.outgoing .tuenti-message-bubble::before {
                   position: absolute !important;
                   content: '' !important;
                   top: 50% !important;
@@ -396,7 +402,7 @@ export default function RootLayout({
                   height: 0 !important;
                   border-style: solid !important;
                   border-width: 4px 0 4px 6px !important;
-                  border-color: transparent transparent transparent #007AFF !important;
+                  border-color: transparent transparent transparent #0096D6 !important;
                 }
 
                 .tuenti-message.incoming .tuenti-message-bubble::after {
@@ -409,7 +415,7 @@ export default function RootLayout({
                   height: 0 !important;
                   border-style: solid !important;
                   border-width: 4px 6px 4px 0 !important;
-                  border-color: transparent #E5E5E7 transparent transparent !important;
+                  border-color: transparent #0096D6 transparent transparent !important;
                 }
 
                 /* Ensure bubbles have relative positioning for triangles */

@@ -439,24 +439,24 @@ export default function RootLayout({
                 body #main-content .tuenti-chat .tc-body .tuenti-message:nth-child(1).tuenti-message.incoming .tuenti-message-bubble::before {
                   border: 3px solid transparent !important;
                   border-right-color: #0096D6 !important;
-                  left: 4px !important;
-                  bottom: 4px !important;
+                  left: -3px !important;
+                  bottom: 2px !important;
                   border-left: 0 !important;
                 }
 
                 body #main-content .tuenti-chat .tc-body .tuenti-message:nth-child(2).tuenti-message.incoming .tuenti-message-bubble::before {
                   border: 3px solid transparent !important;
                   border-right-color: #0096D6 !important;
-                  left: 4px !important;
-                  bottom: 4px !important;
+                  left: -3px !important;
+                  bottom: 2px !important;
                   border-left: 0 !important;
                 }
 
                 body #main-content .tuenti-chat .tc-body .tuenti-message:nth-child(3).tuenti-message.incoming .tuenti-message-bubble::before {
                   border: 3px solid transparent !important;
                   border-right-color: #0096D6 !important;
-                  left: 4px !important;
-                  bottom: 8px !important;
+                  left: -3px !important;
+                  bottom: 6px !important;
                   border-left: 0 !important;
                 }
 
@@ -464,8 +464,8 @@ export default function RootLayout({
                 body #main-content .tuenti-chat .tc-body .tuenti-message:nth-child(4).tuenti-message.outgoing .tuenti-message-bubble::after {
                   border: 3px solid transparent !important;
                   border-left-color: #0096D6 !important;
-                  right: 4px !important;
-                  bottom: 8px !important;
+                  right: -3px !important;
+                  bottom: 6px !important;
                   border-right: 0 !important;
                 }
 

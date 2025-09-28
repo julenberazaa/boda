@@ -274,11 +274,6 @@ export default function RootLayout({
                   margin-right: 10% !important;
                 }
 
-                /* Triangle-bubble gap reduction to 4px */
-                .tuenti-message-bubble::before {
-                  margin-top: 4px !important;
-                  margin-bottom: 4px !important;
-                }
 
                 /* Compact header area (blue background) */
                 .tc-header {
@@ -434,39 +429,81 @@ export default function RootLayout({
                   right: 4px !important;
                 }
 
-                /* ULTRA-HIGH SPECIFICITY: Override globals.css triangles for mobile */
-                /* Incoming messages (1st, 2nd, 3rd) - Override globals.css ::before */
-                body #main-content .tuenti-chat .tc-body .tuenti-message:nth-child(1).tuenti-message.incoming .tuenti-message-bubble::before {
-                  border: 3px solid transparent !important;
-                  border-right-color: #0096D6 !important;
-                  left: -3px !important;
-                  bottom: 2px !important;
-                  border-left: 0 !important;
+                /* NUEVO SISTEMA DE TRIANGULOS - AISLADO COMPLETAMENTE */
+                /* Reset total de pseudo-elementos existentes */
+                html body #main-content .tuenti-chat .tc-body .tuenti-message .tuenti-message-bubble::before,
+                html body #main-content .tuenti-chat .tc-body .tuenti-message .tuenti-message-bubble::after {
+                  display: none !important;
+                  content: none !important;
+                  border: none !important;
+                  width: 0 !important;
+                  height: 0 !important;
                 }
 
-                body #main-content .tuenti-chat .tc-body .tuenti-message:nth-child(2).tuenti-message.incoming .tuenti-message-bubble::before {
-                  border: 3px solid transparent !important;
-                  border-right-color: #0096D6 !important;
+                /* Triangulos completamente nuevos con especificidad máxima */
+                /* Primer mensaje - triángulo pequeño, 8px más cerca, 4px más abajo */
+                html body #main-content .tuenti-chat .tc-body .tuenti-message:nth-child(1).tuenti-message.incoming .tuenti-message-bubble::before {
+                  display: block !important;
+                  content: '' !important;
+                  position: absolute !important;
                   left: -3px !important;
                   bottom: 2px !important;
+                  width: 0 !important;
+                  height: 0 !important;
+                  border: 3px solid transparent !important;
+                  border-right: 3px solid #0096D6 !important;
                   border-left: 0 !important;
+                  z-index: 999 !important;
                 }
 
-                body #main-content .tuenti-chat .tc-body .tuenti-message:nth-child(3).tuenti-message.incoming .tuenti-message-bubble::before {
+                /* Segundo mensaje - triángulo pequeño, 8px más cerca, 4px más abajo */
+                html body #main-content .tuenti-chat .tc-body .tuenti-message:nth-child(2).tuenti-message.incoming .tuenti-message-bubble::before {
+                  display: block !important;
+                  content: '' !important;
+                  position: absolute !important;
+                  left: -3px !important;
+                  bottom: 2px !important;
+                  width: 0 !important;
+                  height: 0 !important;
                   border: 3px solid transparent !important;
-                  border-right-color: #0096D6 !important;
+                  border-right: 3px solid #0096D6 !important;
+                  border-left: 0 !important;
+                  z-index: 999 !important;
+                }
+
+                /* Tercer mensaje - triángulo pequeño, 8px más cerca, posición normal */
+                html body #main-content .tuenti-chat .tc-body .tuenti-message:nth-child(3).tuenti-message.incoming .tuenti-message-bubble::before {
+                  display: block !important;
+                  content: '' !important;
+                  position: absolute !important;
                   left: -3px !important;
                   bottom: 6px !important;
+                  width: 0 !important;
+                  height: 0 !important;
+                  border: 3px solid transparent !important;
+                  border-right: 3px solid #0096D6 !important;
                   border-left: 0 !important;
+                  z-index: 999 !important;
                 }
 
-                /* Outgoing message (4th) - Keep only original triangle, ensure no duplicates */
-                body #main-content .tuenti-chat .tc-body .tuenti-message:nth-child(4).tuenti-message.outgoing .tuenti-message-bubble::after {
-                  border: 3px solid transparent !important;
-                  border-left-color: #0096D6 !important;
+                /* Cuarto mensaje (outgoing) - triángulo pequeño, 8px más cerca */
+                html body #main-content .tuenti-chat .tc-body .tuenti-message:nth-child(4).tuenti-message.outgoing .tuenti-message-bubble::after {
+                  display: block !important;
+                  content: '' !important;
+                  position: absolute !important;
                   right: -3px !important;
                   bottom: 6px !important;
+                  width: 0 !important;
+                  height: 0 !important;
+                  border: 3px solid transparent !important;
+                  border-left: 3px solid #0096D6 !important;
                   border-right: 0 !important;
+                  z-index: 999 !important;
+                }
+
+                /* Asegurar posicionamiento relativo en burbujas */
+                html body #main-content .tuenti-chat .tc-body .tuenti-message .tuenti-message-bubble {
+                  position: relative !important;
                 }
 
               }

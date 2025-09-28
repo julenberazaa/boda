@@ -58,11 +58,27 @@ export default function RootLayout({
               min-height: 100vh;
             }
 
-            /* NUCLEAR MOBILE OVERRIDES - Maximum specificity */
+            /* MOBILE OVERRIDES - TARGETING REAL HTML ELEMENTS */
             @media (max-width: 767px) {
-              /* HERO SECTION - Ultra specific targeting */
-              section.relative.h-screen .relative.z-10.text-center svg.mobile-hero-icon,
-              .mobile-hero-icon {
+              /* HERO SECTION - Override Tailwind classes directly */
+              .hero-mobile-container h1.font-playfair.font-bold.mb-4,
+              .hero-mobile-container h1 {
+                font-size: 16px !important;
+                line-height: 18px !important;
+                margin-bottom: 6px !important;
+                font-weight: 700 !important;
+              }
+
+              .hero-mobile-container p.font-light.mb-8,
+              .hero-mobile-container p {
+                font-size: 12px !important;
+                line-height: 14px !important;
+                margin-bottom: 8px !important;
+                font-weight: 300 !important;
+              }
+
+              /* HERO ICONS */
+              .hero-mobile-container svg {
                 width: 12px !important;
                 height: 12px !important;
                 min-width: 12px !important;
@@ -71,53 +87,21 @@ export default function RootLayout({
                 max-height: 12px !important;
               }
 
-              section.relative.h-screen .relative.z-10.text-center h1.mobile-hero-title,
-              .mobile-hero-title {
-                font-size: 16px !important;
-                line-height: 18px !important;
-                margin-bottom: 6px !important;
-                font-weight: 700 !important;
-              }
-
-              section.relative.h-screen .relative.z-10.text-center p.mobile-hero-subtitle,
-              .mobile-hero-subtitle {
-                font-size: 10px !important;
-                line-height: 12px !important;
-                margin-bottom: 12px !important;
-                max-width: 280px !important;
-                font-weight: 300 !important;
-              }
-
-              /* TIMELINE SECTIONS - Nuclear overrides */
-              .mobile-timeline-grid {
+              /* TIMELINE SECTIONS - Target real classes */
+              .timeline-mobile-container {
                 display: grid !important;
                 grid-template-columns: 1fr 1fr !important;
-                gap: 4px !important;
+                gap: 6px !important;
                 align-items: start !important;
                 width: 100% !important;
-                padding: 4px !important;
+                padding: 6px !important;
                 margin: 0 !important;
                 box-sizing: border-box !important;
               }
 
-              /* Mobile timeline content - Improved readability */
-              .mobile-timeline-content,
-              .mobile-timeline-content * {
-                font-size: 10px !important;
-                line-height: 11px !important;
-                padding: 2px !important;
-                margin: 1px 0 !important;
-              }
-
-              .mobile-timeline-media {
-                padding: 1px !important;
-              }
-
-              /* Age circles - Tiny */
-              .mobile-age-circle,
-              div.mobile-age-circle,
-              .mobile-timeline-content .mobile-age-circle,
-              .mobile-timeline-media .mobile-age-circle {
+              /* Timeline age circles - Target real age-circle class */
+              .timeline-mobile-container .age-circle,
+              .timeline-mobile-container div.age-circle {
                 width: 18px !important;
                 height: 18px !important;
                 min-width: 18px !important;
@@ -130,30 +114,32 @@ export default function RootLayout({
                 justify-content: center !important;
               }
 
-              /* Timeline titles - Improved visibility */
-              .mobile-timeline-title,
-              h2.mobile-timeline-title {
+              /* Timeline year text - Target real year-text class */
+              .timeline-mobile-container .year-text,
+              .timeline-mobile-container div.year-text {
+                font-size: 9px !important;
+                line-height: 10px !important;
+              }
+
+              /* Timeline titles - Target real h2 */
+              .timeline-mobile-container h2.font-playfair.font-bold,
+              .timeline-mobile-container h2 {
                 font-size: 14px !important;
                 line-height: 15px !important;
                 margin-bottom: 3px !important;
                 font-weight: 700 !important;
               }
 
-              /* Year text - Better readability */
-              .mobile-year-text {
-                font-size: 9px !important;
-                line-height: 10px !important;
+              /* Timeline content paragraphs */
+              .timeline-mobile-container p,
+              .timeline-mobile-container div p {
+                font-size: 10px !important;
+                line-height: 11px !important;
+                margin-bottom: 2px !important;
               }
 
-              /* Section spacing - More comfortable */
-              section.mobile-section {
-                padding: 10px !important;
-                min-height: 160px !important;
-              }
-
-              /* Images - Reasonable size */
-              .mobile-image,
-              .mobile-timeline-media img {
+              /* Timeline images */
+              .timeline-mobile-container img {
                 width: 100% !important;
                 height: auto !important;
                 max-height: 100px !important;
@@ -161,106 +147,46 @@ export default function RootLayout({
                 border-radius: 4px !important;
               }
 
-              /* Overrides for mobile content - Improved readability */
+              /* Section spacing for mobile timeline */
+              section .timeline-mobile-container {
+                padding: 8px !important;
+                min-height: 140px !important;
+              }
+
+              /* General mobile content - Fallback sizes */
               .block.md\\:hidden,
               .block.md\\:hidden * {
                 font-size: 10px !important;
                 line-height: 11px !important;
               }
 
-              /* Specific element targeting - Better sizes */
               .block.md\\:hidden p {
                 font-size: 10px !important;
                 line-height: 11px !important;
                 margin-bottom: 2px !important;
               }
 
-              .block.md\\:hidden div {
-                font-size: 10px !important;
-                line-height: 11px !important;
-              }
-
-              /* SELECTIVE MOBILE OVERRIDES - COMPONENT SPECIFIC */
+              /* ADDITIONAL MOBILE OVERRIDES */
               @media screen and (max-width: 768px) {
-                /* HERO SECTION - PRIORITY OVERRIDES */
-                .hero-mobile-container h1 {
+                /* Ensure hero overrides have maximum priority */
+                section.relative.h-screen .hero-mobile-container h1 {
                   font-size: 16px !important;
                   line-height: 18px !important;
                   margin-bottom: 6px !important;
                 }
 
-                .hero-mobile-container p {
+                section.relative.h-screen .hero-mobile-container p {
                   font-size: 12px !important;
                   line-height: 14px !important;
                   margin-bottom: 8px !important;
                 }
 
-                /* TIMELINE SECTION - IMPROVED SIZES */
-                .timeline-mobile-container {
-                  display: grid !important;
-                  grid-template-columns: 1fr 1fr !important;
-                  gap: 6px !important;
-                  padding: 6px !important;
-                  align-items: start !important;
-                }
-
-                .timeline-mobile-container h2 {
-                  font-size: 14px !important;
-                  line-height: 15px !important;
-                  margin-bottom: 3px !important;
-                }
-
-                .timeline-mobile-container p {
-                  font-size: 10px !important;
-                  line-height: 11px !important;
-                  margin-bottom: 2px !important;
-                }
-
-                .timeline-mobile-container .age-circle {
-                  width: 18px !important;
-                  height: 18px !important;
-                  font-size: 10px !important;
-                }
-
-                .timeline-mobile-container .year-text {
-                  font-size: 9px !important;
-                  line-height: 10px !important;
-                }
-
-                /* GENERAL CONTENT - IMPROVED READABILITY */
-                .mobile-timeline-content,
-                .mobile-timeline-content * {
-                  font-size: 10px !important;
-                  line-height: 11px !important;
-                  padding: 2px !important;
-                  margin: 1px 0 !important;
-                }
-
-                .mobile-timeline-title,
-                h2.mobile-timeline-title {
-                  font-size: 14px !important;
-                  line-height: 15px !important;
-                  margin-bottom: 3px !important;
-                  font-weight: 700 !important;
-                }
-
-                /* ICONS - REASONABLE SIZE */
+                /* General icons */
                 svg:not(.hero-mobile-container svg) {
                   width: 14px !important;
                   height: 14px !important;
                   max-width: 14px !important;
                   max-height: 14px !important;
-                }
-
-                /* IMAGES - MAINTAIN VISIBILITY */
-                img {
-                  max-height: 100px !important;
-                }
-
-                /* Section spacing */
-                section {
-                  padding: 8px 6px !important;
-                  min-height: 140px !important;
                 }
 
                 /* Tuenti chat bubbles - make more horizontal/wider */
@@ -580,17 +506,17 @@ export default function RootLayout({
                   min-height: 524px !important;
                 }
 
-                /* HERO TEXT OVERRIDES - Maximum specificity to override any other rules */
-                section.relative.h-screen .hero-mobile-container h1,
-                section[style*="minHeight: '480px'"] .relative.z-10 .inline-block h1.text-7xl.font-bold.font-elegant,
+                /* HERO TEXT OVERRIDES - Ultimate specificity */
+                section.relative.h-screen .hero-mobile-container h1.font-playfair,
+                section[style*="minHeight: '480px'"] .hero-mobile-container h1,
                 .hero-mobile-container h1 {
                   font-size: 16px !important;
                   line-height: 18px !important;
                   margin-bottom: 6px !important;
                 }
 
-                section.relative.h-screen .hero-mobile-container p,
-                section[style*="minHeight: '480px'"] .relative.z-10 .inline-block p.text-xl.hero-intro-text,
+                section.relative.h-screen .hero-mobile-container p.font-light,
+                section[style*="minHeight: '480px'"] .hero-mobile-container p,
                 .hero-mobile-container p {
                   font-size: 12px !important;
                   line-height: 14px !important;

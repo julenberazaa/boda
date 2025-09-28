@@ -515,7 +515,7 @@ export default function RootLayout({
               transform: translateY(-50%) !important;
               width: 0 !important;
               height: 0 !important;
-              border: 9px solid transparent !important;
+              border: 23px solid transparent !important;
               border-right-color: #0096D6 !important;
               border-left: 0 !important;
               z-index: 1000 !important;
@@ -530,24 +530,24 @@ export default function RootLayout({
               transform: translateY(-50%) !important;
               width: 0 !important;
               height: 0 !important;
-              border: 9px solid transparent !important;
+              border: 23px solid transparent !important;
               border-left-color: #0096D6 !important;
               border-right: 0 !important;
               z-index: 1000 !important;
               display: block !important;
             }
 
-            /* TRIANGULOS MÓVILES (UN TERCIO MÁS GRANDES) */
+            /* TRIANGULOS MÓVILES (150% MÁS GRANDES) */
             @media (max-width: 768px) {
               .tuenti-message.incoming .tuenti-message-bubble::before {
-                border: 4px solid transparent !important;
+                border: 10px solid transparent !important;
                 border-right-color: #0096D6 !important;
                 border-left: 0 !important;
                 left: -2px !important;
               }
 
               .tuenti-message.outgoing .tuenti-message-bubble::after {
-                border: 4px solid transparent !important;
+                border: 10px solid transparent !important;
                 border-left-color: #0096D6 !important;
                 border-right: 0 !important;
                 right: -2px !important;

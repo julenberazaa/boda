@@ -27,6 +27,11 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
 
+        {/* Google Fonts */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Pinyon+Script&family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&display=swap" rel="stylesheet" />
+
         {/* Responsive design for all devices */}
         <style dangerouslySetInnerHTML={{
           __html: `
@@ -505,7 +510,7 @@ export default function RootLayout({
             .tuenti-message.incoming .tuenti-message-bubble::before {
               content: '' !important;
               position: absolute !important;
-              left: 1px !important;
+              left: -6px !important;
               top: 50% !important;
               transform: translateY(-50%) !important;
               width: 0 !important;
@@ -520,7 +525,7 @@ export default function RootLayout({
             .tuenti-message.outgoing .tuenti-message-bubble::after {
               content: '' !important;
               position: absolute !important;
-              right: 1px !important;
+              right: -6px !important;
               top: 50% !important;
               transform: translateY(-50%) !important;
               width: 0 !important;
@@ -538,14 +543,14 @@ export default function RootLayout({
                 border: 4px solid transparent !important;
                 border-right-color: #0096D6 !important;
                 border-left: 0 !important;
-                left: 1px !important;
+                left: -4px !important;
               }
 
               .tuenti-message.outgoing .tuenti-message-bubble::after {
                 border: 4px solid transparent !important;
                 border-left-color: #0096D6 !important;
                 border-right: 0 !important;
-                right: 1px !important;
+                right: -4px !important;
               }
             }
           `

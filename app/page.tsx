@@ -1117,7 +1117,7 @@ export default function TimelinePage() {
       {/* Main content - accessible to all devices */}
       <>
       {/* Hero Section */}
-      <section className="relative py-16 bg-gradient-to-br from-terracotta to-sage overflow-hidden" style={{ minHeight: '480px' }}>
+      <section className="relative py-16 bg-gradient-to-br from-terracotta to-sage overflow-hidden" style={{ minHeight: '504px' }}>
         <div
           ref={heroRef}
           className="absolute inset-0 bg-cover bg-center opacity-20"

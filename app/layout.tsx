@@ -100,11 +100,11 @@ export default function RootLayout({
                 box-sizing: border-box !important;
               }
 
-              /* Mobile timeline content - All text super small */
+              /* Mobile timeline content - Improved readability */
               .mobile-timeline-content,
               .mobile-timeline-content * {
-                font-size: 8px !important;
-                line-height: 9px !important;
+                font-size: 10px !important;
+                line-height: 11px !important;
                 padding: 2px !important;
                 margin: 1px 0 !important;
               }
@@ -118,94 +118,71 @@ export default function RootLayout({
               div.mobile-age-circle,
               .mobile-timeline-content .mobile-age-circle,
               .mobile-timeline-media .mobile-age-circle {
-                width: 16px !important;
-                height: 16px !important;
-                min-width: 16px !important;
-                min-height: 16px !important;
-                max-width: 16px !important;
-                max-height: 16px !important;
-                font-size: 8px !important;
+                width: 18px !important;
+                height: 18px !important;
+                min-width: 18px !important;
+                min-height: 18px !important;
+                max-width: 18px !important;
+                max-height: 18px !important;
+                font-size: 10px !important;
                 display: flex !important;
                 align-items: center !important;
                 justify-content: center !important;
               }
 
-              /* Timeline titles */
+              /* Timeline titles - Improved visibility */
               .mobile-timeline-title,
               h2.mobile-timeline-title {
-                font-size: 10px !important;
-                line-height: 11px !important;
-                margin-bottom: 2px !important;
+                font-size: 14px !important;
+                line-height: 15px !important;
+                margin-bottom: 3px !important;
                 font-weight: 700 !important;
               }
 
-              /* Year text */
+              /* Year text - Better readability */
               .mobile-year-text {
-                font-size: 7px !important;
-                line-height: 8px !important;
+                font-size: 9px !important;
+                line-height: 10px !important;
               }
 
-              /* Section spacing */
+              /* Section spacing - More comfortable */
               section.mobile-section {
-                padding: 8px !important;
-                min-height: 140px !important;
+                padding: 10px !important;
+                min-height: 160px !important;
               }
 
-              /* Images - Very small */
+              /* Images - Reasonable size */
               .mobile-image,
               .mobile-timeline-media img {
                 width: 100% !important;
                 height: auto !important;
-                max-height: 80px !important;
+                max-height: 100px !important;
                 object-fit: cover !important;
                 border-radius: 4px !important;
               }
 
-              /* Overrides for ALL mobile content */
+              /* Overrides for mobile content - Improved readability */
               .block.md\\:hidden,
               .block.md\\:hidden * {
-                font-size: 8px !important;
-                line-height: 9px !important;
+                font-size: 10px !important;
+                line-height: 11px !important;
               }
 
-              /* Specific element targeting */
+              /* Specific element targeting - Better sizes */
               .block.md\\:hidden p {
-                font-size: 8px !important;
-                line-height: 9px !important;
+                font-size: 10px !important;
+                line-height: 11px !important;
                 margin-bottom: 2px !important;
               }
 
               .block.md\\:hidden div {
-                font-size: 8px !important;
-                line-height: 9px !important;
+                font-size: 10px !important;
+                line-height: 11px !important;
               }
 
-              /* AGGRESSIVE MOBILE OVERRIDE - SMALL SIZES */
+              /* SELECTIVE MOBILE OVERRIDES - COMPONENT SPECIFIC */
               @media screen and (max-width: 768px) {
-                /* FORCE ALL TEXT TO BE SMALL */
-                * {
-                  font-size: 10px !important;
-                  line-height: 11px !important;
-                }
-
-                h1, h2, h3, h4, h5, h6 {
-                  font-size: 14px !important;
-                  line-height: 15px !important;
-                }
-
-                /* FORCE ALL ICONS/IMAGES TO BE SMALL */
-                svg {
-                  width: 12px !important;
-                  height: 12px !important;
-                  max-width: 12px !important;
-                  max-height: 12px !important;
-                }
-
-                img {
-                  max-height: 80px !important;
-                }
-
-                /* Hero specific overrides */
+                /* HERO SECTION - PRIORITY OVERRIDES */
                 .hero-mobile-container h1 {
                   font-size: 16px !important;
                   line-height: 18px !important;
@@ -213,12 +190,12 @@ export default function RootLayout({
                 }
 
                 .hero-mobile-container p {
-                  font-size: 10px !important;
-                  line-height: 12px !important;
+                  font-size: 12px !important;
+                  line-height: 14px !important;
                   margin-bottom: 8px !important;
                 }
 
-                /* Timeline specific overrides */
+                /* TIMELINE SECTION - IMPROVED SIZES */
                 .timeline-mobile-container {
                   display: grid !important;
                   grid-template-columns: 1fr 1fr !important;
@@ -228,32 +205,62 @@ export default function RootLayout({
                 }
 
                 .timeline-mobile-container h2 {
-                  font-size: 10px !important;
-                  line-height: 11px !important;
+                  font-size: 14px !important;
+                  line-height: 15px !important;
                   margin-bottom: 3px !important;
                 }
 
                 .timeline-mobile-container p {
-                  font-size: 8px !important;
-                  line-height: 9px !important;
+                  font-size: 10px !important;
+                  line-height: 11px !important;
                   margin-bottom: 2px !important;
                 }
 
                 .timeline-mobile-container .age-circle {
-                  width: 16px !important;
-                  height: 16px !important;
-                  font-size: 8px !important;
+                  width: 18px !important;
+                  height: 18px !important;
+                  font-size: 10px !important;
                 }
 
                 .timeline-mobile-container .year-text {
-                  font-size: 7px !important;
-                  line-height: 8px !important;
+                  font-size: 9px !important;
+                  line-height: 10px !important;
                 }
 
-                /* Section spacing tight */
+                /* GENERAL CONTENT - IMPROVED READABILITY */
+                .mobile-timeline-content,
+                .mobile-timeline-content * {
+                  font-size: 10px !important;
+                  line-height: 11px !important;
+                  padding: 2px !important;
+                  margin: 1px 0 !important;
+                }
+
+                .mobile-timeline-title,
+                h2.mobile-timeline-title {
+                  font-size: 14px !important;
+                  line-height: 15px !important;
+                  margin-bottom: 3px !important;
+                  font-weight: 700 !important;
+                }
+
+                /* ICONS - REASONABLE SIZE */
+                svg:not(.hero-mobile-container svg) {
+                  width: 14px !important;
+                  height: 14px !important;
+                  max-width: 14px !important;
+                  max-height: 14px !important;
+                }
+
+                /* IMAGES - MAINTAIN VISIBILITY */
+                img {
+                  max-height: 100px !important;
+                }
+
+                /* Section spacing */
                 section {
-                  padding: 6px 4px !important;
-                  min-height: 120px !important;
+                  padding: 8px 6px !important;
+                  min-height: 140px !important;
                 }
 
                 /* Tuenti chat bubbles - make more horizontal/wider */
@@ -567,22 +574,28 @@ export default function RootLayout({
               }
             }
 
-            /* Hero section responsive height - 44px taller on mobile */
-            @media (max-width: 768px) {
-              section[style*="minHeight: '480px'"] {
-                min-height: 524px !important;
-              }
+              /* Hero section responsive height - Better mobile experience */
+              @media (max-width: 768px) {
+                section[style*="minHeight: '480px'"] {
+                  min-height: 524px !important;
+                }
 
-              /* HERO TEXT OVERRIDES - Must come AFTER aggressive CSS to have priority */
-              section[style*="minHeight: '480px'"] .relative.z-10 .inline-block h1.text-7xl.font-bold.font-elegant {
-                font-size: 16px !important;
-                line-height: 18px !important;
-              }
+                /* HERO TEXT OVERRIDES - Maximum specificity to override any other rules */
+                section.relative.h-screen .hero-mobile-container h1,
+                section[style*="minHeight: '480px'"] .relative.z-10 .inline-block h1.text-7xl.font-bold.font-elegant,
+                .hero-mobile-container h1 {
+                  font-size: 16px !important;
+                  line-height: 18px !important;
+                  margin-bottom: 6px !important;
+                }
 
-              section[style*="minHeight: '480px'"] .relative.z-10 .inline-block p.text-xl.hero-intro-text {
-                font-size: 12px !important;
-                line-height: 14px !important;
-              }
+                section.relative.h-screen .hero-mobile-container p,
+                section[style*="minHeight: '480px'"] .relative.z-10 .inline-block p.text-xl.hero-intro-text,
+                .hero-mobile-container p {
+                  font-size: 12px !important;
+                  line-height: 14px !important;
+                  margin-bottom: 8px !important;
+                }
             }
           `
         }} />

@@ -436,17 +436,17 @@ export default function RootLayout({
                   border-width: 4px 6px 4px 0 !important;
                 }
 
-                /* Specific triangle positioning fixes for each message - UPWARD */
+                /* Specific triangle positioning fixes for each message - MORE UPWARD */
                 .tuenti-message:nth-child(1) .tuenti-message-bubble::after {
-                  top: calc(50% - 6px) !important;
+                  top: calc(50% - 12px) !important;
                 }
 
                 .tuenti-message:nth-child(2) .tuenti-message-bubble::after {
-                  top: calc(50% - 4px) !important;
+                  top: calc(50% - 10px) !important;
                 }
 
                 .tuenti-message:nth-child(3) .tuenti-message-bubble::after {
-                  top: calc(50% - 3px) !important;
+                  top: calc(50% - 8px) !important;
                 }
 
                 .tuenti-message:nth-child(4) .tuenti-message-bubble::before {

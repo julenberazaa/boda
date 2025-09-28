@@ -102,10 +102,10 @@
   /* Asegurar que los círculos de iconos mantengan su forma perfecta */
   .timeline-icon-circle {
     aspect-ratio: 1 / 1;
-    min-width: 3rem;
-    min-height: 3rem;
-    max-width: 3rem;
-    max-height: 3rem;
+    min-width: 2rem;
+    min-height: 2rem;
+    max-width: 2rem;
+    max-height: 2rem;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -524,6 +524,13 @@
 @container (width < 768px) {
   .slide-frame {
     --mobile-scale: 0.8;
+  }
+}
+
+/* Reducir espacio entre columnas en móviles */
+@media (max-width: 767px) {
+  .timeline-item {
+    gap: 0.5rem !important; /* 8px */
   }
 }
 

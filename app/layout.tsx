@@ -250,6 +250,34 @@ export default function RootLayout({
                   padding: 6px 4px !important;
                   min-height: 120px !important;
                 }
+
+                /* Tuenti chat bubbles - make more horizontal/wider */
+                .tuenti-message-bubble {
+                  max-width: 90% !important;
+                  width: auto !important;
+                  padding: 4px 8px !important;
+                  border-radius: 12px !important;
+                  margin: 2px 0 !important;
+                }
+
+                .tuenti-message {
+                  margin: 3px 0 !important;
+                }
+
+                .tuenti-message.outgoing .tuenti-message-bubble {
+                  margin-left: 10% !important;
+                  margin-right: 5% !important;
+                }
+
+                .tuenti-message.incoming .tuenti-message-bubble {
+                  margin-left: 5% !important;
+                  margin-right: 10% !important;
+                }
+
+                /* Tuenti chat header title */
+                .tc-title {
+                  font-size: 10px !important;
+                }
               }
             }
           `

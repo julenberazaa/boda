@@ -8,6 +8,7 @@ import ImageCarousel from "@/components/image-carousel-unified"
 import { getFrameConfig } from "@/lib/local-frame-config"
 // Unified debug logging - no platform-specific logic
 import { emergencyLog } from "@/components/emergency-debug"
+import { useMobileDetection } from "@/hooks/use-mobile-detection"
 
 interface ImageState {
   src: string | null
@@ -20,8 +21,9 @@ interface ImageState {
 export default function TimelinePage() {
   // Emergency logging for debugging white screen
   emergencyLog('info', 'TimelinePage component started rendering')
-  
+
   // Universal access - no device restrictions
+  const isMobile = useMobileDetection()
 
   const heroRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLIFrameElement>(null)
@@ -1218,7 +1220,7 @@ export default function TimelinePage() {
               <div className="tuenti-chat rounded-2xl custom-shadow-right-bottom hover:custom-shadow-right-bottom-hover transition-all duration-500 overflow-hidden" id="tuenti-chat-widget">
                 <div className="tc-header">
                   <div className="tc-status" id="status-dot"></div>
-                  <span className="tc-title">Julen Baños Martín</span>
+                  <span className="tc-title">{isMobile ? 'Julen' : 'Julen Baños Martín'}</span>
                   <div className="tc-window-controls">
                     <button className="tc-btn tc-minimize" title="Minimizar">−</button>
                     <button className="tc-btn tc-maximize" title="Maximizar">□</button>

@@ -435,6 +435,23 @@ export default function RootLayout({
                   left: -5px !important;
                   border-width: 4px 6px 4px 0 !important;
                 }
+
+                /* Specific triangle positioning fixes for each message */
+                .tuenti-message:nth-child(1) .tuenti-message-bubble::after {
+                  top: calc(50% + 4px) !important;
+                }
+
+                .tuenti-message:nth-child(2) .tuenti-message-bubble::after {
+                  top: calc(50% + 2px) !important;
+                }
+
+                .tuenti-message:nth-child(3) .tuenti-message-bubble::after {
+                  top: calc(50% + 1px) !important;
+                }
+
+                .tuenti-message:nth-child(4) .tuenti-message-bubble::before {
+                  top: calc(50% - 1px) !important;
+                }
               }
             }
           `

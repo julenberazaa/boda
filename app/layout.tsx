@@ -313,37 +313,39 @@ export default function RootLayout({
                   height: 6px !important;
                 }
 
-                /* Static chat body size - not dynamic */
+                /* Static chat body size - 12px taller */
                 .tc-body {
                   padding: 6px !important;
                   margin: 0 !important;
-                  min-height: 120px !important;
-                  height: 120px !important;
+                  min-height: 132px !important;
+                  height: 132px !important;
                   padding-bottom: 8px !important;
                   overflow: hidden !important;
                 }
 
-                /* Tuenti chat container - fixed static size */
+                /* Tuenti chat container - 12px taller */
                 .tuenti-chat {
-                  height: 160px !important;
-                  min-height: 160px !important;
-                  max-height: 160px !important;
+                  height: 172px !important;
+                  min-height: 172px !important;
+                  max-height: 172px !important;
                   overflow: hidden !important;
                 }
 
-                /* Header element positioning - buttons left, name right */
+                /* Header element positioning - circle → name → buttons */
                 .tc-header {
                   display: flex !important;
-                  justify-content: space-between !important;
                   align-items: center !important;
                   position: relative !important;
+                  gap: 6px !important;
                 }
 
-                .tc-window-controls {
+                .tc-status {
                   order: 1 !important;
-                  padding: 0 !important;
                   margin: 0 !important;
                   margin-left: 4px !important;
+                  width: 6px !important;
+                  height: 6px !important;
+                  flex-shrink: 0 !important;
                 }
 
                 .tc-title {
@@ -357,12 +359,12 @@ export default function RootLayout({
                   text-align: left !important;
                 }
 
-                .tc-status {
+                .tc-window-controls {
                   order: 3 !important;
+                  padding: 0 !important;
                   margin: 0 !important;
                   margin-right: 4px !important;
-                  width: 6px !important;
-                  height: 6px !important;
+                  flex-shrink: 0 !important;
                 }
 
                 /* Smaller button hover size */
@@ -381,6 +383,38 @@ export default function RootLayout({
                 .tc-btn:hover {
                   transform: scale(0.9) !important;
                   padding: 1px 3px !important;
+                }
+
+                /* Triangle positioning - closer and more centered */
+                .tuenti-message.outgoing .tuenti-message-bubble::after {
+                  position: absolute !important;
+                  content: '' !important;
+                  top: 50% !important;
+                  transform: translateY(-50%) !important;
+                  right: -4px !important;
+                  width: 0 !important;
+                  height: 0 !important;
+                  border-style: solid !important;
+                  border-width: 4px 0 4px 6px !important;
+                  border-color: transparent transparent transparent #007AFF !important;
+                }
+
+                .tuenti-message.incoming .tuenti-message-bubble::after {
+                  position: absolute !important;
+                  content: '' !important;
+                  top: 50% !important;
+                  transform: translateY(-50%) !important;
+                  left: -4px !important;
+                  width: 0 !important;
+                  height: 0 !important;
+                  border-style: solid !important;
+                  border-width: 4px 6px 4px 0 !important;
+                  border-color: transparent #E5E5E7 transparent transparent !important;
+                }
+
+                /* Ensure bubbles have relative positioning for triangles */
+                .tuenti-message-bubble {
+                  position: relative !important;
                 }
               }
             }

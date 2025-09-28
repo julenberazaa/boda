@@ -203,7 +203,8 @@ export default function RootLayout({
               section.timeline-item.mb-16.grid.grid-cols-12,
               section.timeline-item.grid.grid-cols-12,
               #conocidos-2010 {
-                gap: 4px !important; /* Reducido a 4px como solicitado */
+                gap: 6px !important; /* Margen central como solicitado */
+                justify-content: center !important; /* Centrar las columnas */
               }
 
               /* Remove excessive lateral padding */
@@ -466,29 +467,41 @@ export default function RootLayout({
                   margin-top: 24px !important;
                 }
 
-                /* BALANCED MOBILE LAYOUT - All timeline sections */
-                /* Better distribution: 40% media, 60% text */
+                /* BALANCED MOBILE LAYOUT - Centered distribution */
+                /* Better balanced: ~45% media, ~55% text, centered */
                 .timeline-item > div:first-child,
                 #conocidos-2010 > div:first-child {
-                  grid-column: span 4 !important;  /* 4/12 = 33% */
-                  padding-right: 2px !important;
+                  grid-column: span 5 !important;  /* 5/12 = 42% */
+                  padding-right: 3px !important;
+                  margin: 0 auto !important;
                 }
 
                 .timeline-item > div:last-child,
                 #conocidos-2010 > div:last-child {
-                  grid-column: span 8 !important;  /* 8/12 = 67% para texto */
-                  padding-left: 2px !important;
+                  grid-column: span 7 !important;  /* 7/12 = 58% para texto */
+                  padding-left: 3px !important;
+                  margin: 0 auto !important;
                 }
 
-                /* Apply same distribution to all timeline sections */
+                /* Apply same centered distribution to all timeline sections */
                 section.timeline-item > div.col-span-6:first-child {
-                  grid-column: span 4 !important;
-                  padding-right: 2px !important;
+                  grid-column: span 5 !important;
+                  padding-right: 3px !important;
+                  margin: 0 auto !important;
                 }
 
                 section.timeline-item > div.col-span-6:last-child {
-                  grid-column: span 8 !important;
-                  padding-left: 2px !important;
+                  grid-column: span 7 !important;
+                  padding-left: 3px !important;
+                  margin: 0 auto !important;
+                }
+
+                /* Center the entire grid container */
+                section.timeline-item.mb-16.grid.grid-cols-12,
+                #conocidos-2010 {
+                  max-width: calc(100vw - 16px) !important;
+                  margin: 0 auto !important;
+                  justify-items: center !important;
                 }
 
                 /* Plantas decorativas - mucho más pequeñas y en las esquinas para móviles */

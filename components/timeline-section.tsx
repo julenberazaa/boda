@@ -117,7 +117,9 @@ export default function TimelineSection({
             </div>
             {icon && (
               <div className="absolute -top-2 -right-2 w-6 h-6 bg-terracotta rounded-full flex items-center justify-center">
-                <span className="text-xs">{React.cloneElement(icon as React.ReactElement, { className: 'w-3 h-3' })}</span>
+                <div className="w-3 h-3 flex items-center justify-center text-ivory">
+                  {icon}
+                </div>
               </div>
             )}
           </div>

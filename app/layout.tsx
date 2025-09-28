@@ -436,21 +436,36 @@ export default function RootLayout({
                   border-width: 4px 6px 4px 0 !important;
                 }
 
-                /* Specific triangle positioning fixes for each message - MORE UPWARD */
+                /* Mobile-only Tuenti section layout override */
+                #conocidos-2010 {
+                  gap: 0 !important;
+                }
+
+                #conocidos-2010 > div:first-child {
+                  grid-column: span 7 !important;
+                  padding-right: 1rem !important;
+                }
+
+                #conocidos-2010 > div:last-child {
+                  grid-column: span 5 !important;
+                  padding-left: 1rem !important;
+                }
+
+                /* MOBILE-ONLY triangle positioning - VERY AGGRESSIVE UPWARD */
                 .tuenti-message:nth-child(1) .tuenti-message-bubble::after {
-                  top: calc(50% - 12px) !important;
+                  top: calc(50% - 20px) !important;
                 }
 
                 .tuenti-message:nth-child(2) .tuenti-message-bubble::after {
-                  top: calc(50% - 10px) !important;
+                  top: calc(50% - 18px) !important;
                 }
 
                 .tuenti-message:nth-child(3) .tuenti-message-bubble::after {
-                  top: calc(50% - 8px) !important;
+                  top: calc(50% - 16px) !important;
                 }
 
                 .tuenti-message:nth-child(4) .tuenti-message-bubble::before {
-                  top: calc(50% - 2px) !important;
+                  top: calc(50% - 12px) !important;
                 }
               }
             }

@@ -1213,8 +1213,8 @@ export default function TimelinePage() {
         
         <div className="max-w-7xl mx-auto px-4 py-12 relative z-20">
         {/* 2010 - Conocidos - Chat Tuenti */}
-        <section id="conocidos-2010" className="timeline-item mb-16 grid grid-cols-12 sm:grid-cols-12 gap-0 items-center opacity-0 translate-y-8 transition-all duration-1000 ease-in-out pt-24">
-          <div className="col-span-7 pr-4">
+        <section id="conocidos-2010" className="timeline-item mb-16 grid grid-cols-12 sm:grid-cols-12 gap-8 items-center opacity-0 translate-y-8 transition-all duration-1000 ease-in-out pt-24">
+          <div className="col-span-6 pr-8">
             {/* Chat de Tuenti */}
             <div className="p-6">
               <div className="tuenti-chat rounded-2xl custom-shadow-right-bottom hover:custom-shadow-right-bottom-hover transition-all duration-500 overflow-hidden" id="tuenti-chat-widget">
@@ -1233,7 +1233,7 @@ export default function TimelinePage() {
               </div>
             </div>
           </div>
-          <div className="col-span-5 pl-4">
+          <div className="col-span-6 pl-8">
             <div className="flex items-center mb-6">
               <div className="timeline-icon-circle bg-terracotta mr-4">
                 <svg className="w-6 h-6" viewBox="145.5 144.8 609 609.7" xmlns="http://www.w3.org/2000/svg">

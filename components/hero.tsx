@@ -15,12 +15,12 @@ export default function Hero() {
 
       <div className="relative z-10 text-center text-midnight px-4" data-aos="zoom-in">
         <div className="mb-4 md:mb-8">
-          <Heart className="w-8 h-8 md:w-16 md:h-16 mx-auto mb-2 md:mb-4 text-terracotta" />
+          <Heart className="mobile-hero-icon md:w-16 md:h-16 mx-auto mb-2 md:mb-4 text-terracotta" />
         </div>
 
-        <h1 className="font-playfair text-3xl mobile-text-2xl md:text-6xl lg:text-8xl font-bold mb-4">Julen & Maitane</h1>
+        <h1 className="font-playfair mobile-hero-title md:text-6xl lg:text-8xl font-bold mb-4">Julen & Maitane</h1>
 
-        <p className="text-base mobile-text-sm md:text-xl lg:text-2xl font-light mb-8 max-w-2xl mx-auto">
+        <p className="mobile-hero-subtitle md:text-xl lg:text-2xl font-light mb-8 max-w-2xl mx-auto">
           Una historia de amor que comenzó con 7 años y culminará en 2025
         </p>
 

@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import './globals.css'
 // Simplified layout - no platform-specific components needed
 import EmergencyDebug from '@/components/emergency-debug'
-import DimensionLogger from '@/components/dimension-logger'
 
 export const metadata: Metadata = {
   title: 'Boda J&M',
@@ -54,34 +53,68 @@ export default function RootLayout({
               min-height: 100vh;
             }
 
-            /* Mobile responsive utilities */
+            /* Mobile responsive utilities - Proportionally scaled to match desktop visual appearance */
             @media (max-width: 767px) {
-              /* Compact text for mobile */
-              .mobile-text-xs { font-size: 0.625rem; line-height: 0.75rem; }
-              .mobile-text-sm { font-size: 0.75rem; line-height: 1rem; }
-              .mobile-text-base { font-size: 0.8125rem; line-height: 1.125rem; }
-              .mobile-text-lg { font-size: 0.9375rem; line-height: 1.25rem; }
-              .mobile-text-xl { font-size: 1.0625rem; line-height: 1.375rem; }
-              .mobile-text-2xl { font-size: 1.25rem; line-height: 1.5rem; }
-              .mobile-text-3xl { font-size: 1.5rem; line-height: 1.75rem; }
-              .mobile-text-4xl { font-size: 1.75rem; line-height: 2rem; }
+              /* Proportional scaling factor: mobile_width / desktop_width = 375/1536 = 0.244 */
 
-              /* Mobile two-column layout for timeline */
+              /* Content container scaled to maintain 83.3% width ratio */
+              .mobile-container {
+                width: 83.3vw;
+                margin: 0 auto;
+                padding: 0 8.4vw; /* Equivalent to desktop 128px padding scaled */
+              }
+
+              /* Hero proportionally scaled fonts */
+              .mobile-hero-icon {
+                width: 4.15vw; /* 64px * 0.244 = 15.6px ≈ 4.15vw at 375px */
+                height: 4.15vw;
+              }
+              .mobile-hero-title {
+                font-size: 7.5vw; /* 115.2px * 0.244 = 28.1px ≈ 7.5vw at 375px */
+                line-height: 1.2;
+              }
+              .mobile-hero-subtitle {
+                font-size: 1.87vw; /* 28.8px * 0.244 = 7px ≈ 1.87vw at 375px */
+                line-height: 1.4;
+              }
+
+              /* Timeline sections scaled */
               .mobile-timeline-grid {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
-                gap: 0.75rem;
+                gap: 2vw; /* Proportionally scaled gap */
                 align-items: start;
+                width: 100%;
+                max-width: 83.3vw;
+                margin: 0 auto;
               }
 
               .mobile-timeline-content {
-                padding: 0.5rem;
-                font-size: 0.75rem;
-                line-height: 1rem;
+                padding: 1.2vw;
+                font-size: 2.4vw; /* Scaled text size */
+                line-height: 1.3;
               }
 
               .mobile-timeline-media {
-                padding: 0.25rem;
+                padding: 0.6vw;
+              }
+
+              /* Age circle scaled */
+              .mobile-age-circle {
+                width: 3.2vw;
+                height: 3.2vw;
+                font-size: 1.6vw;
+              }
+
+              /* Timeline title scaled */
+              .mobile-timeline-title {
+                font-size: 3.2vw;
+                line-height: 1.2;
+              }
+
+              /* Year text scaled */
+              .mobile-year-text {
+                font-size: 1.8vw;
               }
             }
           `
@@ -91,7 +124,6 @@ export default function RootLayout({
         <div id="main-content">
           {children}
         </div>
-        <DimensionLogger />
         <EmergencyDebug />
       </body>
     </html>

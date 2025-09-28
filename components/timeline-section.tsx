@@ -102,7 +102,7 @@ export default function TimelineSection({
           </div>
         </div>
 
-        {/* Mobile layout: dos columnas, alternando posición */}
+        {/* Mobile layout: dos columnas, alternando posición - Proporcionalmente escalado */}
         <div className="block md:hidden mobile-timeline-grid">
           {/* Columna de medios (carruseles/marcos) - posición alterna */}
           <div className={`mobile-timeline-media ${isReversed ? 'order-2' : 'order-1'}`}>
@@ -116,8 +116,8 @@ export default function TimelineSection({
               />
             </div>
             {icon && (
-              <div className="absolute -top-2 -right-2 w-6 h-6 bg-terracotta rounded-full flex items-center justify-center">
-                <div className="w-3 h-3 flex items-center justify-center text-ivory">
+              <div className="absolute -top-1 -right-1 mobile-age-circle bg-terracotta rounded-full flex items-center justify-center">
+                <div className="flex items-center justify-center text-ivory">
                   {icon}
                 </div>
               </div>
@@ -126,24 +126,24 @@ export default function TimelineSection({
 
           {/* Columna de contenido - posición alterna */}
           <div className={`mobile-timeline-content ${isReversed ? 'order-1' : 'order-2'}`}>
-            {/* Header compacto */}
-            <div className="flex items-center gap-2 mb-2">
-              <div className="w-6 h-6 bg-sage rounded-full flex items-center justify-center">
-                <span className="text-midnight font-bold mobile-text-xs">{age}</span>
+            {/* Header compacto proporcionalmente escalado */}
+            <div className="flex items-center gap-1 mb-1">
+              <div className="mobile-age-circle bg-sage rounded-full flex items-center justify-center">
+                <span className="text-midnight font-bold mobile-age-circle">{age}</span>
               </div>
               <div>
-                <div className="text-terracotta font-medium mobile-text-xs">{year}</div>
-                <div className="w-6 h-0.5 bg-terracotta mt-0.5" />
+                <div className="text-terracotta font-medium mobile-year-text">{year}</div>
+                <div className="w-3 h-0.5 bg-terracotta mt-0.5" />
               </div>
             </div>
 
-            {/* Título compacto */}
-            <h2 className="font-playfair mobile-text-lg font-bold text-midnight mb-2">{title}</h2>
+            {/* Título compacto proporcionalmente escalado */}
+            <h2 className="font-playfair mobile-timeline-title font-bold text-midnight mb-1">{title}</h2>
 
-            {/* Contenido compacto */}
-            <div className="text-midnight/80 mobile-text-xs leading-tight text-justify">
+            {/* Contenido compacto proporcionalmente escalado */}
+            <div className="text-midnight/80 mobile-timeline-content leading-tight text-justify">
               {content.split("\n").map((paragraph, i) => (
-                <p key={i} className="mb-1 last:mb-0">
+                <p key={i} className="mb-0.5 last:mb-0">
                   {paragraph}
                 </p>
               ))}

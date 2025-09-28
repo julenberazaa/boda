@@ -313,21 +313,21 @@ export default function RootLayout({
                   height: 6px !important;
                 }
 
-                /* Static chat body size - 6px shorter */
+                /* Static chat body size - 12px shorter total */
                 .tc-body {
                   padding: 6px !important;
                   margin: 0 !important;
-                  min-height: 126px !important;
-                  height: 126px !important;
+                  min-height: 120px !important;
+                  height: 120px !important;
                   padding-bottom: 2px !important;
                   overflow: hidden !important;
                 }
 
-                /* Tuenti chat container - 6px shorter */
+                /* Tuenti chat container - 12px shorter total */
                 .tuenti-chat {
-                  height: 166px !important;
-                  min-height: 166px !important;
-                  max-height: 166px !important;
+                  height: 160px !important;
+                  min-height: 160px !important;
+                  max-height: 160px !important;
                   overflow: hidden !important;
                 }
 
@@ -575,13 +575,13 @@ export default function RootLayout({
 
               /* Larger hero text on mobile */
               section[style*="minHeight: '480px'"] h1.font-elegant {
-                font-size: calc(8rem * var(--font-scale)) !important;
+                font-size: calc(9rem * var(--font-scale)) !important;
                 line-height: 1 !important;
               }
 
               section[style*="minHeight: '480px'"] p.hero-intro-text {
-                font-size: calc(1.875rem * var(--font-scale)) !important;
-                line-height: 2rem !important;
+                font-size: calc(2.25rem * var(--font-scale)) !important;
+                line-height: 2.5rem !important;
               }
             }
           `

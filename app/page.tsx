@@ -1131,9 +1131,9 @@ export default function TimelinePage() {
               <Heart className="w-16 h-16 mx-auto mb-0 animate-pulse" style={{ marginTop: '0px' }} />
           </div>
           <div className="inline-block mx-auto px-6 py-2">
-            <h1 className="text-8xl font-bold mb-4 font-elegant">Maitane & Julen</h1>
+            <h1 className="text-7xl font-bold mb-4 font-elegant">Maitane & Julen</h1>
             <p
-              className="text-2xl max-w-3xl mx-auto font-manuscript hero-intro-text"
+              className="text-xl max-w-3xl mx-auto font-manuscript hero-intro-text"
               style={{
                 // Ancho un poco mayor (max-w-3xl) y márgenes extra arriba y abajo
                 

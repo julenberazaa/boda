@@ -553,6 +553,18 @@
     width: 1.5rem !important; /* 24px - igual que w-6 h-6 */
     height: 1.5rem !important; /* 24px - igual que w-6 h-6 */
   }
+
+  /* Ajuste específico para el icono de Primeras escapadas - 15% más pequeño */
+  .timeline-icon-circle img[src="/pareja4.svg"] {
+    width: 1.275rem !important; /* 15% más pequeño que 1.5rem */
+    height: 1.275rem !important; /* 15% más pequeño que 1.5rem */
+  }
+
+  /* Ajuste específico para el icono de Pedida de mano - 10% más pequeño horizontalmente, 20% más pequeño verticalmente */
+  .timeline-icon-circle img[src="/pedida/anillos.svg"] {
+    width: 1.35rem !important; /* 10% más pequeño que 1.5rem */
+    height: 1.2rem !important; /* 20% más pequeño que 1.5rem */
+  }
 }
 
 /* Performance optimizations for all devices */

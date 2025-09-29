@@ -565,6 +565,25 @@
     width: 1.215rem !important; /* 19% más pequeño que 1.5rem */
     height: 0.864rem !important; /* 10% adicional sobre 0.96rem = 42.4% total */
   }
+
+  /* Espaciado vertical adicional entre secciones de historia en móviles */
+  .mobile-section + .mobile-section {
+    margin-top: 2rem !important; /* 32px de espacio adicional entre secciones */
+  }
+
+  /* Reducir el margen superior de la primera sección de historia en móviles */
+  .mobile-section:first-of-type {
+    margin-top: -1rem !important; /* Subir la primera sección 16px */
+  }
+
+  /* Asegurar que el contenedor móvil tenga el espaciado correcto */
+  .timeline-mobile-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 0.75rem; /* 12px entre columnas */
+    align-items: start;
+    padding: 1rem 0; /* 16px arriba y abajo */
+  }
 }
 
 /* Performance optimizations for all devices */

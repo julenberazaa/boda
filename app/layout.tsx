@@ -595,6 +595,43 @@ export default function RootLayout({
                   right: 4px !important;
                 }
 
+                /* CAROUSEL MOBILE FIX - Target carousel containers with fixed heights */
+                .timeline-item div[style*="height: calc(384px"],
+                .timeline-item div[style*="height:calc(384px"] {
+                  height: 120px !important;
+                  max-height: 120px !important;
+                  min-height: 120px !important;
+                  overflow: hidden !important;
+                  display: block !important;
+                }
+
+                /* Ensure carousel wrapper visibility and proper sizing */
+                .timeline-item div.p-6 div.relative[style*="width"],
+                .timeline-item div.p-6 > div.relative {
+                  width: 100% !important;
+                  height: 120px !important;
+                  display: block !important;
+                  margin: 0 !important;
+                  padding: 0 !important;
+                }
+
+                /* Force carousel content visibility and proper dimensions */
+                .timeline-item div[style*="position: relative"] > div,
+                .timeline-item div[style*="overflow: hidden"] > * {
+                  display: block !important;
+                  width: 100% !important;
+                  height: 100% !important;
+                  position: relative !important;
+                }
+
+                /* Ensure ImageCarousel component itself is visible */
+                .timeline-item div[style*="height: calc(384px"] .relative.w-full.h-full,
+                .timeline-item div[style*="overflow: hidden"] .relative {
+                  width: 100% !important;
+                  height: 100% !important;
+                  display: block !important;
+                }
+
                 /* TRIANGULOS MÓVILES - FINALES */
                 .tuenti-message-bubble {
                   position: relative !important;

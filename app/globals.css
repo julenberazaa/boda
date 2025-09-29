@@ -547,6 +547,12 @@
   .timeline-item h3 {
     margin-left: 0.5rem !important; /* 8px */
   }
+
+  /* Iconos más pequeños en los círculos para móviles - específicamente para las secciones que tienen iconos grandes */
+  .timeline-icon-circle img {
+    width: 1.5rem !important; /* 24px - igual que w-6 h-6 */
+    height: 1.5rem !important; /* 24px - igual que w-6 h-6 */
+  }
 }
 
 /* Performance optimizations for all devices */

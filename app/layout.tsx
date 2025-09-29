@@ -633,9 +633,9 @@ export default function RootLayout({
                 }
 
 
-                /* MOBILE CAROUSEL FIX - Target exact carousel container structure */
-                section.timeline-item.mb-16.grid.grid-cols-12 div.col-span-6 div.p-6 div.relative div[style*="height: calc(384px"],
-                .timeline-item div.p-6 div.relative div[style*="overflow: hidden"] {
+                /* MOBILE CAROUSEL FIX - Corrected selectors to match actual HTML structure */
+                section.timeline-item.mb-16.grid.grid-cols-12 div.col-span-6 div[class*="p-6"] div.relative div[style*="height: calc(384px"],
+                .timeline-item div[class*="p-6"] div.relative div[style*="overflow: hidden"] {
                   height: 120px !important;
                   min-height: 120px !important;
                   max-height: 120px !important;

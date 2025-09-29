@@ -240,6 +240,42 @@ export default function RootLayout({
               #conocidos-2010 {
                 gap: 8px !important; /* Exactly 8px as requested */
                 justify-content: center !important; /* Centrar las columnas */
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                width: 100% !important;
+                max-width: 100vw !important; /* No exceder ancho de viewport */
+                box-sizing: border-box !important;
+              }
+
+              /* TIMELINE CONTAINER CENTERING - Ensure sections don't shift right */
+              .max-w-7xl.mx-auto {
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                max-width: 100% !important;
+                width: 100% !important;
+                padding-left: 8px !important;
+                padding-right: 8px !important;
+              }
+
+              /* TIMELINE MAIN CONTAINER - Force full-width centering */
+              div.w-full.relative[style*="background"] .max-w-7xl,
+              div.max-w-7xl.mx-auto.px-4.py-12 {
+                margin-left: auto !important;
+                margin-right: auto !important;
+                padding-left: 4px !important;
+                padding-right: 4px !important;
+                max-width: calc(100vw - 8px) !important;
+              }
+
+              /* TIMELINE SECTION CENTERING - Prevent right displacement */
+              section.timeline-item {
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+                width: 100% !important;
+                max-width: 100vw !important;
+                overflow-x: hidden !important;
               }
 
               /* ELIMINATE ALL LATERAL PADDING - Clean slate approach */
@@ -260,6 +296,16 @@ export default function RootLayout({
               section.timeline-item div.col-span-6 > .p-6 {
                 padding-left: 4px !important;
                 padding-right: 4px !important;
+                box-sizing: border-box !important;
+              }
+
+              /* COLUMN CONTENT CONSTRAINTS - Prevent overflow */
+              section.timeline-item div.col-span-6 {
+                max-width: calc(50% - 4px) !important; /* 50% minus half the gap */
+                width: calc(50% - 4px) !important;
+                box-sizing: border-box !important;
+                overflow-wrap: break-word !important;
+                word-break: break-word !important;
               }
 
               /* TEXT ALIGNMENT FIXES - Prevent text from pushing too far right or overflowing */
@@ -269,6 +315,9 @@ export default function RootLayout({
               section.timeline-item div.col-span-6:first-child p {
                 text-align: left !important;
                 margin-left: 0 !important;
+                max-width: 100% !important;
+                overflow-wrap: break-word !important;
+                word-break: break-word !important;
               }
 
               /* Right column text alignment and overflow prevention */
@@ -279,6 +328,7 @@ export default function RootLayout({
                 margin-right: 0 !important;
                 max-width: 100% !important;
                 overflow-wrap: break-word !important;
+                word-break: break-word !important;
               }
 
               /* TIMELINE INTERNAL SPACING - Minimize without accumulation */

@@ -633,7 +633,7 @@ export default function RootLayout({
                 }
 
 
-                /* MOBILE CAROUSEL FIX - Final implementation using working selector */
+                /* MOBILE CAROUSEL FIX - Restore what worked, but preserve transitions */
                 div[style*="calc(384px"] {
                   height: 120px !important;
                   min-height: 120px !important;
@@ -649,16 +649,15 @@ export default function RootLayout({
                   display: block !important;
                   width: 100% !important;
                   height: 100% !important;
-                  position: relative !important;
                 }
 
-                /* Optimize carousel images for mobile - DON'T override opacity/transitions */
+                /* Force carousel images to show - but allow opacity transitions */
                 div[style*="calc(384px"] img {
-                  max-width: 100% !important;
-                  max-height: 100% !important;
+                  display: block !important;
+                  width: 100% !important;
+                  height: 100% !important;
                   object-fit: cover !important;
-                  /* DO NOT override: opacity, transition, zIndex, position:absolute */
-                  /* These are controlled by the carousel component */
+                  /* Allow carousel to control: opacity, transition, z-index */
                 }
 
 

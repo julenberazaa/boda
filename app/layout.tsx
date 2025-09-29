@@ -652,24 +652,15 @@ export default function RootLayout({
                   position: relative !important;
                 }
 
-                /* Optimize carousel images for mobile */
+                /* Optimize carousel images for mobile - DON'T override opacity/transitions */
                 div[style*="calc(384px"] img {
-                  display: block !important;
-                  width: 100% !important;
-                  height: 100% !important;
+                  max-width: 100% !important;
+                  max-height: 100% !important;
                   object-fit: cover !important;
-                  position: relative !important;
+                  /* DO NOT override: opacity, transition, zIndex, position:absolute */
+                  /* These are controlled by the carousel component */
                 }
 
-                /* Ensure carousel images are properly visible */
-                .timeline-item div[style*="height: calc(384px"] img,
-                .timeline-item div[style*="overflow: hidden"] img {
-                  display: block !important;
-                  width: 100% !important;
-                  height: 100% !important;
-                  object-fit: cover !important;
-                  position: relative !important;
-                }
 
                 /* TRIANGULOS MÓVILES - FINALES */
                 .tuenti-message-bubble {

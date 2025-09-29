@@ -728,9 +728,9 @@ export default function RootLayout({
                   height: 76px !important;
                   min-height: 76px !important;
                   max-height: 76px !important;
-                  width: 138px !important; /* 20% wider than 115px */
-                  min-width: 138px !important;
-                  max-width: 138px !important;
+                  width: 166px !important; /* 20% wider than 138px */
+                  min-width: 166px !important;
+                  max-width: 166px !important;
                   display: block !important;
                   overflow: hidden !important;
                   position: relative !important;

@@ -567,28 +567,26 @@
   }
 
   /* Espaciado vertical adicional entre secciones de historia en móviles */
-  section.mobile-section + section.mobile-section {
-    margin-top: 2rem !important; /* 32px de espacio adicional entre secciones */
+  section.timeline-item.mb-16 + section.timeline-item.mb-16 {
+    margin-top: 3rem !important; /* 48px de espacio adicional entre secciones */
   }
 
   /* Reducir el margen superior de la primera sección de historia en móviles */
-  section.mobile-section:first-of-type {
-    margin-top: -1rem !important; /* Subir la primera sección 16px */
+  section.timeline-item.mb-16:first-of-type {
+    margin-top: -2rem !important; /* Subir la primera sección 32px */
+    padding-top: 1rem !important; /* Reducir padding superior */
   }
 
-  /* Espaciado y altura para secciones móviles de historia */
-  section.mobile-section {
-    min-height: auto !important;
-    padding: 1rem 0.5rem !important; /* Mayor padding vertical */
+  /* Espaciado general mejorado para las secciones timeline en móviles */
+  section.timeline-item.mb-16 {
+    padding: 2rem 0 !important; /* Mayor padding vertical */
+    margin-bottom: 2rem !important; /* Sobrescribir el 6px del layout */
   }
 
-  /* Asegurar que el contenedor móvil tenga el espaciado correcto */
-  .timeline-mobile-container {
-    display: grid !important;
-    grid-template-columns: 1fr 2fr !important;
-    gap: 0.75rem !important; /* 12px entre columnas */
-    align-items: start !important;
-    padding: 1rem 0 !important; /* 16px arriba y abajo */
+  /* Específico para el primer elemento que tiene id */
+  section#conocidos-2010.timeline-item.mb-16 {
+    margin-top: -3rem !important; /* Subir aún más la primera sección */
+    padding-top: 2rem !important; /* Compensar con padding */
   }
 }
 

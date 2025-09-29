@@ -633,16 +633,19 @@ export default function RootLayout({
                 }
 
 
-                /* MOBILE CAROUSEL FIX - Final clean implementation */
+                /* DEBUG - TEST if CSS is being applied */
                 div[style*="calc(384px"] {
-                  height: 96px !important;
-                  min-height: 96px !important;
-                  max-height: 96px !important;
+                  height: 76px !important; /* 20% smaller than 96px */
+                  min-height: 76px !important;
+                  max-height: 76px !important;
                   width: 100% !important;
-                  min-width: 120px !important;
+                  min-width: 96px !important; /* 20% smaller than 120px */
+                  max-width: 96px !important;
                   display: block !important;
                   overflow: hidden !important;
                   position: relative !important;
+                  background: lime !important; /* DEBUG - should see green background */
+                  border: 3px solid red !important; /* DEBUG - should see red border */
                 }
 
                 /* Ensure ImageCarousel component fills container */

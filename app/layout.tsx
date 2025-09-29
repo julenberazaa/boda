@@ -639,7 +639,7 @@ export default function RootLayout({
                   min-height: 96px !important;
                   max-height: 96px !important;
                   width: 100% !important;
-                  min-width: 150px !important;
+                  min-width: 120px !important;
                   display: block !important;
                   overflow: hidden !important;
                   position: relative !important;

@@ -203,7 +203,7 @@ export default function RootLayout({
               section.timeline-item.mb-16.grid.grid-cols-12,
               section.timeline-item.grid.grid-cols-12,
               #conocidos-2010 {
-                gap: 6px !important; /* Margen central como solicitado */
+                gap: 12px !important; /* Aumentado de 6px a 12px como solicitado */
                 justify-content: center !important; /* Centrar las columnas */
               }
 
@@ -211,13 +211,13 @@ export default function RootLayout({
               section.timeline-item div.col-span-6.pr-8,
               section.timeline-item div.col-span-6.pr-12,
               #conocidos-2010 > div:first-child {
-                padding-right: 2px !important; /* Reducido aún más */
+                padding-right: 6px !important; /* Ajustado para gap de 12px */
               }
 
               section.timeline-item div.col-span-6.pl-8,
               section.timeline-item div.col-span-6.pl-12,
               #conocidos-2010 > div:last-child {
-                padding-left: 2px !important; /* Reducido aún más */
+                padding-left: 6px !important; /* Ajustado para gap de 12px */
               }
 
               /* TIMELINE INTERNAL SPACING - Minimize without accumulation */
@@ -392,12 +392,16 @@ export default function RootLayout({
                   overflow: hidden !important;
                 }
 
-                /* Tuenti chat container - 12px shorter total */
+                /* Tuenti chat container - Fixed width + height */
                 .tuenti-chat {
+                  width: 100% !important;
+                  max-width: 100% !important;
+                  min-width: 100% !important;
                   height: 160px !important;
                   min-height: 160px !important;
                   max-height: 160px !important;
                   overflow: hidden !important;
+                  box-sizing: border-box !important;
                 }
 
                 /* Header element positioning - circle → name → buttons */
@@ -472,27 +476,27 @@ export default function RootLayout({
                 .timeline-item > div:first-child,
                 #conocidos-2010 > div:first-child {
                   grid-column: span 6 !important;  /* 6/12 = 50% */
-                  padding-right: 3px !important;
+                  padding-right: 6px !important;
                   margin: 0 auto !important;
                 }
 
                 .timeline-item > div:last-child,
                 #conocidos-2010 > div:last-child {
                   grid-column: span 6 !important;  /* 6/12 = 50% igual */
-                  padding-left: 3px !important;
+                  padding-left: 6px !important;
                   margin: 0 auto !important;
                 }
 
                 /* Apply same equal distribution to all timeline sections */
                 section.timeline-item > div.col-span-6:first-child {
                   grid-column: span 6 !important;
-                  padding-right: 3px !important;
+                  padding-right: 6px !important;
                   margin: 0 auto !important;
                 }
 
                 section.timeline-item > div.col-span-6:last-child {
                   grid-column: span 6 !important;
-                  padding-left: 3px !important;
+                  padding-left: 6px !important;
                   margin: 0 auto !important;
                 }
 

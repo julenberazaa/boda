@@ -560,10 +560,10 @@
     height: 1.275rem !important; /* 15% más pequeño que 1.5rem */
   }
 
-  /* Ajuste específico para el icono de Pedida de mano - 10% más pequeño horizontalmente, 20% más pequeño verticalmente */
+  /* Ajuste específico para el icono de Pedida de mano - 19% más pequeño horizontalmente, 36% más pequeño verticalmente */
   .timeline-icon-circle img[src="/pedida/anillos.svg"] {
-    width: 1.35rem !important; /* 10% más pequeño que 1.5rem */
-    height: 1.2rem !important; /* 20% más pequeño que 1.5rem */
+    width: 1.215rem !important; /* 10% adicional sobre 1.35rem = 19% total */
+    height: 0.96rem !important; /* 20% adicional sobre 1.2rem = 36% total */
   }
 }
 

@@ -131,6 +131,11 @@ export default function RootLayout({
                 max-height: 44px !important;
               }
 
+              /* HERO HEART CONTAINER - Reduce margin-bottom by 12px */
+              .mb-8:has(.w-16.h-16.mx-auto.mb-0.animate-pulse) {
+                margin-bottom: 20px !important; /* 32px - 12px = 20px */
+              }
+
               /* TARGET THE MAIN PAGE H1 - This is what's showing in DevTools */
               h1.text-7xl.font-bold.mb-4.font-elegant,
               .inline-block h1.text-7xl,

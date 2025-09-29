@@ -121,14 +121,14 @@ export default function RootLayout({
                 margin: 0 !important;
               }
 
-              /* HERO HEART ICON - 80px size for mobile */
+              /* HERO HEART ICON - 64px size for mobile */
               .w-16.h-16.mx-auto.mb-0.animate-pulse {
-                width: 80px !important;
-                height: 80px !important;
-                min-width: 80px !important;
-                min-height: 80px !important;
-                max-width: 80px !important;
-                max-height: 80px !important;
+                width: 64px !important;
+                height: 64px !important;
+                min-width: 64px !important;
+                min-height: 64px !important;
+                max-width: 64px !important;
+                max-height: 64px !important;
               }
 
               /* TARGET THE MAIN PAGE H1 - This is what's showing in DevTools */
@@ -427,9 +427,9 @@ export default function RootLayout({
                   width: 100% !important;
                   max-width: 100% !important;
                   min-width: 100% !important;
-                  height: 160px !important;
-                  min-height: 160px !important;
-                  max-height: 160px !important;
+                  height: 192px !important;
+                  min-height: 192px !important;
+                  max-height: 192px !important;
                   overflow: hidden !important;
                   box-sizing: border-box !important;
                 }

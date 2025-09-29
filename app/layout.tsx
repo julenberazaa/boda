@@ -121,14 +121,14 @@ export default function RootLayout({
                 margin: 0 !important;
               }
 
-              /* HERO HEART ICON - Double size ONLY for mobile */
+              /* HERO HEART ICON - 80px size for mobile */
               .w-16.h-16.mx-auto.mb-0.animate-pulse {
-                width: 128px !important;  /* w-32 = 128px, double of w-16 = 64px */
-                height: 128px !important;
-                min-width: 128px !important;
-                min-height: 128px !important;
-                max-width: 128px !important;
-                max-height: 128px !important;
+                width: 80px !important;
+                height: 80px !important;
+                min-width: 80px !important;
+                min-height: 80px !important;
+                max-width: 80px !important;
+                max-height: 80px !important;
               }
 
               /* TARGET THE MAIN PAGE H1 - This is what's showing in DevTools */

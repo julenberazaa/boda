@@ -633,31 +633,35 @@ export default function RootLayout({
                 }
 
 
-                /* MOBILE CAROUSEL FIX - Restore what worked, but preserve transitions */
+                /* DEBUG - Let's see what's happening */
                 div[style*="calc(384px"] {
                   height: 120px !important;
                   min-height: 120px !important;
                   max-height: 120px !important;
                   width: 100% !important;
                   display: block !important;
-                  overflow: hidden !important;
+                  overflow: visible !important;
                   position: relative !important;
+                  background: red !important;
+                  border: 3px solid yellow !important;
                 }
 
-                /* Ensure ImageCarousel component fills container properly */
+                /* Check if ImageCarousel component is there */
                 div[style*="calc(384px"] > * {
                   display: block !important;
                   width: 100% !important;
                   height: 100% !important;
+                  background: blue !important;
+                  border: 2px solid green !important;
                 }
 
-                /* Force carousel images to show - but allow opacity transitions */
+                /* Check if images are there */
                 div[style*="calc(384px"] img {
                   display: block !important;
                   width: 100% !important;
                   height: 100% !important;
                   object-fit: cover !important;
-                  /* Allow carousel to control: opacity, transition, z-index */
+                  border: 3px solid purple !important;
                 }
 
 

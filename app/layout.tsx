@@ -247,24 +247,17 @@ export default function RootLayout({
                 box-sizing: border-box !important;
               }
 
-              /* TIMELINE CONTAINER CENTERING - Ensure sections don't shift right */
-              .max-w-7xl.mx-auto {
-                margin-left: 0 !important;
-                margin-right: 0 !important;
-                max-width: 100% !important;
-                width: 100% !important;
-                padding-left: 8px !important;
-                padding-right: 8px !important;
-              }
-
-              /* TIMELINE MAIN CONTAINER - Force full-width centering */
+              /* TIMELINE CONTAINER CENTERING - Unified approach */
+              .max-w-7xl.mx-auto,
               div.w-full.relative[style*="background"] .max-w-7xl,
               div.max-w-7xl.mx-auto.px-4.py-12 {
                 margin-left: auto !important;
                 margin-right: auto !important;
-                padding-left: 4px !important;
-                padding-right: 4px !important;
-                max-width: calc(100vw - 8px) !important;
+                max-width: 100vw !important; /* Full viewport width */
+                width: 100% !important;
+                padding-left: 6px !important; /* Minimal symmetric padding */
+                padding-right: 6px !important;
+                box-sizing: border-box !important;
               }
 
               /* TIMELINE SECTION CENTERING - Prevent right displacement */
@@ -299,13 +292,14 @@ export default function RootLayout({
                 box-sizing: border-box !important;
               }
 
-              /* COLUMN CONTENT CONSTRAINTS - Prevent overflow */
+              /* COLUMN CONTENT CONSTRAINTS - Perfect fit calculation */
               section.timeline-item div.col-span-6 {
-                max-width: calc(50% - 4px) !important; /* 50% minus half the gap */
-                width: calc(50% - 4px) !important;
+                max-width: calc((100vw - 12px - 8px) / 2) !important; /* (viewport - container padding - gap) / 2 */
+                width: calc((100vw - 12px - 8px) / 2) !important; /* 100vw - 12px padding - 8px gap = available space / 2 */
                 box-sizing: border-box !important;
                 overflow-wrap: break-word !important;
                 word-break: break-word !important;
+                overflow: visible !important; /* Allow content to be fully visible */
               }
 
               /* TEXT ALIGNMENT FIXES - Prevent text from pushing too far right or overflowing */
@@ -329,6 +323,38 @@ export default function RootLayout({
                 max-width: 100% !important;
                 overflow-wrap: break-word !important;
                 word-break: break-word !important;
+              }
+
+              /* CRITICAL FIX - Prevent content from being clipped or hidden */
+              section.timeline-item div.col-span-6 * {
+                max-width: 100% !important;
+                overflow: visible !important;
+                white-space: normal !important;
+                text-overflow: clip !important;
+              }
+
+              /* FORCE VISIBILITY - Ensure nothing gets clipped */
+              section.timeline-item div.col-span-6:last-child {
+                position: relative !important;
+                z-index: 1 !important;
+                overflow: visible !important;
+              }
+
+              /* IMAGE CONTAINERS - Prevent right-side clipping */
+              section.timeline-item div.col-span-6 div.p-6,
+              section.timeline-item div.col-span-6 .p-6 {
+                overflow: visible !important;
+                position: relative !important;
+              }
+
+              /* OVERRIDE PROBLEMATIC INLINE STYLES - Force visibility */
+              section.timeline-item div[style*="overflow: hidden"] {
+                overflow: visible !important;
+              }
+
+              /* CAROUSEL CONTAINERS - Ensure no clipping */
+              section.timeline-item div[style*="height: calc(384px"] {
+                overflow: visible !important;
               }
 
               /* TIMELINE INTERNAL SPACING - Minimize without accumulation */

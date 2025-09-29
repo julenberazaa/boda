@@ -121,6 +121,16 @@ export default function RootLayout({
                 margin: 0 !important;
               }
 
+              /* HERO HEART ICON - Double size ONLY for mobile */
+              .w-16.h-16.mx-auto.mb-0.animate-pulse {
+                width: 128px !important;  /* w-32 = 128px, double of w-16 = 64px */
+                height: 128px !important;
+                min-width: 128px !important;
+                min-height: 128px !important;
+                max-width: 128px !important;
+                max-height: 128px !important;
+              }
+
               /* TARGET THE MAIN PAGE H1 - This is what's showing in DevTools */
               h1.text-7xl.font-bold.mb-4.font-elegant,
               .inline-block h1.text-7xl,

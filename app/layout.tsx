@@ -1020,6 +1020,105 @@ export default function RootLayout({
             }
           `
         }} />
+
+        {/* PROFESSIONAL DEBUG SYSTEM FOR TIMELINE MOBILE LAYOUT */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            (function() {
+              if (typeof window !== 'undefined') {
+                function runTimelineDebug() {
+                  if (window.innerWidth > 767) {
+                    console.log('🖥️ Desktop mode - Timeline debug skipped');
+                    return;
+                  }
+
+                  console.group('🔍 TIMELINE MOBILE LAYOUT DEBUG REPORT');
+
+                  const timelineElements = document.querySelectorAll('section.timeline-item, #conocidos-2010');
+                  console.log('📊 Found Timeline Elements:', timelineElements.length);
+
+                  timelineElements.forEach((element, index) => {
+                    const computedStyle = getComputedStyle(element);
+                    const isFlexbox = computedStyle.display === 'flex';
+                    const gap = computedStyle.gap;
+                    const width = computedStyle.width;
+                    const marginBottom = computedStyle.marginBottom;
+
+                    console.group(\`📈 Section \${index + 1}: \${element.id || 'timeline-item'}\`);
+                    console.log('✅ Display:', computedStyle.display, isFlexbox ? '(FLEXBOX ✓)' : '(NOT FLEXBOX ❌)');
+                    console.log('📏 Gap:', gap, gap === '8px' ? '(CORRECT ✓)' : '(INCORRECT ❌)');
+                    console.log('📐 Width:', width);
+                    console.log('⬇️ Margin Bottom:', marginBottom, marginBottom === '24px' ? '(CORRECT ✓)' : '(INCORRECT ❌)');
+
+                    const columns = element.querySelectorAll('.col-span-6');
+                    console.log('📋 Columns Found:', columns.length);
+
+                    columns.forEach((column, colIndex) => {
+                      const colStyle = getComputedStyle(column);
+                      const colWidth = colStyle.width;
+                      const colPadding = colStyle.paddingLeft + ' / ' + colStyle.paddingRight;
+                      const colFlex = colStyle.flex;
+
+                      console.group(\`  🏛️ Column \${colIndex + 1}\`);
+                      console.log('  📏 Width:', colWidth);
+                      console.log('  📦 Padding L/R:', colPadding);
+                      console.log('  🔄 Flex:', colFlex);
+                      console.log('  📝 Classes:', column.className);
+
+                      // Check if column is exactly 50% - 4px
+                      const expectedWidth = (window.innerWidth - 8 - 8) / 2;
+                      const actualWidth = column.getBoundingClientRect().width;
+                      const widthDifference = Math.abs(actualWidth - expectedWidth);
+
+                      console.log('  🎯 Expected Width:', expectedWidth + 'px');
+                      console.log('  📊 Actual Width:', actualWidth + 'px');
+                      console.log('  ⚖️ Difference:', widthDifference + 'px', widthDifference < 5 ? '(ACCEPTABLE ✓)' : '(PROBLEM ❌)');
+                      console.groupEnd();
+                    });
+
+                    console.groupEnd();
+                  });
+
+                  // Check if our ultra-aggressive CSS is being applied
+                  const testElement = document.querySelector('html body div div div section.timeline-item');
+                  if (testElement) {
+                    const testStyle = getComputedStyle(testElement);
+                    console.group('🚀 ULTRA-AGGRESSIVE CSS CHECK');
+                    console.log('🎯 Target Element Found:', !!testElement);
+                    console.log('🔧 Display Override:', testStyle.display);
+                    console.log('📏 Gap Override:', testStyle.gap);
+                    console.log('📐 Width Override:', testStyle.width);
+                    console.log('🔍 Selector Specificity Test:', testStyle.display === 'flex' ? 'WORKING ✓' : 'NOT WORKING ❌');
+                    console.groupEnd();
+                  } else {
+                    console.warn('❌ ULTRA-AGGRESSIVE CSS TARGET NOT FOUND');
+                  }
+
+                  // Media Query Debug
+                  console.group('📱 MEDIA QUERY DEBUG');
+                  console.log('🖥️ Window Width:', window.innerWidth + 'px');
+                  console.log('📱 Mobile Breakpoint (≤767px):', window.innerWidth <= 767 ? 'ACTIVE ✓' : 'INACTIVE ❌');
+                  console.log('🎨 CSS Media Query Should Apply:', window.innerWidth <= 767);
+                  console.groupEnd();
+
+                  console.groupEnd();
+                }
+
+                // Run debug after DOM is loaded
+                if (document.readyState === 'loading') {
+                  document.addEventListener('DOMContentLoaded', () => setTimeout(runTimelineDebug, 1000));
+                } else {
+                  setTimeout(runTimelineDebug, 1000);
+                }
+
+                // Also run on resize to check responsive behavior
+                window.addEventListener('resize', () => setTimeout(runTimelineDebug, 500));
+              }
+            })();
+            `
+          }}
+        />
       </head>
       <body>
         <div id="main-content">

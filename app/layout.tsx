@@ -632,6 +632,52 @@ export default function RootLayout({
                   display: block !important;
                 }
 
+                /* MOBILE GRID LAYOUT FIX - Force single column on mobile for timeline sections */
+                .timeline-item.grid.grid-cols-12 {
+                  display: block !important;
+                  grid-template-columns: none !important;
+                }
+
+                .timeline-item .col-span-6 {
+                  width: 100% !important;
+                  grid-column: auto !important;
+                  margin-bottom: 12px !important;
+                }
+
+                /* Force full width for carousel containers on mobile */
+                .timeline-item .col-span-6 div.p-6 {
+                  width: 100% !important;
+                  padding: 4px !important;
+                }
+
+                /* Override carousel wrapper sizing for mobile visibility */
+                .timeline-item .col-span-6 div.relative[style*="width: 96%"] {
+                  width: 100% !important;
+                  max-width: 100% !important;
+                }
+
+                /* ULTIMATE MOBILE FIX - Maximum specificity targeting exact carousel structure */
+                section.timeline-item.mb-16.grid.grid-cols-12 div.col-span-6 div.p-6 div.relative div[style*="height: calc(384px"],
+                .timeline-item div.p-6 div.relative div[style*="overflow: hidden"] {
+                  height: 100px !important;
+                  min-height: 100px !important;
+                  max-height: 100px !important;
+                  width: 100% !important;
+                  display: block !important;
+                  overflow: visible !important;
+                  position: relative !important;
+                  background: #f0f0f0 !important; /* Temporary visibility aid */
+                  border: 2px solid red !important; /* Temporary visibility aid */
+                }
+
+                /* Force carousel images to be visible */
+                .timeline-item img {
+                  display: block !important;
+                  max-width: 100% !important;
+                  height: auto !important;
+                  visibility: visible !important;
+                }
+
                 /* TRIANGULOS MÓVILES - FINALES */
                 .tuenti-message-bubble {
                   position: relative !important;

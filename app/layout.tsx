@@ -112,8 +112,8 @@ export default function RootLayout({
               h1.text-7xl.font-bold.mb-4.font-elegant,
               .inline-block h1.text-7xl,
               h1.font-elegant {
-                font-size: 44px !important;
-                line-height: 46px !important;
+                font-size: 40px !important;
+                line-height: 42px !important;
                 margin-bottom: 6px !important;
                 font-weight: 700 !important;
               }
@@ -404,6 +404,16 @@ export default function RootLayout({
                   box-sizing: border-box !important;
                 }
 
+                /* SOLUTION: Force maximum width for Tuenti container from start */
+                /* This prevents dynamic expansion during message animation */
+                #conocidos-2010 > div:first-child {
+                  width: 190px !important;  /* Fixed absolute width - optimal for mobile */
+                  min-width: 190px !important;
+                  max-width: 190px !important;
+                  overflow-x: hidden !important;  /* Prevent horizontal overflow */
+                  flex-shrink: 0 !important;  /* Don't shrink in flex containers */
+                }
+
                 /* Header element positioning - circle → name → buttons */
                 .tc-header {
                   display: flex !important;
@@ -467,17 +477,24 @@ export default function RootLayout({
 
                 /* Mobile-only Tuenti section layout override */
                 #conocidos-2010 {
-                  gap: 0 !important;
+                  gap: 12px !important;  /* Consistent with global timeline spacing */
                   margin-top: 24px !important;
                 }
 
                 /* EQUAL MOBILE LAYOUT - 50/50 distribution */
                 /* Perfectly equal columns: 50% media, 50% text */
-                .timeline-item > div:first-child,
-                #conocidos-2010 > div:first-child {
+                .timeline-item > div:first-child {
                   grid-column: span 6 !important;  /* 6/12 = 50% */
                   padding-right: 6px !important;
                   margin: 0 auto !important;
+                }
+
+                /* Tuenti container - fixed width, not percentage-based */
+                #conocidos-2010 > div:first-child {
+                  grid-column: span 6 !important;  /* Keep grid position */
+                  padding-right: 6px !important;   /* Keep spacing */
+                  margin: 0 auto !important;       /* Keep centering */
+                  /* Width is controlled by the earlier rule at line 409 */
                 }
 
                 .timeline-item > div:last-child,

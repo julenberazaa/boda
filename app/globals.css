@@ -535,12 +535,17 @@
 
   /* Círculos más pequeños solo en móviles */
   .timeline-icon-circle {
-    min-width: 2rem !important;
-    min-height: 2rem !important;
-    max-width: 2rem !important;
-    max-height: 2rem !important;
+    min-width: 2.4rem !important;
+    min-height: 2.4rem !important;
+    max-width: 2.4rem !important;
+    max-height: 2.4rem !important;
     margin-bottom: 0.2rem !important;
-    margin-right: 2rem !important;
+    margin-right: 1rem !important;
+  }
+
+  /* Margen derecho para los títulos de la historia en móviles */
+  .timeline-item h3 {
+    margin-right: 1.5rem !important;
   }
 }
 

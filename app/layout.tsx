@@ -115,15 +115,17 @@ export default function RootLayout({
                 font-size: 44px !important;
                 line-height: 46px !important;
                 margin-bottom: 6px !important;
-                margin-left: 0 !important;
-                margin-right: 0 !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
                 padding-left: 0 !important;
                 padding-right: 0 !important;
                 font-weight: 700 !important;
                 white-space: nowrap !important;
                 overflow: visible !important;
-                width: 100% !important;
+                width: auto !important;
                 max-width: 100% !important;
+                text-align: center !important;
+                display: block !important;
               }
 
               /* HERO SECTION TEXT - Target the paragraph */

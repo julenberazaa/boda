@@ -973,10 +973,11 @@ export default function RootLayout({
                   display: flex !important;
                   width: calc(100vw - 8px) !important;
                   margin: 0 auto !important;
-                  gap: 8px !important;
+                  gap: 8px !important; /* EXACTAMENTE 8px entre columnas */
                   padding: 0 4px !important;
                   box-sizing: border-box !important;
                   align-items: flex-start !important;
+                  margin-bottom: 24px !important; /* Restaurar espaciado vertical entre secciones */
                 }
 
                 /* COLUMN SIZING - NUCLEAR OPTION */
@@ -999,6 +1000,22 @@ export default function RootLayout({
                 html body div div div section.timeline-item div.col-span-6.pl-12 {
                   padding-left: 0 !important;
                   padding-right: 0 !important;
+                }
+
+                /* RESTORE INTERNAL SPACING - Content breathing room */
+                html body div div div section.timeline-item div.col-span-6 > * {
+                  padding-left: 4px !important;
+                  padding-right: 4px !important;
+                }
+
+                /* HEADER SPACING RESTORATION */
+                html body div div div section.timeline-item .flex.items-center.mb-6 {
+                  margin-bottom: 12px !important;
+                }
+
+                /* ICON CIRCLE SPACING */
+                html body div div div section.timeline-item .timeline-icon-circle.mr-4 {
+                  margin-right: 8px !important;
                 }
             }
           `

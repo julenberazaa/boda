@@ -407,9 +407,9 @@ export default function RootLayout({
                 /* SOLUTION: Force maximum width for Tuenti container from start */
                 /* This prevents dynamic expansion during message animation */
                 #conocidos-2010 > div:first-child {
-                  width: 190px !important;  /* Fixed absolute width - optimal for mobile */
-                  min-width: 190px !important;
-                  max-width: 190px !important;
+                  width: 178px !important;  /* Reduced by 12px as requested */
+                  min-width: 178px !important;
+                  max-width: 178px !important;
                   overflow-x: hidden !important;  /* Prevent horizontal overflow */
                   flex-shrink: 0 !important;  /* Don't shrink in flex containers */
                 }

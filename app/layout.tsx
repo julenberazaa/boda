@@ -233,29 +233,31 @@ export default function RootLayout({
                 margin-bottom: 4px !important;
               }
 
-              /* TIMELINE COLUMN SPACING - Perfect 8px gap solution */
-              /* Target all timeline sections with grid layout */
+              /* TIMELINE FLEXBOX SOLUTION - Mathematically correct approach */
+              /* Convert grid to flexbox for precise control */
               section.timeline-item.mb-16.grid.grid-cols-12,
               section.timeline-item.grid.grid-cols-12,
               #conocidos-2010 {
+                display: flex !important;
                 gap: 8px !important; /* Exactly 8px as requested */
-                justify-content: center !important; /* Centrar las columnas */
-                margin-left: 0 !important;
-                margin-right: 0 !important;
-                width: 100% !important;
-                max-width: 100vw !important; /* No exceder ancho de viewport */
+                width: calc(100vw - 12px) !important; /* Full viewport minus total container padding */
+                margin: 0 auto !important;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
                 box-sizing: border-box !important;
+                align-items: flex-start !important;
+                overflow-x: hidden !important;
               }
 
-              /* TIMELINE CONTAINER CENTERING - Unified approach */
+              /* TIMELINE CONTAINER CENTERING - Perfect centering */
               .max-w-7xl.mx-auto,
               div.w-full.relative[style*="background"] .max-w-7xl,
               div.max-w-7xl.mx-auto.px-4.py-12 {
                 margin-left: auto !important;
                 margin-right: auto !important;
-                max-width: 100vw !important; /* Full viewport width */
-                width: 100% !important;
-                padding-left: 6px !important; /* Minimal symmetric padding */
+                max-width: 100vw !important;
+                width: 100vw !important;
+                padding-left: 6px !important; /* Container padding for safe margins */
                 padding-right: 6px !important;
                 box-sizing: border-box !important;
               }
@@ -282,24 +284,26 @@ export default function RootLayout({
                 padding-left: 0 !important;
               }
 
-              /* CONTENT-LEVEL PADDING - Minimal and equal for both columns */
+              /* CONTENT-LEVEL PADDING - Now handled by column padding */
               section.timeline-item div.col-span-6 > .flex.items-center,
               section.timeline-item div.col-span-6 > h3,
               section.timeline-item div.col-span-6 > p,
               section.timeline-item div.col-span-6 > .p-6 {
-                padding-left: 4px !important;
-                padding-right: 4px !important;
+                padding-left: 0 !important; /* Padding now handled at column level */
+                padding-right: 0 !important;
                 box-sizing: border-box !important;
               }
 
-              /* COLUMN CONTENT CONSTRAINTS - Perfect fit calculation */
+              /* FLEXBOX COLUMN SIZING - Mathematically correct */
               section.timeline-item div.col-span-6 {
-                max-width: calc((100vw - 12px - 8px) / 2) !important; /* (viewport - container padding - gap) / 2 */
-                width: calc((100vw - 12px - 8px) / 2) !important; /* 100vw - 12px padding - 8px gap = available space / 2 */
+                flex: 1 1 calc(50% - 4px) !important; /* Equal flex with gap consideration */
+                max-width: calc(50% - 4px) !important; /* 50% minus half the 8px gap */
+                width: calc(50% - 4px) !important;
+                padding: 0 4px !important; /* Internal content padding */
                 box-sizing: border-box !important;
                 overflow-wrap: break-word !important;
                 word-break: break-word !important;
-                overflow: visible !important; /* Allow content to be fully visible */
+                overflow: visible !important;
               }
 
               /* TEXT ALIGNMENT FIXES - Prevent text from pushing too far right or overflowing */
@@ -323,6 +327,19 @@ export default function RootLayout({
                 max-width: 100% !important;
                 overflow-wrap: break-word !important;
                 word-break: break-word !important;
+              }
+
+              /* ADDITIONAL SAFETY - Prevent any content overflow */
+              section.timeline-item div.col-span-6 * {
+                max-width: 100% !important;
+                overflow-wrap: break-word !important;
+                box-sizing: border-box !important;
+              }
+
+              /* RIGHT COLUMN SPECIFIC - Extra safety measures */
+              section.timeline-item div.col-span-6:last-child {
+                margin-right: 0 !important;
+                padding-right: 4px !important; /* Ensure content doesn't touch edge */
               }
 
               /* CRITICAL FIX - Prevent content from being clipped or hidden */

@@ -664,9 +664,33 @@ export default function RootLayout({
                 /* Approach 3: Even broader - target any div with calc height */
                 div[style*="calc(384px"] {
                   height: 120px !important;
+                  min-height: 120px !important;
+                  width: 100% !important;
+                  min-width: 100px !important;
                   background: orange !important;
                   border: 2px solid purple !important;
                   display: block !important;
+                  overflow: visible !important;
+                  position: relative !important;
+                }
+
+                /* Force ImageCarousel inside to be visible */
+                div[style*="calc(384px"] > * {
+                  display: block !important;
+                  width: 100% !important;
+                  height: 100% !important;
+                  background: lime !important;
+                  border: 1px solid red !important;
+                }
+
+                /* Force carousel images to show */
+                div[style*="calc(384px"] img {
+                  display: block !important;
+                  width: 100% !important;
+                  height: auto !important;
+                  max-height: 100% !important;
+                  object-fit: cover !important;
+                  border: 2px solid blue !important;
                 }
 
                 /* Ensure carousel images are properly visible */

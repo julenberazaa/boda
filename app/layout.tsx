@@ -964,6 +964,42 @@ export default function RootLayout({
                   line-height: 14px !important;
                   margin-bottom: 8px !important;
                 }
+
+                /* ULTRA-AGGRESSIVE TIMELINE FIX - MAXIMUM SPECIFICITY */
+                /* Force exact 50% width with 8px gap - Nuclear option */
+                html body div div div section.timeline-item.mb-16.grid.grid-cols-12.gap-8,
+                html body div div div section.timeline-item.grid.grid-cols-12.gap-8,
+                html body div div div #conocidos-2010 {
+                  display: flex !important;
+                  width: calc(100vw - 8px) !important;
+                  margin: 0 auto !important;
+                  gap: 8px !important;
+                  padding: 0 4px !important;
+                  box-sizing: border-box !important;
+                  align-items: flex-start !important;
+                }
+
+                /* COLUMN SIZING - NUCLEAR OPTION */
+                html body div div div section.timeline-item div.col-span-6,
+                html body div div div #conocidos-2010 > div {
+                  flex: 0 0 calc(50% - 4px) !important;
+                  width: calc(50% - 4px) !important;
+                  max-width: calc(50% - 4px) !important;
+                  min-width: calc(50% - 4px) !important;
+                  padding: 0 !important;
+                  margin: 0 !important;
+                  box-sizing: border-box !important;
+                  overflow: visible !important;
+                }
+
+                /* ELIMINATE ALL TAILWIND PADDING */
+                html body div div div section.timeline-item div.col-span-6.pr-8,
+                html body div div div section.timeline-item div.col-span-6.pr-12,
+                html body div div div section.timeline-item div.col-span-6.pl-8,
+                html body div div div section.timeline-item div.col-span-6.pl-12 {
+                  padding-left: 0 !important;
+                  padding-right: 0 !important;
+                }
             }
           `
         }} />

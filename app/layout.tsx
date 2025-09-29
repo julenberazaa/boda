@@ -233,26 +233,52 @@ export default function RootLayout({
                 margin-bottom: 4px !important;
               }
 
-              /* TIMELINE COLUMN SPACING - Override restrictive CSS */
+              /* TIMELINE COLUMN SPACING - Perfect 8px gap solution */
               /* Target all timeline sections with grid layout */
               section.timeline-item.mb-16.grid.grid-cols-12,
               section.timeline-item.grid.grid-cols-12,
               #conocidos-2010 {
-                gap: 12px !important; /* Aumentado de 6px a 12px como solicitado */
+                gap: 8px !important; /* Exactly 8px as requested */
                 justify-content: center !important; /* Centrar las columnas */
               }
 
-              /* Remove excessive lateral padding */
+              /* ELIMINATE ALL LATERAL PADDING - Clean slate approach */
               section.timeline-item div.col-span-6.pr-8,
               section.timeline-item div.col-span-6.pr-12,
-              #conocidos-2010 > div:first-child {
-                padding-right: 6px !important; /* Ajustado para gap de 12px */
-              }
-
               section.timeline-item div.col-span-6.pl-8,
               section.timeline-item div.col-span-6.pl-12,
+              #conocidos-2010 > div:first-child,
               #conocidos-2010 > div:last-child {
-                padding-left: 6px !important; /* Ajustado para gap de 12px */
+                padding-right: 0 !important;
+                padding-left: 0 !important;
+              }
+
+              /* CONTENT-LEVEL PADDING - Minimal and equal for both columns */
+              section.timeline-item div.col-span-6 > .flex.items-center,
+              section.timeline-item div.col-span-6 > h3,
+              section.timeline-item div.col-span-6 > p,
+              section.timeline-item div.col-span-6 > .p-6 {
+                padding-left: 4px !important;
+                padding-right: 4px !important;
+              }
+
+              /* TEXT ALIGNMENT FIXES - Prevent text from pushing too far right or overflowing */
+              /* Left column text alignment */
+              section.timeline-item div.col-span-6:first-child .flex.items-center,
+              section.timeline-item div.col-span-6:first-child h3,
+              section.timeline-item div.col-span-6:first-child p {
+                text-align: left !important;
+                margin-left: 0 !important;
+              }
+
+              /* Right column text alignment and overflow prevention */
+              section.timeline-item div.col-span-6:last-child .flex.items-center,
+              section.timeline-item div.col-span-6:last-child h3,
+              section.timeline-item div.col-span-6:last-child p {
+                text-align: left !important;
+                margin-right: 0 !important;
+                max-width: 100% !important;
+                overflow-wrap: break-word !important;
               }
 
               /* TIMELINE INTERNAL SPACING - Minimize without accumulation */
@@ -287,7 +313,7 @@ export default function RootLayout({
                 justify-content: unset !important;
               }
 
-              /* Remove extra wrapper spacing - width constraint */
+              /* IMAGE CONTAINER OPTIMIZATION - Full width utilization */
               .timeline-item div.p-6 div.relative[style*="width: 96%"] {
                 width: 100% !important;
                 margin: 0 !important;
@@ -298,6 +324,20 @@ export default function RootLayout({
               .timeline-item div.p-6 div[style*="height: calc(384px"] {
                 margin: 0 !important;
                 padding: 0 !important;
+              }
+
+              /* ENSURE IMAGES USE FULL AVAILABLE SPACE */
+              section.timeline-item img {
+                max-width: 100% !important;
+                width: 100% !important;
+                height: auto !important;
+                object-fit: cover !important;
+              }
+
+              /* IMAGE CAROUSEL CONTAINERS - No overflow */
+              section.timeline-item div.col-span-6 div.p-6 {
+                overflow: hidden !important;
+                box-sizing: border-box !important;
               }
 
               /* Timeline images */

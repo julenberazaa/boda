@@ -121,14 +121,14 @@ export default function RootLayout({
                 margin: 0 !important;
               }
 
-              /* HERO HEART ICON - 64px size for mobile */
+              /* HERO HEART ICON - 44px size for mobile */
               .w-16.h-16.mx-auto.mb-0.animate-pulse {
-                width: 64px !important;
-                height: 64px !important;
-                min-width: 64px !important;
-                min-height: 64px !important;
-                max-width: 64px !important;
-                max-height: 64px !important;
+                width: 44px !important;
+                height: 44px !important;
+                min-width: 44px !important;
+                min-height: 44px !important;
+                max-width: 44px !important;
+                max-height: 44px !important;
               }
 
               /* TARGET THE MAIN PAGE H1 - This is what's showing in DevTools */
@@ -502,6 +502,15 @@ export default function RootLayout({
                 /* Ensure bubbles have relative positioning for triangles */
                 .tuenti-message-bubble {
                   position: relative !important;
+                }
+
+                /* Remove shadow from Tuenti chat on mobile only */
+                .tuenti-chat.custom-shadow-right-bottom {
+                  box-shadow: none !important;
+                }
+
+                .tuenti-chat.custom-shadow-right-bottom:hover {
+                  box-shadow: none !important;
                 }
 
 

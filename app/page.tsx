@@ -1220,7 +1220,7 @@ export default function TimelinePage() {
               <div className="tuenti-chat rounded-2xl custom-shadow-right-bottom hover:custom-shadow-right-bottom-hover transition-all duration-500 overflow-hidden" id="tuenti-chat-widget">
                 <div className="tc-header">
                   <div className="tc-status" id="status-dot"></div>
-                  <span className="tc-title">{isMobile ? 'Julen' : 'Julen Baños Martín'}</span>
+                  <span className="tc-title">{isMobile ? 'Julen Baños' : 'Julen Baños Martín'}</span>
                   <div className="tc-window-controls">
                     <button className="tc-btn tc-minimize" title="Minimizar">−</button>
                     <button className="tc-btn tc-maximize" title="Maximizar">□</button>

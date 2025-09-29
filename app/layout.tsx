@@ -1002,10 +1002,13 @@ export default function RootLayout({
                   padding-right: 0 !important;
                 }
 
-                /* RESTORE INTERNAL SPACING - Content breathing room */
-                html body div div div section.timeline-item div.col-span-6 > * {
-                  padding-left: 4px !important;
-                  padding-right: 4px !important;
+                /* ELIMINATE ALL PADDING - Complete nuclear option */
+                html body div div div section.timeline-item div.col-span-6,
+                html body div div div section.timeline-item div.col-span-6 *,
+                html body div div div #conocidos-2010 > div,
+                html body div div div #conocidos-2010 > div * {
+                  padding-left: 0 !important;
+                  padding-right: 0 !important;
                 }
 
                 /* HEADER SPACING RESTORATION */
@@ -1016,6 +1019,14 @@ export default function RootLayout({
                 /* ICON CIRCLE SPACING */
                 html body div div div section.timeline-item .timeline-icon-circle.mr-4 {
                   margin-right: 8px !important;
+                }
+
+                /* INTERNAL CONTENT MARGIN - Use margin instead of padding for breathing room */
+                html body div div div section.timeline-item div.col-span-6 > div:not(.p-6),
+                html body div div div section.timeline-item div.col-span-6 > h3,
+                html body div div div section.timeline-item div.col-span-6 > p {
+                  margin-left: 2px !important;
+                  margin-right: 2px !important;
                 }
             }
           `

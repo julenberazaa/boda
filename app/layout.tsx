@@ -108,24 +108,33 @@ export default function RootLayout({
                 font-weight: 300 !important;
               }
 
+              /* FIX HERO CONTAINER LAYOUT CONFLICTS */
+              /* Target the inline-block container that wraps the h1 */
+              .inline-block.mx-auto.px-6.py-2 {
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+                width: 100% !important;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+                margin: 0 !important;
+              }
+
               /* TARGET THE MAIN PAGE H1 - This is what's showing in DevTools */
               h1.text-7xl.font-bold.mb-4.font-elegant,
               .inline-block h1.text-7xl,
               h1.font-elegant {
                 font-size: 44px !important;
                 line-height: 46px !important;
-                margin-bottom: 6px !important;
-                margin-left: auto !important;
-                margin-right: auto !important;
-                padding-left: 0 !important;
-                padding-right: 0 !important;
+                margin: 0 !important;
+                padding: 0 !important;
                 font-weight: 700 !important;
                 white-space: nowrap !important;
                 overflow: visible !important;
                 width: auto !important;
-                max-width: 100% !important;
                 text-align: center !important;
                 display: block !important;
+                flex-shrink: 0 !important;
               }
 
               /* HERO SECTION TEXT - Target the paragraph */

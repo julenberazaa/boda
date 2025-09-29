@@ -543,9 +543,9 @@
     margin-right: 1rem !important;
   }
 
-  /* Margen derecho para los títulos de la historia en móviles */
+  /* Margen izquierdo para los títulos de la historia en móviles */
   .timeline-item h3 {
-    margin-right: 1.5rem !important;
+    margin-left: 1.5rem !important;
   }
 }
 

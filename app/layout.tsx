@@ -112,6 +112,7 @@ export default function RootLayout({
               /* Target the inline-block container that wraps the h1 */
               .inline-block.mx-auto.px-6.py-2 {
                 display: flex !important;
+                flex-direction: column !important;
                 justify-content: center !important;
                 align-items: center !important;
                 width: 100% !important;

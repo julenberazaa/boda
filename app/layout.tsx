@@ -633,69 +633,44 @@ export default function RootLayout({
                 }
 
 
-                /* DEBUG - Force proper width for carousel containers */
+                /* MOBILE CAROUSEL FIX - Final clean implementation */
                 div[style*="calc(384px"] {
                   height: 120px !important;
                   min-height: 120px !important;
                   max-height: 120px !important;
                   width: 100% !important;
                   min-width: 150px !important;
-                  max-width: 100% !important;
                   display: block !important;
-                  overflow: visible !important;
+                  overflow: hidden !important;
                   position: relative !important;
-                  background: red !important;
-                  border: 3px solid yellow !important;
                 }
 
-                /* Force parent containers to give more space */
-                .timeline-item .col-span-6 {
-                  min-width: 200px !important;
-                }
-
-                .timeline-item .col-span-6 div.p-6 {
-                  min-width: 180px !important;
-                }
-
-                .timeline-item .col-span-6 div.relative {
-                  min-width: 160px !important;
-                }
-
-                /* Check if ImageCarousel component is there */
+                /* Ensure ImageCarousel component fills container */
                 div[style*="calc(384px"] > * {
                   display: block !important;
                   width: 100% !important;
                   height: 100% !important;
-                  background: blue !important;
-                  border: 2px solid green !important;
                 }
 
-                /* Check if images are there */
+                /* Ensure carousel images display properly */
                 div[style*="calc(384px"] img {
                   display: block !important;
                   width: 100% !important;
                   height: 100% !important;
                   object-fit: cover !important;
-                  border: 3px solid purple !important;
                 }
 
-                /* DEBUG parent containers that might be limiting width */
+                /* Ensure parent containers don't restrict width */
                 .timeline-item .col-span-6 {
                   min-width: 200px !important;
-                  background: orange !important;
-                  border: 2px solid black !important;
                 }
 
                 .timeline-item .col-span-6 div[class*="p-6"] {
                   min-width: 180px !important;
-                  background: pink !important;
-                  border: 1px solid brown !important;
                 }
 
                 .timeline-item .col-span-6 div.relative[style*="width"] {
                   min-width: 160px !important;
-                  background: cyan !important;
-                  border: 1px solid navy !important;
                 }
 
 

@@ -633,64 +633,32 @@ export default function RootLayout({
                 }
 
 
-                /* DEBUG: Test different selector approaches */
-                /* Approach 1: Most specific selector */
-                section.timeline-item.mb-16.grid.grid-cols-12 div.col-span-6 div[class*="p-6"] div.relative div[style*="height: calc(384px"],
-                .timeline-item div[class*="p-6"] div.relative div[style*="overflow: hidden"] {
-                  height: 120px !important;
-                  min-height: 120px !important;
-                  max-height: 120px !important;
-                  width: 100% !important;
-                  display: block !important;
-                  overflow: visible !important;
-                  position: relative !important;
-                  background: red !important;
-                  border: 3px solid yellow !important;
-                }
-
-                /* Approach 2: Broader selector to catch all carousel containers */
-                .timeline-item div[style*="height: calc(384px - 0px)"] {
-                  height: 120px !important;
-                  min-height: 120px !important;
-                  max-height: 120px !important;
-                  width: 100% !important;
-                  display: block !important;
-                  overflow: visible !important;
-                  position: relative !important;
-                  background: blue !important;
-                  border: 3px solid green !important;
-                }
-
-                /* Approach 3: Even broader - target any div with calc height */
+                /* MOBILE CAROUSEL FIX - Final implementation using working selector */
                 div[style*="calc(384px"] {
                   height: 120px !important;
                   min-height: 120px !important;
+                  max-height: 120px !important;
                   width: 100% !important;
-                  min-width: 100px !important;
-                  background: orange !important;
-                  border: 2px solid purple !important;
                   display: block !important;
-                  overflow: visible !important;
+                  overflow: hidden !important;
                   position: relative !important;
                 }
 
-                /* Force ImageCarousel inside to be visible */
+                /* Ensure ImageCarousel component fills container properly */
                 div[style*="calc(384px"] > * {
                   display: block !important;
                   width: 100% !important;
                   height: 100% !important;
-                  background: lime !important;
-                  border: 1px solid red !important;
+                  position: relative !important;
                 }
 
-                /* Force carousel images to show */
+                /* Optimize carousel images for mobile */
                 div[style*="calc(384px"] img {
                   display: block !important;
                   width: 100% !important;
-                  height: auto !important;
-                  max-height: 100% !important;
+                  height: 100% !important;
                   object-fit: cover !important;
-                  border: 2px solid blue !important;
+                  position: relative !important;
                 }
 
                 /* Ensure carousel images are properly visible */

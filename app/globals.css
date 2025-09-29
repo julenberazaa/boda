@@ -567,22 +567,28 @@
   }
 
   /* Espaciado vertical adicional entre secciones de historia en móviles */
-  .mobile-section + .mobile-section {
+  section.mobile-section + section.mobile-section {
     margin-top: 2rem !important; /* 32px de espacio adicional entre secciones */
   }
 
   /* Reducir el margen superior de la primera sección de historia en móviles */
-  .mobile-section:first-of-type {
+  section.mobile-section:first-of-type {
     margin-top: -1rem !important; /* Subir la primera sección 16px */
+  }
+
+  /* Espaciado y altura para secciones móviles de historia */
+  section.mobile-section {
+    min-height: auto !important;
+    padding: 1rem 0.5rem !important; /* Mayor padding vertical */
   }
 
   /* Asegurar que el contenedor móvil tenga el espaciado correcto */
   .timeline-mobile-container {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 0.75rem; /* 12px entre columnas */
-    align-items: start;
-    padding: 1rem 0; /* 16px arriba y abajo */
+    display: grid !important;
+    grid-template-columns: 1fr 2fr !important;
+    gap: 0.75rem !important; /* 12px entre columnas */
+    align-items: start !important;
+    padding: 1rem 0 !important; /* 16px arriba y abajo */
   }
 }
 

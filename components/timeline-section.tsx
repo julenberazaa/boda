@@ -48,10 +48,8 @@ export default function TimelineSection({
   return (
     <section
       ref={sectionRef}
-      className={isMobile ? `flex items-center ${background}` : `min-h-screen md:min-h-screen flex items-center mobile-section md:py-20 px-2 md:px-4 ${background}`}
+      className={isMobile ? `flex items-center mobile-section ${background}` : `min-h-screen md:min-h-screen flex items-center mobile-section md:py-20 px-2 md:px-4 ${background}`}
       style={isMobile ? {
-        minHeight: '120px',
-        padding: '6px 4px',
         display: 'flex',
         alignItems: 'center'
       } : {}}

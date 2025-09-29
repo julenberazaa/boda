@@ -635,9 +635,9 @@ export default function RootLayout({
 
                 /* MOBILE CAROUSEL FIX - Final clean implementation */
                 div[style*="calc(384px"] {
-                  height: 120px !important;
-                  min-height: 120px !important;
-                  max-height: 120px !important;
+                  height: 96px !important;
+                  min-height: 96px !important;
+                  max-height: 96px !important;
                   width: 100% !important;
                   min-width: 150px !important;
                   display: block !important;

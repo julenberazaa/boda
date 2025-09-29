@@ -467,31 +467,31 @@ export default function RootLayout({
                   margin-top: 24px !important;
                 }
 
-                /* BALANCED MOBILE LAYOUT - Centered distribution */
-                /* Better balanced: ~45% media, ~55% text, centered */
+                /* EQUAL MOBILE LAYOUT - 50/50 distribution */
+                /* Perfectly equal columns: 50% media, 50% text */
                 .timeline-item > div:first-child,
                 #conocidos-2010 > div:first-child {
-                  grid-column: span 5 !important;  /* 5/12 = 42% */
+                  grid-column: span 6 !important;  /* 6/12 = 50% */
                   padding-right: 3px !important;
                   margin: 0 auto !important;
                 }
 
                 .timeline-item > div:last-child,
                 #conocidos-2010 > div:last-child {
-                  grid-column: span 7 !important;  /* 7/12 = 58% para texto */
+                  grid-column: span 6 !important;  /* 6/12 = 50% igual */
                   padding-left: 3px !important;
                   margin: 0 auto !important;
                 }
 
-                /* Apply same centered distribution to all timeline sections */
+                /* Apply same equal distribution to all timeline sections */
                 section.timeline-item > div.col-span-6:first-child {
-                  grid-column: span 5 !important;
+                  grid-column: span 6 !important;
                   padding-right: 3px !important;
                   margin: 0 auto !important;
                 }
 
                 section.timeline-item > div.col-span-6:last-child {
-                  grid-column: span 7 !important;
+                  grid-column: span 6 !important;
                   padding-left: 3px !important;
                   margin: 0 auto !important;
                 }

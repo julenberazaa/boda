@@ -207,11 +207,16 @@ export default function RootLayout({
                 justify-content: center !important; /* Centrar las columnas */
               }
 
-              /* Remove excessive lateral padding */
+                /* Remove excessive lateral padding - TUENTI OPTIMIZED */
               section.timeline-item div.col-span-6.pr-8,
-              section.timeline-item div.col-span-6.pr-12,
-              #conocidos-2010 > div:first-child {
+              section.timeline-item div.col-span-6.pr-12 {
                 padding-right: 6px !important; /* Ajustado para gap de 12px */
+              }
+              
+              /* Special tight padding for Tuenti chat container */
+              #conocidos-2010 > div:first-child {
+                padding-right: 3px !important; /* Tighter for static chat width */
+                padding-left: 3px !important;  /* Balanced tight spacing */
               }
 
               section.timeline-item div.col-span-6.pl-8,
@@ -316,15 +321,18 @@ export default function RootLayout({
                   max-height: 14px !important;
                 }
 
-                /* Tuenti chat bubbles - make more horizontal/wider */
+                /* Tuenti chat bubbles - FIXED WIDTH STATIC */
                 .tuenti-message-bubble {
-                  max-width: 90% !important;
+                  max-width: 110px !important;   /* Fixed max width in pixels */
                   width: auto !important;
-                  padding: 4px 8px !important;
+                  min-width: 60px !important;    /* Minimum width to prevent collapse */
+                  padding: 4px 6px !important;   /* Reduced padding for tight fit */
                   border-radius: 12px !important;
                   margin: 2px 0 !important;
-                  font-size: 10px !important;
-                  line-height: 11px !important;
+                  font-size: 9px !important;     /* Slightly smaller to fit better */
+                  line-height: 10px !important;
+                  word-wrap: break-word !important;
+                  overflow-wrap: break-word !important;
                 }
 
                 /* Tuenti message text content - updated size */
@@ -339,13 +347,13 @@ export default function RootLayout({
                 }
 
                 .tuenti-message.outgoing .tuenti-message-bubble {
-                  margin-left: 10% !important;
-                  margin-right: 5% !important;
+                  margin-left: 3px !important;  /* Fixed pixels - no dynamic expansion */
+                  margin-right: 2px !important;
                 }
 
                 .tuenti-message.incoming .tuenti-message-bubble {
-                  margin-left: 5% !important;
-                  margin-right: 10% !important;
+                  margin-left: 2px !important;  /* Fixed pixels - no dynamic expansion */
+                  margin-right: 3px !important;
                 }
 
 
@@ -382,26 +390,28 @@ export default function RootLayout({
                   height: 6px !important;
                 }
 
-                /* Static chat body size - 12px shorter total */
+                /* Static chat body size - OPTIMIZED FOR 140px WIDTH */
                 .tc-body {
-                  padding: 6px !important;
+                  padding: 4px !important;        /* Reduced padding for tight fit */
                   margin: 0 !important;
                   min-height: 120px !important;
                   height: 120px !important;
                   padding-bottom: 2px !important;
                   overflow: hidden !important;
+                  box-sizing: border-box !important;
                 }
 
-                /* Tuenti chat container - Fixed width + height */
+                /* Tuenti chat container - ABSOLUTE STATIC WIDTH */
                 .tuenti-chat {
-                  width: 100% !important;
-                  max-width: 100% !important;
-                  min-width: 100% !important;
+                  width: 140px !important;      /* Fixed pixel width - no expansion */
+                  max-width: 140px !important;
+                  min-width: 140px !important;
                   height: 160px !important;
                   min-height: 160px !important;
                   max-height: 160px !important;
                   overflow: hidden !important;
                   box-sizing: border-box !important;
+                  flex-shrink: 0 !important;    /* Prevent flex shrinking */
                 }
 
                 /* Header element positioning - circle → name → buttons */
@@ -467,7 +477,7 @@ export default function RootLayout({
 
                 /* Mobile-only Tuenti section layout override */
                 #conocidos-2010 {
-                  gap: 0 !important;
+                  gap: 12px !important; /* Unified with global timeline spacing */
                   margin-top: 24px !important;
                 }
 
@@ -478,6 +488,9 @@ export default function RootLayout({
                   grid-column: span 6 !important;  /* 6/12 = 50% */
                   padding-right: 6px !important;
                   margin: 0 auto !important;
+                  max-width: 50% !important;       /* Prevent column expansion */
+                  overflow: hidden !important;     /* Clip content that exceeds */
+                  width: 100% !important;          /* Force exact container size */
                 }
 
                 .timeline-item > div:last-child,

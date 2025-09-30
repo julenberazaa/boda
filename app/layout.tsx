@@ -1028,6 +1028,41 @@ export default function RootLayout({
                   margin-left: 2px !important;
                   margin-right: 2px !important;
                 }
+
+                /* CAROUSEL CONTAINER FIX - Eliminate padding from .p-6 containers */
+                html body div div div section.timeline-item div.p-6,
+                html body div div div section.timeline-item .p-6,
+                html body div div div #conocidos-2010 div.p-6 {
+                  padding: 0 !important;
+                  width: 100% !important;
+                  box-sizing: border-box !important;
+                }
+
+                /* CAROUSEL WIDTH FIX - Force 100% width instead of 96% */
+                html body div div div section.timeline-item .p-6 div.relative,
+                html body div div div section.timeline-item div.p-6 > div,
+                html body div div div section.timeline-item div[style*="width: 96%"] {
+                  width: 100% !important;
+                  max-width: 100% !important;
+                  margin: 0 !important;
+                }
+
+                /* CAROUSEL IMAGES - Respect column boundaries */
+                html body div div div section.timeline-item div.col-span-6 img,
+                html body div div div section.timeline-item .p-6 img,
+                html body div div div #conocidos-2010 img {
+                  max-width: 100% !important;
+                  width: 100% !important;
+                  height: auto !important;
+                  object-fit: cover !important;
+                }
+
+                /* CAROUSEL OVERFLOW CONTROL */
+                html body div div div section.timeline-item div[style*="overflow"],
+                html body div div div section.timeline-item .p-6 > div {
+                  overflow: hidden !important;
+                  max-width: 100% !important;
+                }
             }
           `
         }} />

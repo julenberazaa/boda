@@ -980,20 +980,23 @@ export default function RootLayout({
                   margin-bottom: 24px !important; /* Restaurar espaciado vertical entre secciones */
                 }
 
-                /* COLUMN SIZING - NUCLEAR OPTION - SUPPORT CENTERED CAROUSELS */
+                /* COLUMN SIZING - NUCLEAR OPTION */
                 html body div div div section.timeline-item div.col-span-6,
                 html body div div div #conocidos-2010 > div {
                   flex: 0 0 calc(50% - 4px) !important;
                   width: calc(50% - 4px) !important;
                   max-width: calc(50% - 4px) !important;
                   min-width: calc(50% - 4px) !important;
-                  display: flex !important;
-                  align-items: center !important;
-                  justify-content: center !important;
                   padding: 0 !important;
                   margin: 0 !important;
                   box-sizing: border-box !important;
-                  overflow: visible !important;
+                  overflow: visible !important; /* Default para textos */
+                }
+
+                /* COLUMN OVERFLOW - Hidden solo para columnas con carruseles */
+                html body div div div section.timeline-item div.col-span-6:has(.p-6),
+                html body div div div #conocidos-2010 > div:has(.p-6) {
+                  overflow: hidden !important; /* Contiene carruseles dentro de límites */
                 }
 
                 /* ELIMINATE ALL TAILWIND PADDING */
@@ -1070,7 +1073,7 @@ export default function RootLayout({
                 /* CAROUSEL ASPECT RATIO FIX - 3:4 (horizontal:vertical) - NUCLEAR OVERRIDE */
                 /* MÁXIMA ESPECIFICIDAD para sobrescribir reglas anteriores */
 
-                /* Contenedor p-6 - FORZAR aspect ratio y overflow hidden - 80% WIDTH + CENTRADO */
+                /* Contenedor p-6 - FORZAR aspect ratio, 80% width y centrado */
                 html body div div div section.timeline-item.mb-16 div.col-span-6 > div.p-6,
                 html body div div div section.timeline-item.grid div.col-span-6 > div.p-6,
                 html body div div div section.timeline-item div.col-span-6 > div.p-6,

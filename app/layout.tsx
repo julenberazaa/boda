@@ -802,13 +802,9 @@ export default function RootLayout({
                   min-width: 200px !important;
                 }
 
-                .timeline-item .col-span-6 div[class*="p-6"] {
-                  min-width: 180px !important;
-                }
-
-                .timeline-item .col-span-6 div.relative[style*="width"] {
-                  min-width: 160px !important;
-                }
+                /* ELIMINADO: min-width que bloqueaba el width: 64% de los carruseles */
+                /* .timeline-item .col-span-6 div[class*="p-6"] { min-width: 180px !important; } */
+                /* .timeline-item .col-span-6 div.relative[style*="width"] { min-width: 160px !important; } */
 
 
                 /* TRIANGULOS MÓVILES - FINALES */

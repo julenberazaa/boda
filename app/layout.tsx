@@ -1007,10 +1007,11 @@ export default function RootLayout({
                 }
 
                 /* ELIMINATE ALL PADDING - Complete nuclear option */
+                /* EXCEPCIÓN: No aplicar a elementos de Tuenti para mantener su lógica separada */
                 html body div div div section.timeline-item div.col-span-6,
-                html body div div div section.timeline-item div.col-span-6 *,
-                html body div div div #conocidos-2010 > div,
-                html body div div div #conocidos-2010 > div * {
+                html body div div div section.timeline-item div.col-span-6 *:not(.tuenti-chat):not(.tuenti-chat *),
+                html body div div div #conocidos-2010 > div:not(.tuenti-chat),
+                html body div div div #conocidos-2010 > div *:not(.tuenti-chat):not(.tuenti-chat *) {
                   padding-left: 0 !important;
                   padding-right: 0 !important;
                 }
@@ -1071,14 +1072,14 @@ export default function RootLayout({
                 /* CAROUSEL ASPECT RATIO FIX - 3:4 (horizontal:vertical) - NUCLEAR OVERRIDE */
                 /* MÁXIMA ESPECIFICIDAD para sobrescribir reglas anteriores */
 
-                /* Contenedor p-6 - FORZAR aspect ratio, 64% width y centrado */
+                /* Contenedor p-6 - FORZAR aspect ratio, 70% width y centrado */
                 html body div div div section.timeline-item.mb-16 div.col-span-6 > div.p-6,
                 html body div div div section.timeline-item.grid div.col-span-6 > div.p-6,
                 html body div div div section.timeline-item div.col-span-6 > div.p-6,
                 html body div div div section.timeline-item div.col-span-6 div.p-6,
                 html body div div div #conocidos-2010 div.col-span-6 > div.p-6 {
                   aspect-ratio: 3 / 4 !important;
-                  width: 70% !important; /* 10% más grande que el 64% anterior */
+                  width: 70% !important; /* 10% más grande que anterior (64% × 1.10 = 70.4%) */
                   height: auto !important;
                   display: block !important;
                   padding: 0 !important;
@@ -1122,7 +1123,7 @@ export default function RootLayout({
                   position: relative !important;
                 }
 
-                /* Asegurar que imágenes/videos dentro del carrusel se ajusten al alto */
+                /* Asegurar que imágenes/videos dentro del carrusel se ajusten al alto sin recortar */
                 html body div div div section.timeline-item .p-6 img,
                 html body div div div section.timeline-item .p-6 video,
                 html body div div div section.timeline-item div.relative img,
@@ -1132,7 +1133,7 @@ export default function RootLayout({
                   left: 0 !important;
                   width: 100% !important;
                   height: 100% !important;
-                  object-fit: contain !important; /* Ajusta imagen al alto sin recortar */
+                  object-fit: contain !important; /* Cambiado de cover a contain para no recortar */
                 }
 
                 /* Frame overlay mantiene posición sobre el carrusel */

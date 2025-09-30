@@ -976,7 +976,7 @@ export default function RootLayout({
                   gap: 8px !important; /* EXACTAMENTE 8px entre columnas */
                   padding: 0 4px !important;
                   box-sizing: border-box !important;
-                  align-items: flex-start !important;
+                  align-items: center !important; /* CENTRADO VERTICAL: carrusel + texto */
                   margin-bottom: 24px !important; /* Restaurar espaciado vertical entre secciones */
                 }
 
@@ -1062,6 +1062,45 @@ export default function RootLayout({
                 html body div div div section.timeline-item .p-6 > div {
                   overflow: hidden !important;
                   max-width: 100% !important;
+                }
+
+                /* CAROUSEL ASPECT RATIO FIX - 3:4 (horizontal:vertical) */
+                /* Contenedor del carrusel - aspect ratio fijo */
+                html body div div div section.timeline-item div[style*="height: calc"],
+                html body div div div section.timeline-item div.p-6 > div.relative,
+                html body div div div section.timeline-item div[style*="overflow: hidden"] {
+                  height: auto !important;
+                  aspect-ratio: 3 / 4 !important;
+                  width: 100% !important;
+                  position: relative !important;
+                  overflow: hidden !important;
+                }
+
+                /* Contenedor p-6 centrado para carruseles */
+                html body div div div section.timeline-item div.p-6 {
+                  display: flex !important;
+                  align-items: center !important;
+                  justify-content: center !important;
+                  width: 100% !important;
+                }
+
+                /* Asegurar que imágenes/videos dentro del carrusel respeten el aspect ratio */
+                html body div div div section.timeline-item .p-6 img,
+                html body div div div section.timeline-item .p-6 video,
+                html body div div div section.timeline-item div[style*="height: calc"] img,
+                html body div div div section.timeline-item div[style*="height: calc"] video {
+                  position: absolute !important;
+                  top: 0 !important;
+                  left: 0 !important;
+                  width: 100% !important;
+                  height: 100% !important;
+                  object-fit: cover !important;
+                }
+
+                /* Frame overlay mantiene posición sobre el carrusel */
+                html body div div div section.timeline-item .p-6 img[alt=""] {
+                  pointer-events: none !important;
+                  z-index: 30 !important;
                 }
             }
           `

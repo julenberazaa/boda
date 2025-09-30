@@ -1078,7 +1078,7 @@ export default function RootLayout({
                 html body div div div section.timeline-item div.col-span-6 div.p-6,
                 html body div div div #conocidos-2010 div.col-span-6 > div.p-6 {
                   aspect-ratio: 3 / 4 !important;
-                  width: 64% !important; /* 36% más pequeño que columna (80% de 80%) */
+                  width: 70% !important; /* 10% más grande que el 64% anterior */
                   height: auto !important;
                   display: block !important;
                   padding: 0 !important;
@@ -1122,7 +1122,7 @@ export default function RootLayout({
                   position: relative !important;
                 }
 
-                /* Asegurar que imágenes/videos dentro del carrusel respeten el aspect ratio */
+                /* Asegurar que imágenes/videos dentro del carrusel se ajusten al alto */
                 html body div div div section.timeline-item .p-6 img,
                 html body div div div section.timeline-item .p-6 video,
                 html body div div div section.timeline-item div.relative img,
@@ -1132,7 +1132,7 @@ export default function RootLayout({
                   left: 0 !important;
                   width: 100% !important;
                   height: 100% !important;
-                  object-fit: cover !important;
+                  object-fit: contain !important; /* Ajusta imagen al alto sin recortar */
                 }
 
                 /* Frame overlay mantiene posición sobre el carrusel */

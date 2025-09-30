@@ -330,7 +330,8 @@ export default function RootLayout({
               }
 
               /* ADDITIONAL SAFETY - Prevent any content overflow */
-              section.timeline-item div.col-span-6 * {
+              /* EXCEPCIÓN: No aplicar a .p-6 que tiene su propio width controlado */
+              section.timeline-item div.col-span-6 *:not(.p-6):not(.p-6 *) {
                 max-width: 100% !important;
                 overflow-wrap: break-word !important;
                 box-sizing: border-box !important;
@@ -343,7 +344,8 @@ export default function RootLayout({
               }
 
               /* CRITICAL FIX - Prevent content from being clipped or hidden */
-              section.timeline-item div.col-span-6 * {
+              /* EXCEPCIÓN: No aplicar max-width a .p-6 que tiene width controlado */
+              section.timeline-item div.col-span-6 *:not(.p-6):not(.p-6 *) {
                 max-width: 100% !important;
                 overflow: visible !important;
                 white-space: normal !important;

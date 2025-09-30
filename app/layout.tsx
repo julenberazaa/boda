@@ -1073,14 +1073,14 @@ export default function RootLayout({
                 /* CAROUSEL ASPECT RATIO FIX - 3:4 (horizontal:vertical) - NUCLEAR OVERRIDE */
                 /* MÁXIMA ESPECIFICIDAD para sobrescribir reglas anteriores */
 
-                /* Contenedor p-6 - FORZAR aspect ratio, 80% width y centrado */
+                /* Contenedor p-6 - FORZAR aspect ratio, 64% width y centrado */
                 html body div div div section.timeline-item.mb-16 div.col-span-6 > div.p-6,
                 html body div div div section.timeline-item.grid div.col-span-6 > div.p-6,
                 html body div div div section.timeline-item div.col-span-6 > div.p-6,
                 html body div div div section.timeline-item div.col-span-6 div.p-6,
                 html body div div div #conocidos-2010 div.col-span-6 > div.p-6 {
                   aspect-ratio: 3 / 4 !important;
-                  width: 80% !important; /* 20% más pequeño */
+                  width: 64% !important; /* 36% más pequeño que columna (80% de 80%) */
                   height: auto !important;
                   display: block !important;
                   padding: 0 !important;

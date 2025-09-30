@@ -1231,6 +1231,86 @@ export default function RootLayout({
                   console.log('🎨 CSS Media Query Should Apply:', window.innerWidth <= 767);
                   console.groupEnd();
 
+                  // CAROUSEL SPECIFIC DEBUG - ULTRA DETAILED
+                  console.group('🎠 CAROUSEL (.p-6) COMPREHENSIVE DEBUG');
+                  const carousels = document.querySelectorAll('section.timeline-item .p-6');
+                  console.log('🎯 Total Carousels Found:', carousels.length);
+
+                  carousels.forEach((carousel, idx) => {
+                    const carouselStyle = getComputedStyle(carousel);
+                    const carouselRect = carousel.getBoundingClientRect();
+                    const parentCol = carousel.closest('.col-span-6');
+                    const parentColStyle = parentCol ? getComputedStyle(parentCol) : null;
+                    const parentColRect = parentCol ? parentCol.getBoundingClientRect() : null;
+
+                    console.group(\`🎠 Carousel \${idx + 1}\`);
+                    console.log('📦 Classes:', carousel.className);
+
+                    // Width Analysis
+                    console.group('📏 WIDTH ANALYSIS');
+                    console.log('  CSS width property:', carouselStyle.width);
+                    console.log('  Computed width (px):', carouselRect.width + 'px');
+                    console.log('  Max-width:', carouselStyle.maxWidth);
+                    console.log('  Min-width:', carouselStyle.minWidth);
+                    if (parentColRect) {
+                      const percentageOfColumn = ((carouselRect.width / parentColRect.width) * 100).toFixed(2);
+                      console.log('  % of Column Width:', percentageOfColumn + '%', percentageOfColumn < 65 ? '(TARGET: 64% ✓)' : '(SHOULD BE 64% ❌)');
+                      console.log('  Parent Column Width:', parentColRect.width + 'px');
+                    }
+                    console.groupEnd();
+
+                    // Box Model
+                    console.group('📦 BOX MODEL');
+                    console.log('  box-sizing:', carouselStyle.boxSizing);
+                    console.log('  padding:', carouselStyle.padding);
+                    console.log('  margin:', carouselStyle.margin);
+                    console.log('  border:', carouselStyle.border);
+                    console.groupEnd();
+
+                    // Aspect Ratio
+                    console.group('📐 ASPECT RATIO');
+                    console.log('  aspect-ratio CSS:', carouselStyle.aspectRatio);
+                    const actualRatio = (carouselRect.width / carouselRect.height).toFixed(2);
+                    const expectedRatio = (3/4).toFixed(2);
+                    console.log('  Actual ratio (W/H):', actualRatio);
+                    console.log('  Expected (3/4):', expectedRatio);
+                    console.log('  Match:', actualRatio === expectedRatio ? 'YES ✓' : 'NO ❌ (diff: ' + Math.abs(actualRatio - expectedRatio).toFixed(2) + ')');
+                    console.groupEnd();
+
+                    // Position & Overflow
+                    console.group('🔧 POSITION & OVERFLOW');
+                    console.log('  position:', carouselStyle.position);
+                    console.log('  overflow:', carouselStyle.overflow);
+                    console.log('  display:', carouselStyle.display);
+                    console.log('  z-index:', carouselStyle.zIndex);
+                    console.groupEnd();
+
+                    // Children Analysis
+                    const relativeChild = carousel.querySelector('.relative, div[class*="relative"]');
+                    if (relativeChild) {
+                      const childStyle = getComputedStyle(relativeChild);
+                      const childRect = relativeChild.getBoundingClientRect();
+                      console.group('👶 CHILD div.relative');
+                      console.log('  width:', childStyle.width, '(' + childRect.width + 'px)');
+                      console.log('  height:', childStyle.height, '(' + childRect.height + 'px)');
+                      console.log('  Has inline style:', relativeChild.hasAttribute('style') ? 'YES: ' + relativeChild.getAttribute('style') : 'NO');
+                      console.groupEnd();
+                    }
+
+                    // All Applied CSS Rules (attempt to trace)
+                    console.group('🎨 CSS SPECIFICITY TEST');
+                    console.log('  Checking if ultra-specific rules apply...');
+                    const ultraSelector = 'html body div div div section.timeline-item div.col-span-6 > div.p-6';
+                    const matches = carousel.matches('section.timeline-item div.col-span-6 > .p-6');
+                    console.log('  Matches ultra selector:', matches ? 'YES ✓' : 'NO ❌');
+                    console.log('  Width from CSS:', carouselStyle.width, carouselStyle.width === '64%' ? '(64% APPLIED ✓)' : '(NOT 64% ❌)');
+                    console.groupEnd();
+
+                    console.groupEnd();
+                  });
+
+                  console.groupEnd();
+
                   console.groupEnd();
                 }
 

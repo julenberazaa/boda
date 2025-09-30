@@ -1265,7 +1265,7 @@ export default function TimelinePage() {
           <div className="col-span-6">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative' }}>
+                <div style={{ height: 'calc(460.8px - 0px)', overflow: 'visible', position: 'relative' }}>
                   <ImageCarousel
                     images={[
                       "/primeras-escapadas-01.png",
@@ -1293,7 +1293,7 @@ export default function TimelinePage() {
           <div className="col-span-6 order-1">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-visible" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative' }}>
+                <div className="overflow-visible" style={{ height: 'calc(460.8px - 0px)', overflow: 'visible', position: 'relative' }}>
                   <ImageCarousel
                     images={[
                       "/estudios/ESTUDIOS.jpeg",
@@ -1343,7 +1343,7 @@ export default function TimelinePage() {
           <div className="col-span-6">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="rounded-2xl" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative' }}>
+                <div className="rounded-2xl" style={{ height: 'calc(460.8px - 0px)', overflow: 'visible', position: 'relative' }}>
                   <ImageCarousel
                     images={[
                       "/estudios-oposiciones-01.png",
@@ -1371,7 +1371,7 @@ export default function TimelinePage() {
           <div className="col-span-6 order-1">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-visible rounded-2xl" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative' }}>
+                <div className="overflow-visible rounded-2xl" style={{ height: 'calc(460.8px - 0px)', overflow: 'visible', position: 'relative' }}>
                   <ImageCarousel
                     images={[
                       "/mir/MIR.png",
@@ -1420,7 +1420,7 @@ export default function TimelinePage() {
           <div className="col-span-6">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-visible" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative' }}>
+                <div className="overflow-visible" style={{ height: 'calc(460.8px - 0px)', overflow: 'visible', position: 'relative' }}>
                   <ImageCarousel
                     images={[
                       "/hobbies/HOBBIES.jpeg",
@@ -1448,7 +1448,7 @@ export default function TimelinePage() {
           <div className="col-span-6 order-1">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-visible" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative' }}>
+                <div className="overflow-visible" style={{ height: 'calc(460.8px - 0px)', overflow: 'visible', position: 'relative' }}>
                   <ImageCarousel
                     images={[
                       "/independizarse/INDEP.png",
@@ -1500,7 +1500,7 @@ export default function TimelinePage() {
           <div className="col-span-6">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-visible" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative' }}>
+                <div className="overflow-visible" style={{ height: 'calc(460.8px - 0px)', overflow: 'visible', position: 'relative' }}>
                   <ImageCarousel
                     media={[
                       { type: 'image', src: '/ilun/ILUN.png' },
@@ -1547,7 +1547,7 @@ export default function TimelinePage() {
           <div className="col-span-6 order-1">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-visible" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative' }}>
+                <div className="overflow-visible" style={{ height: 'calc(460.8px - 0px)', overflow: 'visible', position: 'relative' }}>
                   <ImageCarousel
                     images={[
                       "/pedida/PEDIDA_MANO.png",

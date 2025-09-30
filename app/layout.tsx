@@ -1064,31 +1064,49 @@ export default function RootLayout({
                   max-width: 100% !important;
                 }
 
-                /* CAROUSEL ASPECT RATIO FIX - 3:4 (horizontal:vertical) */
-                /* Contenedor del carrusel - aspect ratio fijo */
-                html body div div div section.timeline-item div[style*="height: calc"],
-                html body div div div section.timeline-item div.p-6 > div.relative,
-                html body div div div section.timeline-item div[style*="overflow: hidden"] {
-                  height: auto !important;
+                /* CAROUSEL ASPECT RATIO FIX - 3:4 (horizontal:vertical) - ULTRA AGGRESSIVE */
+                /* Contenedor p-6 - debe tener aspect ratio */
+                html body div div div section.timeline-item div.col-span-6 > div.p-6,
+                html body div div div section.timeline-item div.col-span-6 div.p-6,
+                html body div div div #conocidos-2010 div.col-span-6 > div.p-6 {
                   aspect-ratio: 3 / 4 !important;
                   width: 100% !important;
+                  height: auto !important;
+                  display: flex !important;
+                  align-items: center !important;
+                  justify-content: center !important;
+                  padding: 0 !important;
+                  box-sizing: border-box !important;
                   position: relative !important;
                   overflow: hidden !important;
                 }
 
-                /* Contenedor p-6 centrado para carruseles */
-                html body div div div section.timeline-item div.p-6 {
-                  display: flex !important;
-                  align-items: center !important;
-                  justify-content: center !important;
+                /* div.relative dentro de p-6 - también aspect ratio */
+                html body div div div section.timeline-item div.p-6 > div.relative,
+                html body div div div section.timeline-item div.p-6 div.relative,
+                html body div div div section.timeline-item div.p-6 > div {
+                  aspect-ratio: 3 / 4 !important;
                   width: 100% !important;
+                  height: auto !important;
+                  position: relative !important;
+                  overflow: hidden !important;
+                  margin: 0 !important;
+                }
+
+                /* div con style inline height: calc - forzar aspect ratio */
+                html body div div div section.timeline-item div[style*="height: calc"] {
+                  height: auto !important;
+                  aspect-ratio: 3 / 4 !important;
+                  width: 100% !important;
+                  min-height: unset !important;
+                  max-height: unset !important;
                 }
 
                 /* Asegurar que imágenes/videos dentro del carrusel respeten el aspect ratio */
                 html body div div div section.timeline-item .p-6 img,
                 html body div div div section.timeline-item .p-6 video,
-                html body div div div section.timeline-item div[style*="height: calc"] img,
-                html body div div div section.timeline-item div[style*="height: calc"] video {
+                html body div div div section.timeline-item div.relative img,
+                html body div div div section.timeline-item div.relative video {
                   position: absolute !important;
                   top: 0 !important;
                   left: 0 !important;
@@ -1098,9 +1116,11 @@ export default function RootLayout({
                 }
 
                 /* Frame overlay mantiene posición sobre el carrusel */
-                html body div div div section.timeline-item .p-6 img[alt=""] {
+                html body div div div section.timeline-item .p-6 img[alt=""],
+                html body div div div section.timeline-item div.relative img[alt=""] {
                   pointer-events: none !important;
                   z-index: 30 !important;
+                  position: absolute !important;
                 }
             }
           `

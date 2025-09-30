@@ -357,15 +357,15 @@ export default function RootLayout({
                 overflow: visible !important;
               }
 
-              /* IMAGE CONTAINERS - Prevent right-side clipping */
-              section.timeline-item div.col-span-6 div.p-6,
-              section.timeline-item div.col-span-6 .p-6 {
+              /* IMAGE CONTAINERS - MODIFIED: Allow hidden for carousels */
+              section.timeline-item div.col-span-6 div.p-6:not(:has(.relative)),
+              section.timeline-item div.col-span-6 .p-6:not(:has(.relative)) {
                 overflow: visible !important;
                 position: relative !important;
               }
 
-              /* OVERRIDE PROBLEMATIC INLINE STYLES - Force visibility */
-              section.timeline-item div[style*="overflow: hidden"] {
+              /* OVERRIDE PROBLEMATIC INLINE STYLES - MODIFIED: Not for carousels */
+              section.timeline-item div[style*="overflow: hidden"]:not(.p-6):not(.p-6 *) {
                 overflow: visible !important;
               }
 
@@ -1064,42 +1064,58 @@ export default function RootLayout({
                   max-width: 100% !important;
                 }
 
-                /* CAROUSEL ASPECT RATIO FIX - 3:4 (horizontal:vertical) - ULTRA AGGRESSIVE */
-                /* Contenedor p-6 - debe tener aspect ratio */
+                /* CAROUSEL ASPECT RATIO FIX - 3:4 (horizontal:vertical) - NUCLEAR OVERRIDE */
+                /* MÁXIMA ESPECIFICIDAD para sobrescribir reglas anteriores */
+
+                /* Contenedor p-6 - FORZAR aspect ratio y overflow hidden */
+                html body div div div section.timeline-item.mb-16 div.col-span-6 > div.p-6,
+                html body div div div section.timeline-item.grid div.col-span-6 > div.p-6,
                 html body div div div section.timeline-item div.col-span-6 > div.p-6,
                 html body div div div section.timeline-item div.col-span-6 div.p-6,
                 html body div div div #conocidos-2010 div.col-span-6 > div.p-6 {
                   aspect-ratio: 3 / 4 !important;
                   width: 100% !important;
                   height: auto !important;
-                  display: flex !important;
-                  align-items: center !important;
-                  justify-content: center !important;
+                  display: block !important;
                   padding: 0 !important;
+                  margin: 0 !important;
                   box-sizing: border-box !important;
                   position: relative !important;
-                  overflow: hidden !important;
+                  overflow: hidden !important; /* CRÍTICO: debe ser hidden, no visible */
+                  min-height: 0 !important;
+                  max-height: none !important;
                 }
 
-                /* div.relative dentro de p-6 - también aspect ratio */
+                /* div.relative dentro de p-6 - FORZAR aspect ratio */
+                html body div div div section.timeline-item.mb-16 div.p-6 > div.relative,
+                html body div div div section.timeline-item.grid div.p-6 > div.relative,
                 html body div div div section.timeline-item div.p-6 > div.relative,
-                html body div div div section.timeline-item div.p-6 div.relative,
-                html body div div div section.timeline-item div.p-6 > div {
+                html body div div div section.timeline-item div.p-6 div.relative {
                   aspect-ratio: 3 / 4 !important;
                   width: 100% !important;
                   height: auto !important;
                   position: relative !important;
                   overflow: hidden !important;
                   margin: 0 !important;
+                  padding: 0 !important;
+                  box-sizing: border-box !important;
+                  min-height: 0 !important;
+                  max-height: none !important;
                 }
 
-                /* div con style inline height: calc - forzar aspect ratio */
-                html body div div div section.timeline-item div[style*="height: calc"] {
+                /* div con style inline height: calc - ELIMINAR height y forzar aspect ratio */
+                html body div div div section.timeline-item.mb-16 div[style*="height: calc"],
+                html body div div div section.timeline-item.grid div[style*="height: calc"],
+                html body div div div section.timeline-item div[style*="height: calc"],
+                html body div div div section.timeline-item div[style*="height:"],
+                html body div div div section.timeline-item div.p-6 div[style*="height"] {
                   height: auto !important;
                   aspect-ratio: 3 / 4 !important;
                   width: 100% !important;
-                  min-height: unset !important;
-                  max-height: unset !important;
+                  min-height: 0 !important;
+                  max-height: none !important;
+                  overflow: hidden !important;
+                  position: relative !important;
                 }
 
                 /* Asegurar que imágenes/videos dentro del carrusel respeten el aspect ratio */
@@ -1125,61 +1141,6 @@ export default function RootLayout({
             }
           `
         }} />
-
-        {/* FORCE ASPECT RATIO 3:4 WITH JAVASCRIPT - NUCLEAR OPTION */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            (function() {
-              if (typeof window !== 'undefined' && window.innerWidth <= 767) {
-                function forceCarouselAspectRatio() {
-                  // Encontrar TODOS los contenedores de carruseles
-                  const selectors = [
-                    'section.timeline-item div.p-6',
-                    'section.timeline-item div.p-6 > div.relative',
-                    'section.timeline-item div.p-6 > div',
-                    'section.timeline-item div[style*="height: calc"]',
-                    '#conocidos-2010 div.p-6'
-                  ];
-
-                  selectors.forEach(selector => {
-                    const elements = document.querySelectorAll(selector);
-                    elements.forEach(el => {
-                      // Forzar aspect ratio 3:4 via inline style (máxima prioridad)
-                      el.style.aspectRatio = '3 / 4';
-                      el.style.height = 'auto';
-                      el.style.width = '100%';
-                      el.style.position = 'relative';
-                      el.style.overflow = 'hidden';
-
-                      console.log('📦 Aspect ratio 3:4 aplicado a:', selector, el);
-                    });
-                  });
-
-                  console.log('✅ Aspect ratio 3:4 forzado en todos los carruseles');
-                }
-
-                // Aplicar inmediatamente
-                if (document.readyState === 'loading') {
-                  document.addEventListener('DOMContentLoaded', forceCarouselAspectRatio);
-                } else {
-                  forceCarouselAspectRatio();
-                }
-
-                // Re-aplicar después de 500ms por si acaso
-                setTimeout(forceCarouselAspectRatio, 500);
-
-                // Re-aplicar en resize
-                window.addEventListener('resize', () => {
-                  if (window.innerWidth <= 767) {
-                    forceCarouselAspectRatio();
-                  }
-                });
-              }
-            })();
-            `
-          }}
-        />
 
         {/* PROFESSIONAL DEBUG SYSTEM FOR TIMELINE MOBILE LAYOUT */}
         <script

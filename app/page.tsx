@@ -749,7 +749,7 @@ export default function TimelinePage() {
                     <button
                       type="button"
                       onClick={() => setShowPassword((v) => !v)}
-                      className="absolute right-3 top-1/2 text-midnight/60 hover:text-midnight focus:outline-none"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-midnight/60 hover:text-midnight focus:outline-none"
                       aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
                     >
                       {showPassword ? (
@@ -848,7 +848,7 @@ export default function TimelinePage() {
                     <button
                       type="button"
                       onClick={() => setShowPassword((v) => !v)}
-                      className="absolute right-3 top-1/2 text-midnight/60 hover:text-midnight focus:outline-none"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-midnight/60 hover:text-midnight focus:outline-none"
                       aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
                     >
                       {showPassword ? (

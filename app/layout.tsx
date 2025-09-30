@@ -1126,6 +1126,61 @@ export default function RootLayout({
           `
         }} />
 
+        {/* FORCE ASPECT RATIO 3:4 WITH JAVASCRIPT - NUCLEAR OPTION */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            (function() {
+              if (typeof window !== 'undefined' && window.innerWidth <= 767) {
+                function forceCarouselAspectRatio() {
+                  // Encontrar TODOS los contenedores de carruseles
+                  const selectors = [
+                    'section.timeline-item div.p-6',
+                    'section.timeline-item div.p-6 > div.relative',
+                    'section.timeline-item div.p-6 > div',
+                    'section.timeline-item div[style*="height: calc"]',
+                    '#conocidos-2010 div.p-6'
+                  ];
+
+                  selectors.forEach(selector => {
+                    const elements = document.querySelectorAll(selector);
+                    elements.forEach(el => {
+                      // Forzar aspect ratio 3:4 via inline style (máxima prioridad)
+                      el.style.aspectRatio = '3 / 4';
+                      el.style.height = 'auto';
+                      el.style.width = '100%';
+                      el.style.position = 'relative';
+                      el.style.overflow = 'hidden';
+
+                      console.log('📦 Aspect ratio 3:4 aplicado a:', selector, el);
+                    });
+                  });
+
+                  console.log('✅ Aspect ratio 3:4 forzado en todos los carruseles');
+                }
+
+                // Aplicar inmediatamente
+                if (document.readyState === 'loading') {
+                  document.addEventListener('DOMContentLoaded', forceCarouselAspectRatio);
+                } else {
+                  forceCarouselAspectRatio();
+                }
+
+                // Re-aplicar después de 500ms por si acaso
+                setTimeout(forceCarouselAspectRatio, 500);
+
+                // Re-aplicar en resize
+                window.addEventListener('resize', () => {
+                  if (window.innerWidth <= 767) {
+                    forceCarouselAspectRatio();
+                  }
+                });
+              }
+            })();
+            `
+          }}
+        />
+
         {/* PROFESSIONAL DEBUG SYSTEM FOR TIMELINE MOBILE LAYOUT */}
         <script
           dangerouslySetInnerHTML={{

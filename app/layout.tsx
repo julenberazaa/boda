@@ -980,13 +980,16 @@ export default function RootLayout({
                   margin-bottom: 24px !important; /* Restaurar espaciado vertical entre secciones */
                 }
 
-                /* COLUMN SIZING - NUCLEAR OPTION */
+                /* COLUMN SIZING - NUCLEAR OPTION - SUPPORT CENTERED CAROUSELS */
                 html body div div div section.timeline-item div.col-span-6,
                 html body div div div #conocidos-2010 > div {
                   flex: 0 0 calc(50% - 4px) !important;
                   width: calc(50% - 4px) !important;
                   max-width: calc(50% - 4px) !important;
                   min-width: calc(50% - 4px) !important;
+                  display: flex !important;
+                  align-items: center !important;
+                  justify-content: center !important;
                   padding: 0 !important;
                   margin: 0 !important;
                   box-sizing: border-box !important;
@@ -1067,18 +1070,18 @@ export default function RootLayout({
                 /* CAROUSEL ASPECT RATIO FIX - 3:4 (horizontal:vertical) - NUCLEAR OVERRIDE */
                 /* MÁXIMA ESPECIFICIDAD para sobrescribir reglas anteriores */
 
-                /* Contenedor p-6 - FORZAR aspect ratio y overflow hidden */
+                /* Contenedor p-6 - FORZAR aspect ratio y overflow hidden - 80% WIDTH + CENTRADO */
                 html body div div div section.timeline-item.mb-16 div.col-span-6 > div.p-6,
                 html body div div div section.timeline-item.grid div.col-span-6 > div.p-6,
                 html body div div div section.timeline-item div.col-span-6 > div.p-6,
                 html body div div div section.timeline-item div.col-span-6 div.p-6,
                 html body div div div #conocidos-2010 div.col-span-6 > div.p-6 {
                   aspect-ratio: 3 / 4 !important;
-                  width: 100% !important;
+                  width: 80% !important; /* 20% más pequeño */
                   height: auto !important;
                   display: block !important;
                   padding: 0 !important;
-                  margin: 0 !important;
+                  margin: 0 auto !important; /* Centrado horizontal */
                   box-sizing: border-box !important;
                   position: relative !important;
                   overflow: hidden !important; /* CRÍTICO: debe ser hidden, no visible */

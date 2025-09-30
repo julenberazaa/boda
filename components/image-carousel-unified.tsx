@@ -187,7 +187,7 @@ export default function ImageCarousel({
         </div>
       </div>
 
-      {/* Frame overlay - tamaño natural, centrado */}
+      {/* Frame overlay - 20% más grande, mantiene proporción original */}
       {frameSrc && (
         <img
           src={frameSrc}
@@ -196,11 +196,10 @@ export default function ImageCarousel({
             position: 'absolute',
             top: '50%',
             left: '50%',
-            transform: 'translate(-50%, -50%) scale(1.2)',
-            maxWidth: 'none',
-            maxHeight: 'none',
-            width: 'auto',
-            height: 'auto',
+            width: '120%',
+            height: '120%',
+            transform: 'translate(-50%, -50%)',
+            objectFit: 'contain',
             zIndex: 30,
             pointerEvents: 'none'
           }}

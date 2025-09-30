@@ -187,17 +187,20 @@ export default function ImageCarousel({
         </div>
       </div>
 
-      {/* Frame overlay - 20% más grande */}
+      {/* Frame overlay - tamaño natural, centrado */}
       {frameSrc && (
         <img
           src={frameSrc}
           alt=""
           style={{
             position: 'absolute',
-            top: '-10%',
-            left: '-10%',
-            width: '120%',
-            height: '120%',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%) scale(1.2)',
+            maxWidth: 'none',
+            maxHeight: 'none',
+            width: 'auto',
+            height: 'auto',
             zIndex: 30,
             pointerEvents: 'none'
           }}

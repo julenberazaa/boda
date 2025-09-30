@@ -187,7 +187,7 @@ export default function ImageCarousel({
         </div>
       </div>
 
-      {/* Frame overlay - usa scaleX/scaleY del frameConfig, multiplicado por 1.44 base */}
+      {/* Frame overlay - usa scaleX/scaleY del frameConfig, multiplicado por 1.008 base (1.44 * 0.7 = 1.008) */}
       {frameSrc && (
         <img
           src={frameSrc}
@@ -198,7 +198,7 @@ export default function ImageCarousel({
             left: '50%',
             width: '100%',
             height: '100%',
-            transform: `translate(-50%, -50%) scale(${(frameConfig?.scaleX || 1) * 1.44}, ${(frameConfig?.scaleY || 1) * 1.44})`,
+            transform: `translate(-50%, -50%) scale(${(frameConfig?.scaleX || 1) * 1.008}, ${(frameConfig?.scaleY || 1) * 1.008})`,
             objectFit: 'contain',
             zIndex: 30,
             pointerEvents: 'none'

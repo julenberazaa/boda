@@ -140,61 +140,64 @@ export default function ImageCarousel({
       className={`relative w-full h-full cursor-pointer${className ? ` ${className}` : ''}`}
       onClick={handleContainerClick}
     >
-      <div className="overflow-hidden w-full h-full">
-        {mediaItems.map((item, index) => {
-          // UNIFIED styling - same for all devices
-          const commonStyle: React.CSSProperties = {
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            opacity: index === activeIndex ? 1 : 0,
-            transition: 'opacity 1s ease-in-out', // Simple, same for all
-            zIndex: index === activeIndex ? 20 : 10,
-          }
+      {/* Contenedor interno para las imágenes reducidas al 80% */}
+      <div className="overflow-hidden w-full h-full flex items-center justify-center">
+        <div style={{ width: '80%', height: '80%', position: 'relative' }}>
+          {mediaItems.map((item, index) => {
+            // UNIFIED styling - same for all devices
+            const commonStyle: React.CSSProperties = {
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              opacity: index === activeIndex ? 1 : 0,
+              transition: 'opacity 1s ease-in-out', // Simple, same for all
+              zIndex: index === activeIndex ? 20 : 10,
+            }
 
-          if (item.type === 'image') {
+            if (item.type === 'image') {
+              return (
+                <img
+                  key={`img-${item.src}-${index}`}
+                  src={item.src}
+                  alt={`${alt} - Imagen ${index + 1}`}
+                  draggable={false}
+                  style={commonStyle}
+                  loading="lazy"
+                  decoding="async"
+                />
+              )
+            }
+
             return (
-              <img
-                key={`img-${item.src}-${index}`}
+              <video
+                key={`vid-${item.src}-${index}`}
+                ref={(el) => { videoRefs.current[index] = el }}
                 src={item.src}
-                alt={`${alt} - Imagen ${index + 1}`}
-                draggable={false}
+                playsInline
+                controls={false}
+                muted
                 style={commonStyle}
-                loading="lazy"
-                decoding="async"
+                preload={index === activeIndex ? 'auto' : 'metadata'}
               />
             )
-          }
-
-          return (
-            <video
-              key={`vid-${item.src}-${index}`}
-              ref={(el) => { videoRefs.current[index] = el }}
-              src={item.src}
-              playsInline
-              controls={false}
-              muted
-              style={commonStyle}
-              preload={index === activeIndex ? 'auto' : 'metadata'}
-            />
-          )
-        })}
+          })}
+        </div>
       </div>
 
-      {/* Frame overlay - MAXIMUM SIMPLE for iOS Safari */}
+      {/* Frame overlay - 20% más grande */}
       {frameSrc && (
         <img
           src={frameSrc}
           alt=""
           style={{
             position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
+            top: '-10%',
+            left: '-10%',
+            width: '120%',
+            height: '120%',
             zIndex: 30,
             pointerEvents: 'none'
           }}

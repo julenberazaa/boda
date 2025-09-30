@@ -141,7 +141,7 @@ export default function ImageCarousel({
       onClick={handleContainerClick}
     >
       {/* Contenedor interno para las imágenes reducidas al 80% */}
-      <div className="overflow-hidden w-full h-full flex items-center justify-center">
+      <div className="overflow-visible w-full h-full flex items-center justify-center">
         <div style={{ width: '80%', height: '80%', position: 'relative' }}>
           {mediaItems.map((item, index) => {
             // UNIFIED styling - same for all devices

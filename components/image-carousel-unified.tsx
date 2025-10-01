@@ -242,7 +242,7 @@ export default function ImageCarousel({
           left: activeCropBox ? `${activeCropBox.x}%` : '50%',
           top: activeCropBox ? `${activeCropBox.y}%` : '50%',
           transform: activeCropBox ? 'none' : 'translate(-50%, -50%)',
-          overflow: borderRadius ? 'hidden' : 'visible',
+          overflow: 'hidden',
           borderRadius: borderRadius || undefined
         }}>
           {mediaItems.map((item, index) => {

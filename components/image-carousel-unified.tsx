@@ -155,6 +155,14 @@ export default function ImageCarousel({
     const width = Math.abs(endX - drawStart.x)
     const height = Math.abs(endY - drawStart.y)
 
+    // Only save if rectangle has meaningful size (at least 20px in both dimensions)
+    if (width < 20 || height < 20) {
+      setIsDrawing(false)
+      setDrawStart(null)
+      setDrawCurrent(null)
+      return
+    }
+
     const cropBox: CropBox = {
       x: (x / rect.width) * 100,
       y: (y / rect.height) * 100,

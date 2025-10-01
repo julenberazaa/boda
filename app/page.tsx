@@ -2,10 +2,11 @@
 
 import { useEffect, useMemo, useRef, useState } from "react"
 import { createPortal } from "react-dom"
-import { Heart, Plane, MapPin, Camera, Video, Sun, Star, Ship, BellRingIcon as Ring, BookOpen, PartyPopper, X, PawPrint, Eye, EyeOff, ChevronLeft, ChevronRight } from "lucide-react"
+import { Heart, Plane, MapPin, Camera, Video, Sun, Star, Ship, BellRingIcon as Ring, BookOpen, PartyPopper, X, PawPrint, Eye, EyeOff, ChevronLeft, ChevronRight, Download } from "lucide-react"
 import ImageCarousel from "@/components/image-carousel-unified"
 // import FramesOverlay from "@/components/frames-overlay" // DEPRECATED: Replaced with frames inside carousels
 import { getFrameConfig } from "@/lib/local-frame-config"
+import type { CropBox } from "@/lib/local-frame-config"
 // Unified debug logging - no platform-specific logic
 import { emergencyLog } from "@/components/emergency-debug"
 import { useMobileDetection } from "@/hooks/use-mobile-detection"
@@ -50,6 +51,11 @@ export default function TimelinePage() {
   const [tuentiStarted, setTuentiStarted] = useState(false)
   // Simplified scroll handling - unified for all platforms
 
+  // Calibration mode state
+  const [calibrationMode, setCalibrationMode] = useState(false)
+  const [calibrationData, setCalibrationData] = useState<Record<string, CropBox>>({})
+  const [activeCalibration, setActiveCalibration] = useState<string | null>(null)
+
   // Overlay de contraseña (pantalla previa)
   const [overlayVisible, setOverlayVisible] = useState(true)
   const [inputPass, setInputPass] = useState('')
@@ -60,12 +66,27 @@ export default function TimelinePage() {
   const [hasMounted, setHasMounted] = useState(false)
   const overlayVisibleRef = useRef(overlayVisible)
   useEffect(() => { overlayVisibleRef.current = overlayVisible }, [overlayVisible])
-  useEffect(() => { 
+  useEffect(() => {
     emergencyLog('info', 'useEffect mounting - setting hasMounted to true')
     setHasMounted(true)
     emergencyLog('info', 'hasMounted set to true')
   }, [])
-  
+
+  // Ctrl+A listener for calibration mode toggle
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.key === 'a') {
+        e.preventDefault()
+        setCalibrationMode(prev => !prev)
+        setActiveCalibration(null) // Reset active calibration when toggling mode
+        console.log('Calibration mode:', !calibrationMode)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [calibrationMode])
+
   // UNIFIED: Standard page initialization for all devices
   useEffect(() => {
     // Wait until content is mounted
@@ -432,6 +453,28 @@ export default function TimelinePage() {
   }, [tuentiStarted])
 
   // Removed old dynamic overlay logic; frames are now rendered via FramesOverlay
+
+  // Calibration handlers
+  const handleStartCalibration = (experienceId: string) => {
+    setActiveCalibration(experienceId)
+  }
+
+  const handleConfirmCalibration = (experienceId: string, cropBox: CropBox) => {
+    setCalibrationData(prev => ({ ...prev, [experienceId]: cropBox }))
+    setActiveCalibration(null)
+    console.log(`Calibración guardada para ${experienceId}:`, cropBox)
+  }
+
+  const handleExportCalibration = () => {
+    const configText = JSON.stringify(calibrationData, null, 2)
+    navigator.clipboard.writeText(configText).then(() => {
+      alert('Configuración de calibración copiada al portapapeles!')
+      console.log('Calibration data:', configText)
+    }).catch(err => {
+      console.error('Error al copiar:', err)
+      alert('Error al copiar. Revisa la consola.')
+    })
+  }
 
   // Standard viewport handling
   const getCurrentScale = (): number => {
@@ -1265,7 +1308,7 @@ export default function TimelinePage() {
           <div className="col-span-6">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div style={{ height: 'calc(460.8px - 0px)', overflow: 'visible', position: 'relative' }}>
+                <div style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative' }}>
                   <ImageCarousel
                     images={[
                       "/primeras-escapadas-01.png",
@@ -1278,6 +1321,10 @@ export default function TimelinePage() {
                     experienceId="02"
                     frameSrc={getFrameConfig("02")?.frameSrc}
                     frameConfig={getFrameConfig("02") || undefined}
+                    calibrationMode={calibrationMode}
+                    isActiveCalibration={activeCalibration === "02"}
+                    onStartCalibration={() => handleStartCalibration("02")}
+                    onConfirmCalibration={(cropBox) => handleConfirmCalibration("02", cropBox)}
                     onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
                       openImageCarousel(imageSrc, imageArray, currentIndex, rect)
                     }}
@@ -1293,7 +1340,7 @@ export default function TimelinePage() {
           <div className="col-span-6 order-1">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-visible" style={{ height: 'calc(460.8px - 0px)', overflow: 'visible', position: 'relative' }}>
+                <div className="overflow-visible" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative' }}>
                   <ImageCarousel
                     images={[
                       "/estudios/ESTUDIOS.jpeg",
@@ -1306,6 +1353,10 @@ export default function TimelinePage() {
                     experienceId="estudios"
                     frameSrc={getFrameConfig("estudios")?.frameSrc}
                     frameConfig={getFrameConfig("estudios") || undefined}
+                    calibrationMode={calibrationMode}
+                    isActiveCalibration={activeCalibration === "estudios"}
+                    onStartCalibration={() => handleStartCalibration("estudios")}
+                    onConfirmCalibration={(cropBox) => handleConfirmCalibration("estudios", cropBox)}
                     onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
                       openImageCarousel(imageSrc, imageArray, currentIndex, rect)
                     }}
@@ -1343,7 +1394,7 @@ export default function TimelinePage() {
           <div className="col-span-6">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="rounded-2xl" style={{ height: 'calc(460.8px - 0px)', overflow: 'visible', position: 'relative' }}>
+                <div className="rounded-2xl" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative' }}>
                   <ImageCarousel
                     images={[
                       "/estudios-oposiciones-01.png",
@@ -1354,11 +1405,15 @@ export default function TimelinePage() {
                     ]}
                     alt="Oposiciones de policía"
                     experienceId="03"
+                    frameSrc={getFrameConfig("03")?.frameSrc}
+                    frameConfig={getFrameConfig("03") || undefined}
+                    calibrationMode={calibrationMode}
+                    isActiveCalibration={activeCalibration === "03"}
+                    onStartCalibration={() => handleStartCalibration("03")}
+                    onConfirmCalibration={(cropBox) => handleConfirmCalibration("03", cropBox)}
                     onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
                       openImageCarousel(imageSrc, imageArray, currentIndex, rect)
                     }}
-                    frameSrc={getFrameConfig("03")?.frameSrc}
-                    frameConfig={getFrameConfig("03") || undefined}
                   />
                 </div>
               </div>
@@ -1371,7 +1426,7 @@ export default function TimelinePage() {
           <div className="col-span-6 order-1">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-visible rounded-2xl" style={{ height: 'calc(460.8px - 0px)', overflow: 'visible', position: 'relative' }}>
+                <div className="overflow-visible rounded-2xl" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative' }}>
                   <ImageCarousel
                     images={[
                       "/mir/MIR.png",
@@ -1381,11 +1436,15 @@ export default function TimelinePage() {
                     ]}
                     alt="MIR"
                     experienceId="mir"
+                    frameSrc={getFrameConfig("mir")?.frameSrc}
+                    frameConfig={getFrameConfig("mir") || undefined}
+                    calibrationMode={calibrationMode}
+                    isActiveCalibration={activeCalibration === "mir"}
+                    onStartCalibration={() => handleStartCalibration("mir")}
+                    onConfirmCalibration={(cropBox) => handleConfirmCalibration("mir", cropBox)}
                     onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
                       openImageCarousel(imageSrc, imageArray, currentIndex, rect)
                     }}
-                    frameSrc={getFrameConfig("mir")?.frameSrc}
-                    frameConfig={getFrameConfig("mir") || undefined}
                   />
                 </div>
               </div>
@@ -1420,7 +1479,7 @@ export default function TimelinePage() {
           <div className="col-span-6">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-visible" style={{ height: 'calc(460.8px - 0px)', overflow: 'visible', position: 'relative' }}>
+                <div className="overflow-visible" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative' }}>
                   <ImageCarousel
                     images={[
                       "/hobbies/HOBBIES.jpeg",
@@ -1431,11 +1490,15 @@ export default function TimelinePage() {
                     ]}
                     alt="Hobbies"
                     experienceId="hobbies"
+                    frameSrc={getFrameConfig("hobbies")?.frameSrc}
+                    frameConfig={getFrameConfig("hobbies") || undefined}
+                    calibrationMode={calibrationMode}
+                    isActiveCalibration={activeCalibration === "hobbies"}
+                    onStartCalibration={() => handleStartCalibration("hobbies")}
+                    onConfirmCalibration={(cropBox) => handleConfirmCalibration("hobbies", cropBox)}
                     onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
                       openImageCarousel(imageSrc, imageArray, currentIndex, rect)
                     }}
-                    frameSrc={getFrameConfig("hobbies")?.frameSrc}
-                    frameConfig={getFrameConfig("hobbies") || undefined}
                   />
                 </div>
               </div>
@@ -1448,7 +1511,7 @@ export default function TimelinePage() {
           <div className="col-span-6 order-1">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-visible" style={{ height: 'calc(460.8px - 0px)', overflow: 'visible', position: 'relative' }}>
+                <div className="overflow-visible" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative' }}>
                   <ImageCarousel
                     images={[
                       "/independizarse/INDEP.png",
@@ -1461,11 +1524,15 @@ export default function TimelinePage() {
                     ]}
                     alt="Independizarse"
                     experienceId="independizarse"
+                    frameSrc={getFrameConfig("independizarse")?.frameSrc}
+                    frameConfig={getFrameConfig("independizarse") || undefined}
+                    calibrationMode={calibrationMode}
+                    isActiveCalibration={activeCalibration === "independizarse"}
+                    onStartCalibration={() => handleStartCalibration("independizarse")}
+                    onConfirmCalibration={(cropBox) => handleConfirmCalibration("independizarse", cropBox)}
                     onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
                       openImageCarousel(imageSrc, imageArray, currentIndex, rect)
                     }}
-                    frameSrc={getFrameConfig("independizarse")?.frameSrc}
-                    frameConfig={getFrameConfig("independizarse") || undefined}
                   />
                 </div>
               </div>
@@ -1500,7 +1567,7 @@ export default function TimelinePage() {
           <div className="col-span-6">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-visible" style={{ height: 'calc(460.8px - 0px)', overflow: 'visible', position: 'relative' }}>
+                <div className="overflow-visible" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative' }}>
                   <ImageCarousel
                     media={[
                       { type: 'image', src: '/ilun/ILUN.png' },
@@ -1524,6 +1591,12 @@ export default function TimelinePage() {
                     ]}
                     alt="Ilun"
                     experienceId="ilun"
+                    frameSrc={getFrameConfig("ilun")?.frameSrc}
+                    frameConfig={getFrameConfig("ilun") || undefined}
+                    calibrationMode={calibrationMode}
+                    isActiveCalibration={activeCalibration === "ilun"}
+                    onStartCalibration={() => handleStartCalibration("ilun")}
+                    onConfirmCalibration={(cropBox) => handleConfirmCalibration("ilun", cropBox)}
                     onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
                       openImageCarousel(imageSrc, imageArray, currentIndex, rect)
                     }}
@@ -1533,8 +1606,6 @@ export default function TimelinePage() {
                     onOpenMediaCarousel={(items, startIndex, rect) => {
                       openUnifiedMediaCarousel(items, startIndex, rect)
                     }}
-                    frameSrc={getFrameConfig("ilun")?.frameSrc}
-                    frameConfig={getFrameConfig("ilun") || undefined}
                   />
                 </div>
               </div>
@@ -1547,18 +1618,22 @@ export default function TimelinePage() {
           <div className="col-span-6 order-1">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-visible" style={{ height: 'calc(460.8px - 0px)', overflow: 'visible', position: 'relative' }}>
+                <div className="overflow-visible" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative' }}>
                   <ImageCarousel
                     images={[
                       "/pedida/PEDIDA_MANO.png",
                     ]}
                     alt="Pedida de mano"
                     experienceId="pedida"
+                    frameSrc={getFrameConfig("pedida")?.frameSrc}
+                    frameConfig={getFrameConfig("pedida") || undefined}
+                    calibrationMode={calibrationMode}
+                    isActiveCalibration={activeCalibration === "pedida"}
+                    onStartCalibration={() => handleStartCalibration("pedida")}
+                    onConfirmCalibration={(cropBox) => handleConfirmCalibration("pedida", cropBox)}
                     onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
                       openImageCarousel(imageSrc, imageArray, currentIndex, rect)
                     }}
-                    frameSrc={getFrameConfig("pedida")?.frameSrc}
-                    frameConfig={getFrameConfig("pedida") || undefined}
                   />
                 </div>
               </div>
@@ -1654,6 +1729,35 @@ export default function TimelinePage() {
         </div>
       </section>
         </>
+
+      {/* Export Calibration Button - Fixed position when calibration mode is active */}
+      {calibrationMode && (
+        <button
+          onClick={handleExportCalibration}
+          style={{
+            position: 'fixed',
+            bottom: '24px',
+            right: '24px',
+            zIndex: 9999,
+            padding: '12px 20px',
+            backgroundColor: '#10b981',
+            color: 'white',
+            border: 'none',
+            borderRadius: '8px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            cursor: 'pointer',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+            fontSize: '14px',
+            fontWeight: '600'
+          }}
+          title="Exportar configuración de calibración"
+        >
+          <Download size={18} />
+          Export Calibration
+        </button>
+      )}
     </div>
   )
 }

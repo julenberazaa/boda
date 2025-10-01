@@ -1,3 +1,10 @@
+export interface CropBox {
+  x: number      // % desde la izquierda del contenedor
+  y: number      // % desde arriba del contenedor
+  width: number  // % del ancho del contenedor
+  height: number // % del alto del contenedor
+}
+
 export interface LocalFrameConfig {
   frameSrc: string
   scaleX?: number
@@ -5,6 +12,7 @@ export interface LocalFrameConfig {
   offsetX?: number
   offsetY?: number
   fit?: 'cover' | 'contain' | 'fill'
+  cropBox?: CropBox
 }
 
 // Mapeo de experience IDs a configuraciones de marcos locales

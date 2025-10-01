@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react"
 import { emergencyLog } from './emergency-debug'
+import { Edit, Check } from 'lucide-react'
+import type { CropBox } from '@/lib/local-frame-config'
 
 interface MediaItem {
   type: 'image' | 'video'
@@ -24,7 +26,13 @@ interface ImageCarouselProps extends React.HTMLAttributes<HTMLDivElement> {
     offsetX?: number
     offsetY?: number
     fit?: 'cover' | 'contain' | 'fill'
+    cropBox?: CropBox
   }
+  // Calibration properties
+  calibrationMode?: boolean
+  isActiveCalibration?: boolean
+  onStartCalibration?: () => void
+  onConfirmCalibration?: (cropBox: CropBox) => void
 }
 
 export default function ImageCarousel({
@@ -37,12 +45,22 @@ export default function ImageCarousel({
   experienceId,
   frameSrc,
   frameConfig,
+  calibrationMode,
+  isActiveCalibration,
+  onStartCalibration,
+  onConfirmCalibration,
   className,
   ...rest
 }: ImageCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0)
   const carouselRef = useRef<HTMLDivElement>(null)
   const videoRefs = useRef<Record<number, HTMLVideoElement | null>>({})
+
+  // Calibration state
+  const [isDrawing, setIsDrawing] = useState(false)
+  const [drawStart, setDrawStart] = useState<{ x: number; y: number } | null>(null)
+  const [drawCurrent, setDrawCurrent] = useState<{ x: number; y: number } | null>(null)
+  const [tempCropBox, setTempCropBox] = useState<CropBox | null>(null)
 
   // Build media list with backward compatibility - UNIFIED
   const mediaItems: MediaItem[] = (() => {
@@ -103,7 +121,57 @@ export default function ImageCarousel({
     }
   }, [activeIndex, isVideoActive, totalItems])
 
+  // Calibration handlers
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isActiveCalibration) return
+
+    const rect = carouselRef.current?.getBoundingClientRect()
+    if (!rect) return
+
+    setIsDrawing(true)
+    setDrawStart({ x: e.clientX - rect.left, y: e.clientY - rect.top })
+    setDrawCurrent({ x: e.clientX - rect.left, y: e.clientY - rect.top })
+  }
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDrawing || !drawStart) return
+
+    const rect = carouselRef.current?.getBoundingClientRect()
+    if (!rect) return
+
+    setDrawCurrent({ x: e.clientX - rect.left, y: e.clientY - rect.top })
+  }
+
+  const handleMouseUp = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDrawing || !drawStart || !carouselRef.current) return
+
+    const rect = carouselRef.current.getBoundingClientRect()
+    const endX = e.clientX - rect.left
+    const endY = e.clientY - rect.top
+
+    // Calculate cropBox in percentages
+    const x = Math.min(drawStart.x, endX)
+    const y = Math.min(drawStart.y, endY)
+    const width = Math.abs(endX - drawStart.x)
+    const height = Math.abs(endY - drawStart.y)
+
+    const cropBox: CropBox = {
+      x: (x / rect.width) * 100,
+      y: (y / rect.height) * 100,
+      width: (width / rect.width) * 100,
+      height: (height / rect.height) * 100
+    }
+
+    setTempCropBox(cropBox)
+    setIsDrawing(false)
+    setDrawStart(null)
+    setDrawCurrent(null)
+  }
+
   const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Don't trigger image modal if in calibration mode
+    if (calibrationMode) return
+
     const current = mediaItems[activeIndex]
     const rect = e.currentTarget.getBoundingClientRect()
 
@@ -133,16 +201,37 @@ export default function ImageCarousel({
 
   if (totalItems === 0) return null
 
+  // Determine which cropBox to use: tempCropBox (being drawn) or saved cropBox
+  const activeCropBox = tempCropBox || frameConfig?.cropBox
+
+  // Calculate drawing rectangle for visualization
+  const drawRect = drawStart && drawCurrent ? {
+    left: Math.min(drawStart.x, drawCurrent.x),
+    top: Math.min(drawStart.y, drawCurrent.y),
+    width: Math.abs(drawCurrent.x - drawStart.x),
+    height: Math.abs(drawCurrent.y - drawStart.y)
+  } : null
+
   return (
     <div
       ref={carouselRef}
       {...rest}
-      className={`relative w-full h-full cursor-pointer${className ? ` ${className}` : ''}`}
+      className={`relative w-full h-full ${calibrationMode ? 'cursor-crosshair' : 'cursor-pointer'}${className ? ` ${className}` : ''}`}
       onClick={handleContainerClick}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
     >
-      {/* Contenedor interno para las imágenes reducidas al 80% */}
+      {/* Contenedor interno para las imágenes - usa cropBox si existe */}
       <div className="overflow-visible w-full h-full flex items-center justify-center">
-        <div style={{ width: '80%', height: '80%', position: 'relative' }}>
+        <div style={{
+          width: activeCropBox ? `${activeCropBox.width}%` : '80%',
+          height: activeCropBox ? `${activeCropBox.height}%` : '80%',
+          position: 'absolute',
+          left: activeCropBox ? `${activeCropBox.x}%` : '50%',
+          top: activeCropBox ? `${activeCropBox.y}%` : '50%',
+          transform: activeCropBox ? 'none' : 'translate(-50%, -50%)'
+        }}>
           {mediaItems.map((item, index) => {
             // UNIFIED styling - same for all devices
             const commonStyle: React.CSSProperties = {
@@ -187,7 +276,7 @@ export default function ImageCarousel({
         </div>
       </div>
 
-      {/* Frame overlay - usa scaleX/scaleY del frameConfig, multiplicado por 1.0584 base (1.008 * 1.05 = 1.0584) */}
+      {/* Frame overlay - escala fija 1.2, mantiene proporción original */}
       {frameSrc && (
         <img
           src={frameSrc}
@@ -198,12 +287,102 @@ export default function ImageCarousel({
             left: '50%',
             width: '100%',
             height: '100%',
-            transform: `translate(-50%, -50%) scale(${(frameConfig?.scaleX || 1) * 1.0584}, ${(frameConfig?.scaleY || 1) * 1.0584})`,
+            transform: 'translate(-50%, -50%) scale(1.2, 1.2)',
             objectFit: 'contain',
             zIndex: 30,
             pointerEvents: 'none'
           }}
         />
+      )}
+
+      {/* Calibration drawing overlay */}
+      {isActiveCalibration && drawRect && (
+        <div
+          style={{
+            position: 'absolute',
+            left: `${drawRect.left}px`,
+            top: `${drawRect.top}px`,
+            width: `${drawRect.width}px`,
+            height: `${drawRect.height}px`,
+            border: '2px solid #22c55e',
+            backgroundColor: 'rgba(34, 197, 94, 0.2)',
+            zIndex: 40,
+            pointerEvents: 'none'
+          }}
+        >
+          <div style={{
+            position: 'absolute',
+            top: '-20px',
+            left: '0',
+            fontSize: '11px',
+            color: '#22c55e',
+            backgroundColor: 'rgba(0,0,0,0.7)',
+            padding: '2px 4px',
+            borderRadius: '3px',
+            whiteSpace: 'nowrap'
+          }}>
+            {drawRect.width.toFixed(0)}px × {drawRect.height.toFixed(0)}px
+          </div>
+        </div>
+      )}
+
+      {/* Calibration buttons */}
+      {calibrationMode && frameSrc && (
+        <div style={{
+          position: 'absolute',
+          top: '8px',
+          right: '8px',
+          zIndex: 50
+        }}>
+          {!isActiveCalibration ? (
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                onStartCalibration?.()
+              }}
+              style={{
+                width: '32px',
+                height: '32px',
+                borderRadius: '50%',
+                backgroundColor: '#3b82f6',
+                border: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.3)'
+              }}
+              title="Calibrar marco"
+            >
+              <Edit size={16} color="white" />
+            </button>
+          ) : (
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                if (tempCropBox) {
+                  onConfirmCalibration?.(tempCropBox)
+                }
+              }}
+              disabled={!tempCropBox}
+              style={{
+                width: '32px',
+                height: '32px',
+                borderRadius: '50%',
+                backgroundColor: tempCropBox ? '#22c55e' : '#9ca3af',
+                border: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: tempCropBox ? 'pointer' : 'not-allowed',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.3)'
+              }}
+              title="Confirmar calibración"
+            >
+              <Check size={16} color="white" />
+            </button>
+          )}
+        </div>
       )}
     </div>
   )

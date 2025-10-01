@@ -233,8 +233,8 @@ export default function ImageCarousel({
       {/* Contenedor interno para las imágenes - usa cropBox si existe */}
       <div className="overflow-visible w-full h-full flex items-center justify-center">
         <div style={{
-          width: activeCropBox ? `${activeCropBox.width}%` : '80%',
-          height: activeCropBox ? `${activeCropBox.height}%` : '80%',
+          width: activeCropBox ? `${activeCropBox.width}%` : '96%',
+          height: activeCropBox ? `${activeCropBox.height}%` : '96%',
           position: 'absolute',
           left: activeCropBox ? `${activeCropBox.x}%` : '50%',
           top: activeCropBox ? `${activeCropBox.y}%` : '50%',
@@ -284,7 +284,7 @@ export default function ImageCarousel({
         </div>
       </div>
 
-      {/* Frame overlay - escala fija 1.2, mantiene proporción original */}
+      {/* Frame overlay - escala fija 1.44 (1.2 * 1.2), mantiene proporción original */}
       {frameSrc && (
         <img
           src={frameSrc}
@@ -295,7 +295,7 @@ export default function ImageCarousel({
             left: '50%',
             width: '100%',
             height: '100%',
-            transform: 'translate(-50%, -50%) scale(1.2, 1.2)',
+            transform: 'translate(-50%, -50%) scale(1.44, 1.44)',
             objectFit: 'contain',
             zIndex: 30,
             pointerEvents: 'none'

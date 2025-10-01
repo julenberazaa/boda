@@ -33,6 +33,8 @@ interface ImageCarouselProps extends React.HTMLAttributes<HTMLDivElement> {
   isActiveCalibration?: boolean
   onStartCalibration?: () => void
   onConfirmCalibration?: (cropBox: CropBox) => void
+  // Styling properties
+  borderRadius?: string
 }
 
 export default function ImageCarousel({
@@ -49,6 +51,7 @@ export default function ImageCarousel({
   isActiveCalibration,
   onStartCalibration,
   onConfirmCalibration,
+  borderRadius,
   className,
   ...rest
 }: ImageCarouselProps) {
@@ -238,7 +241,9 @@ export default function ImageCarousel({
           position: 'absolute',
           left: activeCropBox ? `${activeCropBox.x}%` : '50%',
           top: activeCropBox ? `${activeCropBox.y}%` : '50%',
-          transform: activeCropBox ? 'none' : 'translate(-50%, -50%)'
+          transform: activeCropBox ? 'none' : 'translate(-50%, -50%)',
+          overflow: borderRadius ? 'hidden' : 'visible',
+          borderRadius: borderRadius || undefined
         }}>
           {mediaItems.map((item, index) => {
             // UNIFIED styling - same for all devices

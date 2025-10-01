@@ -1308,7 +1308,7 @@ export default function TimelinePage() {
           <div className="col-span-6">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative', transform: 'scale(1.2)', transformOrigin: 'center' }}>
+                <div style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative', transform: 'scale(1.2)', transformOrigin: 'center', borderRadius: '1rem' }}>
                   <ImageCarousel
                     images={[
                       "/primeras-escapadas-01.png",
@@ -1325,6 +1325,7 @@ export default function TimelinePage() {
                     isActiveCalibration={activeCalibration === "02"}
                     onStartCalibration={() => handleStartCalibration("02")}
                     onConfirmCalibration={(cropBox) => handleConfirmCalibration("02", cropBox)}
+                    borderRadius="1rem"
                     onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
                       openImageCarousel(imageSrc, imageArray, currentIndex, rect)
                     }}
@@ -1426,7 +1427,7 @@ export default function TimelinePage() {
           <div className="col-span-6 order-1">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-visible rounded-2xl" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative', transform: 'scale(1.134)', transformOrigin: 'center' }}>
+                <div className="overflow-visible rounded-2xl" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative', transform: 'scale(1.134)', transformOrigin: 'center', borderRadius: '1rem' }}>
                   <ImageCarousel
                     images={[
                       "/mir/MIR.png",
@@ -1442,6 +1443,7 @@ export default function TimelinePage() {
                     isActiveCalibration={activeCalibration === "mir"}
                     onStartCalibration={() => handleStartCalibration("mir")}
                     onConfirmCalibration={(cropBox) => handleConfirmCalibration("mir", cropBox)}
+                    borderRadius="1rem"
                     onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
                       openImageCarousel(imageSrc, imageArray, currentIndex, rect)
                     }}

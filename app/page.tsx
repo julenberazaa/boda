@@ -1394,7 +1394,7 @@ export default function TimelinePage() {
           <div className="col-span-6">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="rounded-2xl" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative', transform: 'scale(1.32)', transformOrigin: 'center' }}>
+                <div className="rounded-2xl" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative', transform: 'scale(1.254)', transformOrigin: 'center' }}>
                   <ImageCarousel
                     images={[
                       "/estudios-oposiciones-01.png",
@@ -1426,7 +1426,7 @@ export default function TimelinePage() {
           <div className="col-span-6 order-1">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-visible rounded-2xl" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative', transform: 'scale(1.08)', transformOrigin: 'center' }}>
+                <div className="overflow-visible rounded-2xl" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative', transform: 'scale(1.134)', transformOrigin: 'center' }}>
                   <ImageCarousel
                     images={[
                       "/mir/MIR.png",
@@ -1479,7 +1479,7 @@ export default function TimelinePage() {
           <div className="col-span-6">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-visible" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative', transform: 'scale(1.2)', transformOrigin: 'center' }}>
+                <div className="overflow-visible" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative', transform: 'scale(1.26)', transformOrigin: 'center' }}>
                   <ImageCarousel
                     images={[
                       "/hobbies/HOBBIES.jpeg",

@@ -210,7 +210,13 @@ export default function ImageCarousel({
   if (totalItems === 0) return null
 
   // Determine which cropBox to use: tempCropBox (being drawn) or saved cropBox
-  const activeCropBox = tempCropBox || frameConfig?.cropBox
+  // Scale cropBox by 1.2 to match the 20% increase in frame size
+  const activeCropBox = tempCropBox || (frameConfig?.cropBox ? {
+    x: frameConfig.cropBox.x * 1.2,
+    y: frameConfig.cropBox.y * 1.2,
+    width: frameConfig.cropBox.width * 1.2,
+    height: frameConfig.cropBox.height * 1.2
+  } : undefined)
 
   // Calculate drawing rectangle for visualization
   const drawRect = drawStart && drawCurrent ? {

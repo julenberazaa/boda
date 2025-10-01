@@ -137,7 +137,13 @@ export const LOCAL_FRAME_CONFIGS: Record<string, LocalFrameConfig> = {
     scaleY: 1.2,
     offsetX: 0,
     offsetY: 0,
-    fit: 'contain'
+    fit: 'contain',
+    cropBox: {
+      x: 13.839283636232762,
+      y: 12.864583730697632,
+      width: 74.77678062052178,
+      height: 74.73958333333334
+    }
   }
 }
 

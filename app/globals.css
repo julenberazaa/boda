@@ -627,3 +627,13 @@
     animation: none !important;
   }
 }
+
+/* Hover scale effect for carousel images */
+.hover-scale-image:hover {
+  transform: scale(1.1);
+}
+
+/* Disable hover effect in calibration mode */
+.cursor-crosshair .hover-scale-image:hover {
+  transform: none;
+}

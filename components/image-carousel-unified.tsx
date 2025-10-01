@@ -255,7 +255,7 @@ export default function ImageCarousel({
               height: '100%',
               objectFit: 'cover',
               opacity: index === activeIndex ? 1 : 0,
-              transition: 'opacity 1s ease-in-out', // Simple, same for all
+              transition: 'opacity 1s ease-in-out, transform 0.3s ease-out',
               zIndex: index === activeIndex ? 20 : 10,
             }
 
@@ -267,6 +267,7 @@ export default function ImageCarousel({
                   alt={`${alt} - Imagen ${index + 1}`}
                   draggable={false}
                   style={commonStyle}
+                  className="hover-scale-image"
                   loading="lazy"
                   decoding="async"
                 />
@@ -282,6 +283,7 @@ export default function ImageCarousel({
                 controls={false}
                 muted
                 style={commonStyle}
+                className="hover-scale-image"
                 preload={index === activeIndex ? 'auto' : 'metadata'}
               />
             )

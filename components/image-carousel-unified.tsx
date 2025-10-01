@@ -210,13 +210,7 @@ export default function ImageCarousel({
   if (totalItems === 0) return null
 
   // Determine which cropBox to use: tempCropBox (being drawn) or saved cropBox
-  // Scale cropBox by 1.2 to match the 20% increase in frame size
-  const activeCropBox = tempCropBox || (frameConfig?.cropBox ? {
-    x: frameConfig.cropBox.x * 1.2,
-    y: frameConfig.cropBox.y * 1.2,
-    width: frameConfig.cropBox.width * 1.2,
-    height: frameConfig.cropBox.height * 1.2
-  } : undefined)
+  const activeCropBox = tempCropBox || frameConfig?.cropBox
 
   // Calculate drawing rectangle for visualization
   const drawRect = drawStart && drawCurrent ? {
@@ -239,8 +233,8 @@ export default function ImageCarousel({
       {/* Contenedor interno para las imágenes - usa cropBox si existe */}
       <div className="overflow-visible w-full h-full flex items-center justify-center">
         <div style={{
-          width: activeCropBox ? `${activeCropBox.width}%` : '96%',
-          height: activeCropBox ? `${activeCropBox.height}%` : '96%',
+          width: activeCropBox ? `${activeCropBox.width}%` : '80%',
+          height: activeCropBox ? `${activeCropBox.height}%` : '80%',
           position: 'absolute',
           left: activeCropBox ? `${activeCropBox.x}%` : '50%',
           top: activeCropBox ? `${activeCropBox.y}%` : '50%',
@@ -290,7 +284,7 @@ export default function ImageCarousel({
         </div>
       </div>
 
-      {/* Frame overlay - escala fija 1.44 (1.2 * 1.2), mantiene proporción original */}
+      {/* Frame overlay - escala fija 1.2, mantiene proporción original */}
       {frameSrc && (
         <img
           src={frameSrc}
@@ -301,7 +295,7 @@ export default function ImageCarousel({
             left: '50%',
             width: '100%',
             height: '100%',
-            transform: 'translate(-50%, -50%) scale(1.44, 1.44)',
+            transform: 'translate(-50%, -50%) scale(1.2, 1.2)',
             objectFit: 'contain',
             zIndex: 30,
             pointerEvents: 'none'

@@ -25,7 +25,13 @@ export const LOCAL_FRAME_CONFIGS: Record<string, LocalFrameConfig> = {
     scaleY: 1.2,
     offsetX: 0,
     offsetY: 0,
-    fit: 'contain'
+    fit: 'contain',
+    cropBox: {
+      x: 14.025289851691165,
+      y: 12.864581743876139,
+      width: 74.03273305215838,
+      height: 73.95833333333334
+    }
   },
 
   // Estudios universitarios
@@ -35,7 +41,13 @@ export const LOCAL_FRAME_CONFIGS: Record<string, LocalFrameConfig> = {
     scaleY: 1.15,
     offsetX: 0,
     offsetY: 0,
-    fit: 'contain'
+    fit: 'contain',
+    cropBox: {
+      x: 11.235117146960862,
+      y: 12.604165077209473,
+      width: 78.68303035442963,
+      height: 74.73958333333334
+    }
   },
 
   // Oposiciones de policía
@@ -45,7 +57,13 @@ export const LOCAL_FRAME_CONFIGS: Record<string, LocalFrameConfig> = {
     scaleY: 1.4,
     offsetX: 0,
     offsetY: 0,
-    fit: 'contain'
+    fit: 'contain',
+    cropBox: {
+      x: 11.979159038691813,
+      y: 14.427081743876139,
+      width: 75.14880440470347,
+      height: 61.458333333333336
+    }
   },
 
   // MIR / Medicina
@@ -55,7 +73,13 @@ export const LOCAL_FRAME_CONFIGS: Record<string, LocalFrameConfig> = {
     scaleY: 1.15,
     offsetX: 0,
     offsetY: 0,
-    fit: 'contain'
+    fit: 'contain',
+    cropBox: {
+      x: 5.096724707962806,
+      y: 10.989583532015484,
+      width: 89.09969631151723,
+      height: 80.20833333333334
+    }
   },
 
   // Hobbies
@@ -65,7 +89,13 @@ export const LOCAL_FRAME_CONFIGS: Record<string, LocalFrameConfig> = {
     scaleY: 1.25,
     offsetX: 0,
     offsetY: 0,
-    fit: 'contain'
+    fit: 'contain',
+    cropBox: {
+      x: 11.979159038691813,
+      y: 14.114582538604736,
+      width: 74.59076872843092,
+      height: 71.61458333333334
+    }
   },
 
   // Independizarse
@@ -75,7 +105,13 @@ export const LOCAL_FRAME_CONFIGS: Record<string, LocalFrameConfig> = {
     scaleY: 1.3,
     offsetX: 0,
     offsetY: 0,
-    fit: 'contain'
+    fit: 'contain',
+    cropBox: {
+      x: 12.909224175778514,
+      y: 15.052082141240438,
+      width: 74.77678062052178,
+      height: 70.3125
+    }
   },
 
   // Ilun
@@ -85,7 +121,13 @@ export const LOCAL_FRAME_CONFIGS: Record<string, LocalFrameConfig> = {
     scaleY: 1.15,
     offsetX: 0,
     offsetY: 0,
-    fit: 'contain'
+    fit: 'contain',
+    cropBox: {
+      x: 11.235111470328413,
+      y: 12.447915474573772,
+      width: 79.05505413861133,
+      height: 75
+    }
   },
 
   // Pedida de mano

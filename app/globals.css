@@ -555,6 +555,8 @@
   /* Container reset - full width, 4px padding */
   .max-w-7xl.mx-auto,
   div.max-w-7xl,
+  div.max-w-7xl.mx-auto.px-4,
+  div.max-w-7xl.mx-auto.px-4.py-12,
   .container {
     max-width: 100vw !important;
     width: 100% !important;
@@ -568,6 +570,8 @@
   section.timeline-item,
   section.timeline-item.mb-16,
   section.timeline-item.grid,
+  section.timeline-item.grid.grid-cols-12,
+  section.timeline-item.grid.grid-cols-12.gap-8,
   section#conocidos-2010 {
     display: flex !important;
     flex-direction: column !important;
@@ -575,6 +579,8 @@
     width: 100% !important;
     max-width: 100vw !important;
     padding: 1rem 0.25rem !important; /* 0.25rem = 4px lateral */
+    padding-left: 0.25rem !important;
+    padding-right: 0.25rem !important;
     margin: 0 0 2rem 0 !important;
     overflow-x: hidden !important;
     box-sizing: border-box !important;
@@ -583,23 +589,57 @@
   /* COLUMNS become full-width blocks - NO extra padding */
   section.timeline-item .col-span-6,
   section.timeline-item > div,
+  section.timeline-item div.col-span-6.pr-8,
+  section.timeline-item div.col-span-6.pl-8,
+  section.timeline-item div.col-span-6.pr-12,
+  section.timeline-item div.col-span-6.pl-12,
+  section.timeline-item div.col-span-6.order-2.pl-12,
+  section#conocidos-2010 div.col-span-6.pr-8,
+  section#conocidos-2010 div.col-span-6.pl-8,
   #conocidos-2010 > div {
     flex: 0 0 100% !important;
     width: 100% !important;
     max-width: 100% !important;
     padding: 0 !important; /* Sin padding extra - el section ya tiene 4px */
+    padding-left: 0 !important;
+    padding-right: 0 !important;
     margin: 0 !important;
     box-sizing: border-box !important;
   }
 
-  /* Remove ALL Tailwind padding classes in mobile */
+  /* Remove ALL Tailwind padding classes in mobile - ULTRA SPECIFIC */
   section.timeline-item .pl-8,
   section.timeline-item .pr-8,
   section.timeline-item .pl-12,
   section.timeline-item .pr-12,
   section.timeline-item .px-4,
   section.timeline-item .px-6,
-  section.timeline-item .px-8 {
+  section.timeline-item .px-8,
+  .pl-8,
+  .pr-8,
+  .pl-12,
+  .pr-12,
+  .px-4,
+  .px-6,
+  .px-8 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* NUCLEAR OPTION: ALL layout divs get 0 lateral padding (but not carousel internals) */
+  section.timeline-item > div.col-span-6,
+  section.timeline-item > div[class*="col-"],
+  section#conocidos-2010 > div.col-span-6,
+  section#conocidos-2010 > div[class*="col-"] {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* Body container override for global scope */
+  body,
+  body > div,
+  #__next,
+  main {
     padding-left: 0 !important;
     padding-right: 0 !important;
   }

@@ -674,55 +674,57 @@
     order: 1 !important; /* Asume que order-2 en desktop = texto */
   }
 
-  /* CAROUSELS CONTAINER (.p-6) - Full width with overflow visible for frames */
+  /* CAROUSELS CONTAINER (.p-6) - Minimal changes, preserve structure */
   .timeline-item .p-6,
   .timeline-item div.p-6 {
     width: 100% !important;
-    max-width: 100% !important;
-    height: auto !important;
+    padding: 0 !important; /* Remove Tailwind p-6 (24px) */
+    overflow: visible !important; /* CRITICAL: visible para que marcos no se corten */
+  }
+
+  /* Carousel flex container inside .p-6 - preserve flex justify-center */
+  .timeline-item .p-6 > div.flex {
+    overflow: visible !important;
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+  }
+
+  /* Carousel inner container (width: 96%) - MANTENER 96% para margen visual */
+  .timeline-item .p-6 div.relative[style*="width: 96%"],
+  .timeline-item .p-6 div.relative[style*="width:96%"] {
+    /* NO cambiar width: mantener 96% del HTML */
+    position: relative !important;
+    overflow: visible !important;
     margin: 0 !important;
     padding: 0 !important;
-    overflow: visible !important; /* CRITICAL: visible para que marcos no se corten */
-    box-sizing: border-box !important;
   }
 
-  /* Carousel flex container inside .p-6 */
-  .timeline-item .p-6 > div {
-    overflow: visible !important; /* Asegurar visible en todos los niveles */
-  }
-
-  /* Carousel inner container (width: 96%) - visible overflow */
-  .timeline-item .p-6 div.relative,
-  .timeline-item .p-6 div[style*="width: 96%"],
-  .timeline-item .p-6 div[style*="width:96%"] {
-    width: 100% !important;
-    max-width: 100% !important;
-    position: relative !important;
-    margin: 0 auto !important;
-    padding: 0 !important;
-    overflow: visible !important;
-  }
-
-  /* CRITICAL: Carousel container with height:calc or transform - aspect ratio + visible overflow */
-  .timeline-item .p-6 div[style*="height: calc"],
-  .timeline-item .p-6 div[style*="height:calc"],
+  /* CRITICAL: Carousel scaled container - scale down for mobile */
   .timeline-item .p-6 div[style*="transform: scale"],
   .timeline-item .p-6 div[style*="transform:scale"] {
+    /* Mantener dimensiones originales pero sin scale */
+    transform: none !important; /* Remove desktop scale(1.2) */
+    transform-origin: center !important;
+    overflow: visible !important; /* CRITICAL para marcos */
+    position: relative !important;
+  }
+
+  /* CRITICAL: Container with height:calc - convert to aspect-ratio based sizing */
+  .timeline-item .p-6 div[style*="height: calc"],
+  .timeline-item .p-6 div[style*="height:calc"] {
     width: 100% !important;
-    max-width: calc(100vw - 1.75rem) !important; /* Full width - 28px (14px × 2) */
-    aspect-ratio: 1 / 1.2 !important; /* Base ratio from desktop scale(1.2) */
+    max-width: calc(100vw - 3.5rem) !important; /* Full width - 56px (28px section + 28px p-6 flex) */
+    height: 0 !important; /* CRITICAL: height 0 con padding-bottom para aspect ratio */
+    padding-bottom: 120% !important; /* aspect-ratio 1:1.2 = 120% height */
     position: relative !important; /* CRITICAL: parent must be relative for absolute child */
     overflow: visible !important; /* CRITICAL para marcos */
     margin: 0 auto !important;
-    padding: 0 !important;
-    transform: none !important; /* Remove desktop scale transform */
-    /* NO forzar height - aspect-ratio la calcula automáticamente */
   }
 
-  /* ImageCarousel component itself (.relative.w-full.h-full) - MUST be absolute to fill aspect-ratio */
-  .timeline-item .p-6 div > div.relative.w-full.h-full,
-  .timeline-item .p-6 div.relative.w-full.h-full {
-    position: absolute !important; /* CRITICAL: absolute para llenar aspect-ratio parent */
+  /* ImageCarousel component itself (.relative.w-full.h-full) - MUST be absolute */
+  .timeline-item .p-6 div[style*="height"] > div.relative.w-full.h-full {
+    position: absolute !important; /* CRITICAL: absolute para llenar padding-bottom parent */
     top: 0 !important;
     left: 0 !important;
     width: 100% !important;
@@ -730,14 +732,20 @@
     overflow: visible !important;
   }
 
-  /* Frame overlays (empty alt) - mantener escala del componente */
-  .timeline-item .p-6 img[alt=""],
-  .timeline-item img[alt=""] {
-    /* Mantener los estilos inline del componente, solo asegurar overflow visible */
+  /* Frame overlays (empty alt) - escala para mobile */
+  .timeline-item .p-6 img[alt=""] {
+    /* Frame debe cubrir todo el carousel con scale */
     position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: 100% !important;
+    height: 100% !important;
+    transform: translate(-50%, -50%) scale(1.2) !important; /* Mantener scale 1.2 del componente */
+    object-fit: contain !important;
     pointer-events: none !important;
     z-index: 30 !important;
-    max-width: none !important; /* Permitir que el frame sea más grande que el contenedor */
+    max-width: none !important;
+    max-height: none !important;
   }
 
   /* Timeline mobile container (for TimelineSection component) */

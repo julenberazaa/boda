@@ -607,30 +607,14 @@
     box-sizing: border-box !important;
   }
 
-  /* Remove ALL Tailwind padding classes in mobile - ULTRA SPECIFIC */
+  /* Remove Tailwind padding classes ONLY within timeline-item */
   section.timeline-item .pl-8,
   section.timeline-item .pr-8,
   section.timeline-item .pl-12,
   section.timeline-item .pr-12,
   section.timeline-item .px-4,
   section.timeline-item .px-6,
-  section.timeline-item .px-8,
-  .pl-8,
-  .pr-8,
-  .pl-12,
-  .pr-12,
-  .px-4,
-  .px-6,
-  .px-8 {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
-  /* NUCLEAR OPTION: ALL layout divs get 0 lateral padding (but not carousel internals) */
-  section.timeline-item > div.col-span-6,
-  section.timeline-item > div[class*="col-"],
-  section#conocidos-2010 > div.col-span-6,
-  section#conocidos-2010 > div[class*="col-"] {
+  section.timeline-item .px-8 {
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
@@ -674,57 +658,57 @@
     order: 1 !important; /* Asume que order-2 en desktop = texto */
   }
 
-  /* CAROUSELS CONTAINER (.p-6) - Minimal changes, preserve structure */
+  /* CAROUSELS CONTAINER (.p-6) - Remove padding but preserve structure */
   .timeline-item .p-6,
   .timeline-item div.p-6 {
     width: 100% !important;
     padding: 0 !important; /* Remove Tailwind p-6 (24px) */
     overflow: visible !important; /* CRITICAL: visible para que marcos no se corten */
-  }
-
-  /* Carousel flex container inside .p-6 - preserve flex justify-center */
-  .timeline-item .p-6 > div.flex {
-    overflow: visible !important;
     display: flex !important;
     justify-content: center !important;
-    width: 100% !important;
   }
 
-  /* Carousel inner container (width: 96%) - MANTENER 96% para margen visual */
+  /* Carousel inner container (width: 96%) - Cambiar a 100% para simplificar */
+  .timeline-item .p-6 > div.flex,
+  .timeline-item .p-6 > div.relative,
   .timeline-item .p-6 div.relative[style*="width: 96%"],
   .timeline-item .p-6 div.relative[style*="width:96%"] {
-    /* NO cambiar width: mantener 96% del HTML */
+    width: 100% !important; /* Cambiar de 96% a 100% - eliminar doble margen */
+    max-width: calc(100vw - 1.75rem) !important; /* Full width - 28px (14px × 2) */
     position: relative !important;
     overflow: visible !important;
-    margin: 0 !important;
+    margin: 0 auto !important;
     padding: 0 !important;
   }
 
-  /* CRITICAL: Carousel scaled container - scale down for mobile */
+  /* CRITICAL: Carousel scaled container - remove transform scale */
   .timeline-item .p-6 div[style*="transform: scale"],
   .timeline-item .p-6 div[style*="transform:scale"] {
-    /* Mantener dimensiones originales pero sin scale */
     transform: none !important; /* Remove desktop scale(1.2) */
     transform-origin: center !important;
-    overflow: visible !important; /* CRITICAL para marcos */
+    overflow: visible !important;
     position: relative !important;
+    width: 100% !important;
+    max-width: calc(100vw - 1.75rem) !important;
   }
 
-  /* CRITICAL: Container with height:calc - convert to aspect-ratio based sizing */
+  /* CRITICAL: Container with height:calc - padding-bottom technique */
   .timeline-item .p-6 div[style*="height: calc"],
   .timeline-item .p-6 div[style*="height:calc"] {
     width: 100% !important;
-    max-width: calc(100vw - 3.5rem) !important; /* Full width - 56px (28px section + 28px p-6 flex) */
-    height: 0 !important; /* CRITICAL: height 0 con padding-bottom para aspect ratio */
+    max-width: calc(100vw - 1.75rem) !important; /* Correct: 28px total (14px × 2) */
+    height: 0 !important; /* CRITICAL: height 0 for padding-bottom trick */
     padding-bottom: 120% !important; /* aspect-ratio 1:1.2 = 120% height */
-    position: relative !important; /* CRITICAL: parent must be relative for absolute child */
-    overflow: visible !important; /* CRITICAL para marcos */
+    position: relative !important;
+    overflow: visible !important;
     margin: 0 auto !important;
   }
 
-  /* ImageCarousel component itself (.relative.w-full.h-full) - MUST be absolute */
+  /* ImageCarousel component - position absolute to fill padding-bottom container */
+  .timeline-item .p-6 div.relative.w-full.h-full,
+  .timeline-item .p-6 div > div.relative.w-full.h-full,
   .timeline-item .p-6 div[style*="height"] > div.relative.w-full.h-full {
-    position: absolute !important; /* CRITICAL: absolute para llenar padding-bottom parent */
+    position: absolute !important;
     top: 0 !important;
     left: 0 !important;
     width: 100% !important;

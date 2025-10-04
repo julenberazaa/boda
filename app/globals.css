@@ -552,7 +552,7 @@
    ======================================== */
 @media (max-width: 767px) {
 
-  /* Container reset - full width, 4px padding */
+  /* Container reset - full width, 8px padding */
   .max-w-7xl.mx-auto,
   div.max-w-7xl,
   div.max-w-7xl.mx-auto.px-4,
@@ -560,8 +560,8 @@
   .container {
     max-width: 100vw !important;
     width: 100% !important;
-    padding-left: 0.25rem !important; /* 4px */
-    padding-right: 0.25rem !important; /* 4px */
+    padding-left: 0.5rem !important; /* 8px */
+    padding-right: 0.5rem !important; /* 8px */
     margin-left: 0 !important;
     margin-right: 0 !important;
   }
@@ -578,9 +578,9 @@
     gap: 1.5rem !important;
     width: 100% !important;
     max-width: 100vw !important;
-    padding: 1rem 0.25rem !important; /* 0.25rem = 4px lateral */
-    padding-left: 0.25rem !important;
-    padding-right: 0.25rem !important;
+    padding: 1rem 0.5rem !important; /* 0.5rem = 8px lateral */
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
     margin: 0 0 2rem 0 !important;
     overflow-x: hidden !important;
     box-sizing: border-box !important;
@@ -645,92 +645,101 @@
   }
 
   /* MOBILE ORDER: Using flexbox order */
-  /* Title/Text column first */
+  /* Title/Text column first - OVERRIDE desktop order-1/order-2 */
   section.timeline-item > div:has(h3),
   section.timeline-item > div:has(.flex.items-center),
+  section.timeline-item > div.col-span-6:has(h3),
+  section.timeline-item > div.col-span-6:has(.flex.items-center),
+  section.timeline-item > div.order-2:has(h3),
+  section.timeline-item > div.order-2:has(.flex.items-center),
   #conocidos-2010 > div:last-child {
     order: 1 !important;
   }
 
-  /* Media/Carousel column second */
+  /* Media/Carousel column second - OVERRIDE desktop order-1/order-2 */
   section.timeline-item > div:has(.p-6),
   section.timeline-item > div:has(img),
+  section.timeline-item > div.col-span-6:has(.p-6),
+  section.timeline-item > div.order-1:has(.p-6),
+  section.timeline-item > div.order-2:has(.p-6),
   #conocidos-2010 > div:first-child {
     order: 2 !important;
   }
 
-  /* CAROUSELS: Scale down, preserve desktop aspect ratios, centered with 4px margin */
+  /* CAROUSELS CONTAINER (.p-6) - Full width with overflow visible for frames */
   .timeline-item .p-6,
   .timeline-item div.p-6 {
-    width: calc(100% - 0.5rem) !important; /* Full width minus 4px on each side */
-    max-width: 420px !important;
+    width: 100% !important;
+    max-width: 100% !important;
     height: auto !important;
-    margin: 0 auto !important;
+    margin: 0 !important;
     padding: 0 !important;
-    overflow: visible !important; /* Changed to visible to allow frames */
+    overflow: visible !important; /* CRITICAL: visible para que marcos no se corten */
     box-sizing: border-box !important;
   }
 
-  /* Carousel inner container (width: 96%) - keep structure */
-  .timeline-item .p-6 > div.relative,
-  .timeline-item div[style*="width: 96%"] {
-    width: 100% !important;
-    position: relative !important;
-    margin: 0 !important;
-    padding: 0 !important;
+  /* Carousel flex container inside .p-6 */
+  .timeline-item .p-6 > div {
+    overflow: visible !important; /* Asegurar visible en todos los niveles */
   }
 
-  /* CRITICAL: Carousel container with height:calc - preserve aspect ratio */
-  .timeline-item .p-6 div[style*="height: calc"],
-  .timeline-item .p-6 div[style*="height:calc"] {
+  /* Carousel inner container (width: 96%) - visible overflow */
+  .timeline-item .p-6 div.relative,
+  .timeline-item .p-6 div[style*="width: 96%"],
+  .timeline-item .p-6 div[style*="width:96%"] {
     width: 100% !important;
+    max-width: 100% !important;
+    position: relative !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  /* CRITICAL: Carousel container with height:calc or transform - aspect ratio + visible overflow */
+  .timeline-item .p-6 div[style*="height: calc"],
+  .timeline-item .p-6 div[style*="height:calc"],
+  .timeline-item .p-6 div[style*="transform: scale"],
+  .timeline-item .p-6 div[style*="transform:scale"] {
+    width: 100% !important;
+    max-width: 420px !important; /* Límite de ancho en móviles */
     height: auto !important;
     aspect-ratio: 1 / 1.2 !important; /* Base ratio from desktop scale(1.2) */
     position: relative !important;
-    overflow: visible !important;
-    margin: 0 !important;
+    overflow: visible !important; /* CRITICAL para marcos */
+    margin: 0 auto !important;
     padding: 0 !important;
+    transform: none !important; /* Remove desktop scale transform */
   }
 
-  /* ImageCarousel component itself - must fill the aspect-ratio container */
-  .timeline-item .p-6 div[style*="height"] > div.relative.w-full.h-full {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
+  /* ImageCarousel component itself (.relative.w-full.h-full) */
+  .timeline-item .p-6 div > div.relative.w-full.h-full,
+  .timeline-item .p-6 div.relative.w-full.h-full {
+    position: relative !important; /* Cambiar de absolute a relative */
     width: 100% !important;
     height: 100% !important;
+    overflow: visible !important;
   }
 
-  /* Images/Videos inside carousel: fill container, preserve aspect */
+  /* Images/Videos inside carousel */
   .timeline-item .p-6 img:not([alt=""]),
   .timeline-item .p-6 video {
     width: 100% !important;
     height: 100% !important;
-    object-fit: contain !important;
-    display: block !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-  }
-
-  /* General timeline images (not in carousel) */
-  .timeline-item img:not([alt=""]):not(.timeline-item .p-6 img),
-  .timeline-item video:not(.timeline-item .p-6 video) {
-    width: 100% !important;
-    height: auto !important;
-    object-fit: contain !important;
+    object-fit: cover !important;
     display: block !important;
   }
 
-  /* Frame overlays (empty alt) maintain desktop positioning */
+  /* Frame overlays (empty alt) - visible y escalado apropiado */
   .timeline-item .p-6 img[alt=""],
   .timeline-item img[alt=""] {
     position: absolute !important;
     top: 50% !important;
     left: 50% !important;
-    width: auto !important;
-    height: auto !important;
-    transform: translate(-50%, -50%) scale(var(--frame-overlay-scale, 1.2)) !important;
+    width: 120% !important; /* Hacer frame más grande para que se vea completo */
+    height: 120% !important;
+    max-width: none !important;
+    transform: translate(-50%, -50%) !important;
+    object-fit: contain !important;
     pointer-events: none !important;
     z-index: 30 !important;
   }
@@ -823,7 +832,7 @@
   /* Hero section - center all content and remove extra padding */
   section.relative.h-screen,
   section.relative.min-h-screen {
-    padding: 0 0.25rem !important; /* 4px lateral only */
+    padding: 0 0.5rem !important; /* 8px lateral only */
   }
 
   /* Hero inline-block container - remove padding, center properly */

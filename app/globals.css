@@ -552,6 +552,18 @@
    ======================================== */
 @media (max-width: 767px) {
 
+  /* Container reset - full width, 4px padding */
+  .max-w-7xl.mx-auto,
+  div.max-w-7xl,
+  .container {
+    max-width: 100vw !important;
+    width: 100% !important;
+    padding-left: 0.25rem !important; /* 4px */
+    padding-right: 0.25rem !important; /* 4px */
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
   /* RESET: Remove desktop grid, use single-column flex layout */
   section.timeline-item,
   section.timeline-item.mb-16,
@@ -568,16 +580,28 @@
     box-sizing: border-box !important;
   }
 
-  /* COLUMNS become full-width blocks with 4px internal padding */
+  /* COLUMNS become full-width blocks - NO extra padding */
   section.timeline-item .col-span-6,
   section.timeline-item > div,
   #conocidos-2010 > div {
     flex: 0 0 100% !important;
     width: 100% !important;
     max-width: 100% !important;
-    padding: 0 0.25rem !important; /* 4px lateral interno */
+    padding: 0 !important; /* Sin padding extra - el section ya tiene 4px */
     margin: 0 !important;
     box-sizing: border-box !important;
+  }
+
+  /* Remove ALL Tailwind padding classes in mobile */
+  section.timeline-item .pl-8,
+  section.timeline-item .pr-8,
+  section.timeline-item .pl-12,
+  section.timeline-item .pr-12,
+  section.timeline-item .px-4,
+  section.timeline-item .px-6,
+  section.timeline-item .px-8 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 
   /* MOBILE ORDER: Using flexbox order */
@@ -756,6 +780,25 @@
      TIPOGRAFÍA MOBILE - TAMAÑOS ESPECÍFICOS
      ======================================== */
 
+  /* Hero section - center all content and remove extra padding */
+  section.relative.h-screen,
+  section.relative.min-h-screen {
+    padding: 0 0.25rem !important; /* 4px lateral only */
+  }
+
+  /* Hero inline-block container - remove padding, center properly */
+  section.relative.h-screen .inline-block,
+  section.relative .inline-block.mx-auto.px-6.py-2 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+
   /* Hero - Título principal: 44px (single line) */
   h1.text-7xl.font-bold.mb-4.font-elegant,
   h1.font-elegant,
@@ -764,6 +807,9 @@
     line-height: 1.1 !important;
     white-space: nowrap !important; /* Force single line */
     overflow: visible !important;
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
 
   /* Hero - Subtítulo/intro: 18px */
@@ -772,6 +818,9 @@
   .hero-mobile-container p {
     font-size: 18px !important;
     line-height: 1.4 !important;
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
 
   /* Historia - Títulos (h3): 18px */
@@ -802,10 +851,10 @@
     line-height: 1.4 !important;
   }
 
-  /* Flores decorativas - 36px (75% del tamaño desktop 48px) */
+  /* Flores decorativas - 61px (36px + 70% = 61.2px ≈ 61px) */
   .absolute.inset-0.pointer-events-none.z-10 img {
-    width: 36px !important;
-    height: 36px !important;
+    width: 61px !important;
+    height: 61px !important;
   }
 
   .absolute.inset-0.pointer-events-none.z-10 img:nth-child(1) {

@@ -635,15 +635,6 @@
     padding-right: 0 !important;
   }
 
-  /* Body container override for global scope */
-  body,
-  body > div,
-  #__next,
-  main {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
   /* MOBILE ORDER: Using flexbox order */
   /* STRATEGY: Force ALL carousels to order: 2 and ALL text to order: 1 */
 
@@ -719,19 +710,23 @@
   .timeline-item .p-6 div[style*="transform:scale"] {
     width: 100% !important;
     max-width: calc(100vw - 1.75rem) !important; /* Full width - 28px (14px × 2) */
-    height: auto !important;
     aspect-ratio: 1 / 1.2 !important; /* Base ratio from desktop scale(1.2) */
-    position: relative !important;
+    position: relative !important; /* CRITICAL: parent must be relative for absolute child */
     overflow: visible !important; /* CRITICAL para marcos */
     margin: 0 auto !important;
     padding: 0 !important;
     transform: none !important; /* Remove desktop scale transform */
+    /* NO forzar height - aspect-ratio la calcula automáticamente */
   }
 
-  /* ImageCarousel component itself (.relative.w-full.h-full) - NO FORZAR estilos */
+  /* ImageCarousel component itself (.relative.w-full.h-full) - MUST be absolute to fill aspect-ratio */
   .timeline-item .p-6 div > div.relative.w-full.h-full,
   .timeline-item .p-6 div.relative.w-full.h-full {
-    /* Dejar que el componente maneje sus propios estilos */
+    position: absolute !important; /* CRITICAL: absolute para llenar aspect-ratio parent */
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
     overflow: visible !important;
   }
 

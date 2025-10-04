@@ -552,7 +552,7 @@
    ======================================== */
 @media (max-width: 767px) {
 
-  /* Container reset - full width, 8px padding */
+  /* Container reset - full width, 14px padding */
   .max-w-7xl.mx-auto,
   div.max-w-7xl,
   div.max-w-7xl.mx-auto.px-4,
@@ -560,8 +560,8 @@
   .container {
     max-width: 100vw !important;
     width: 100% !important;
-    padding-left: 0.5rem !important; /* 8px */
-    padding-right: 0.5rem !important; /* 8px */
+    padding-left: 0.875rem !important; /* 14px */
+    padding-right: 0.875rem !important; /* 14px */
     margin-left: 0 !important;
     margin-right: 0 !important;
   }
@@ -578,9 +578,9 @@
     gap: 1.5rem !important;
     width: 100% !important;
     max-width: 100vw !important;
-    padding: 1rem 0.5rem !important; /* 0.5rem = 8px lateral */
-    padding-left: 0.5rem !important;
-    padding-right: 0.5rem !important;
+    padding: 1rem 0.875rem !important; /* 0.875rem = 14px lateral */
+    padding-left: 0.875rem !important;
+    padding-right: 0.875rem !important;
     margin: 0 0 2rem 0 !important;
     overflow-x: hidden !important;
     box-sizing: border-box !important;
@@ -645,25 +645,42 @@
   }
 
   /* MOBILE ORDER: Using flexbox order */
-  /* Title/Text column first - OVERRIDE desktop order-1/order-2 */
+  /* STRATEGY: Force ALL carousels to order: 2 and ALL text to order: 1 */
+
+  /* Title/Text column ALWAYS first - ULTRA specific to override Tailwind */
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6:has(h3),
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6:has(.flex.items-center),
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6.pr-12:has(h3),
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6.pr-12:has(.flex.items-center),
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6.order-2:has(h3),
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6.order-2:has(.flex.items-center),
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6.order-2.pl-12:has(h3),
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6.order-2.pl-12:has(.flex.items-center),
   section.timeline-item > div:has(h3),
   section.timeline-item > div:has(.flex.items-center),
-  section.timeline-item > div.col-span-6:has(h3),
-  section.timeline-item > div.col-span-6:has(.flex.items-center),
-  section.timeline-item > div.order-2:has(h3),
-  section.timeline-item > div.order-2:has(.flex.items-center),
   #conocidos-2010 > div:last-child {
     order: 1 !important;
   }
 
-  /* Media/Carousel column second - OVERRIDE desktop order-1/order-2 */
+  /* Media/Carousel column ALWAYS second - ULTRA specific to override Tailwind */
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6:has(.p-6),
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6.order-1:has(.p-6),
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6.order-1:has(div.p-6),
+  section.timeline-item.grid.grid-cols-12 > div.order-1:has(.p-6.flex.justify-center),
+  section.timeline-item.grid > div:has(.p-6),
   section.timeline-item > div:has(.p-6),
   section.timeline-item > div:has(img),
-  section.timeline-item > div.col-span-6:has(.p-6),
-  section.timeline-item > div.order-1:has(.p-6),
-  section.timeline-item > div.order-2:has(.p-6),
   #conocidos-2010 > div:first-child {
     order: 2 !important;
+  }
+
+  /* FALLBACK: Si :has() no funciona, forzar por clases específicas */
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6.order-1 {
+    order: 2 !important; /* Asume que order-1 en desktop = carousel */
+  }
+
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6.order-2 {
+    order: 1 !important; /* Asume que order-2 en desktop = texto */
   }
 
   /* CAROUSELS CONTAINER (.p-6) - Full width with overflow visible for frames */
@@ -701,7 +718,7 @@
   .timeline-item .p-6 div[style*="transform: scale"],
   .timeline-item .p-6 div[style*="transform:scale"] {
     width: 100% !important;
-    max-width: 420px !important; /* Límite de ancho en móviles */
+    max-width: calc(100vw - 1.75rem) !important; /* Full width - 28px (14px × 2) */
     height: auto !important;
     aspect-ratio: 1 / 1.2 !important; /* Base ratio from desktop scale(1.2) */
     position: relative !important;
@@ -711,37 +728,21 @@
     transform: none !important; /* Remove desktop scale transform */
   }
 
-  /* ImageCarousel component itself (.relative.w-full.h-full) */
+  /* ImageCarousel component itself (.relative.w-full.h-full) - NO FORZAR estilos */
   .timeline-item .p-6 div > div.relative.w-full.h-full,
   .timeline-item .p-6 div.relative.w-full.h-full {
-    position: relative !important; /* Cambiar de absolute a relative */
-    width: 100% !important;
-    height: 100% !important;
+    /* Dejar que el componente maneje sus propios estilos */
     overflow: visible !important;
   }
 
-  /* Images/Videos inside carousel */
-  .timeline-item .p-6 img:not([alt=""]),
-  .timeline-item .p-6 video {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    display: block !important;
-  }
-
-  /* Frame overlays (empty alt) - visible y escalado apropiado */
+  /* Frame overlays (empty alt) - mantener escala del componente */
   .timeline-item .p-6 img[alt=""],
   .timeline-item img[alt=""] {
+    /* Mantener los estilos inline del componente, solo asegurar overflow visible */
     position: absolute !important;
-    top: 50% !important;
-    left: 50% !important;
-    width: 120% !important; /* Hacer frame más grande para que se vea completo */
-    height: 120% !important;
-    max-width: none !important;
-    transform: translate(-50%, -50%) !important;
-    object-fit: contain !important;
     pointer-events: none !important;
     z-index: 30 !important;
+    max-width: none !important; /* Permitir que el frame sea más grande que el contenedor */
   }
 
   /* Timeline mobile container (for TimelineSection component) */
@@ -832,7 +833,7 @@
   /* Hero section - center all content and remove extra padding */
   section.relative.h-screen,
   section.relative.min-h-screen {
-    padding: 0 0.5rem !important; /* 8px lateral only */
+    padding: 0 0.875rem !important; /* 14px lateral only */
   }
 
   /* Hero inline-block container - remove padding, center properly */

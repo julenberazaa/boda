@@ -111,29 +111,10 @@ export default function TimelineSection({
           </div>
         </div>
 
-        {/* Mobile layout: simplified with CSS classes */}
+        {/* Mobile layout: Grid order Título → Texto → Media */}
         <div className={`${isMobile ? 'timeline-mobile-container' : 'hidden'}`}>
-          {/* Columna de medios */}
-          <div className={isReversed ? 'order-2' : 'order-1'}>
-            <div className="relative overflow-hidden rounded-lg shadow-lg">
-              <Image
-                src={imageUrl || "/placeholder.svg"}
-                alt={`${title} - ${year}`}
-                width={200}
-                height={150}
-                className="w-full h-auto object-cover"
-              />
-            </div>
-            {icon && (
-              <div className="absolute -top-1 -right-1 w-4 h-4 bg-terracotta rounded-full flex items-center justify-center text-ivory text-xs">
-                {icon}
-              </div>
-            )}
-          </div>
-
-          {/* Columna de contenido */}
-          <div className={isReversed ? 'order-1' : 'order-2'}>
-            {/* Header */}
+          {/* Título (grid-area: title) */}
+          <div style={{ gridArea: 'title' }}>
             <div className="flex items-center gap-2 mb-2">
               <div className="age-circle bg-sage rounded-full flex items-center justify-center text-midnight font-bold">
                 {age}
@@ -143,13 +124,13 @@ export default function TimelineSection({
                 <div className="w-3 h-px bg-terracotta mt-1" />
               </div>
             </div>
-
-            {/* Título */}
             <h2 className="font-playfair font-bold text-midnight mb-2">
               {title}
             </h2>
+          </div>
 
-            {/* Contenido */}
+          {/* Texto (grid-area: text) */}
+          <div style={{ gridArea: 'text' }} className="text-content">
             <div className="text-midnight/80 leading-relaxed text-justify">
               {content.split("\n").map((paragraph, i) => (
                 <p key={i} className="mb-1 last:mb-0">
@@ -157,6 +138,24 @@ export default function TimelineSection({
                 </p>
               ))}
             </div>
+          </div>
+
+          {/* Media (grid-area: media) */}
+          <div style={{ gridArea: 'media' }} className="media-container">
+            <div className="relative overflow-hidden rounded-lg shadow-lg">
+              <Image
+                src={imageUrl || "/placeholder.svg"}
+                alt={`${title} - ${year}`}
+                width={600}
+                height={400}
+                className="w-full h-auto object-contain"
+              />
+            </div>
+            {icon && (
+              <div className="absolute -top-1 -right-1 w-4 h-4 bg-terracotta rounded-full flex items-center justify-center text-ivory text-xs">
+                {icon}
+              </div>
+            )}
           </div>
         </div>
       </div>

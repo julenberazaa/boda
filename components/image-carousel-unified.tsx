@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { emergencyLog } from './emergency-debug'
 import { Edit, Check } from 'lucide-react'
 import type { CropBox } from '@/lib/local-frame-config'
+import { useCarouselResize } from '@/hooks/use-carousel-resize'
 
 interface MediaItem {
   type: 'image' | 'video'
@@ -83,6 +84,17 @@ export default function ImageCarousel({
       userAgent: navigator.userAgent.substring(0, 100)
     })
   }, [experienceId, totalItems, frameSrc])
+
+  // ResizeObserver fallback for real-time adjustments (universal support)
+  useCarouselResize(carouselRef, (width, height) => {
+    // Optional: Add custom resize logic here if needed
+    // CSS handles most cases via container queries + auto heights
+    emergencyLog('debug', `Carousel resized (fallback)`, {
+      experienceId,
+      width,
+      height
+    })
+  })
 
   // UNIFIED Auto-advance - same for all devices
   useEffect(() => {

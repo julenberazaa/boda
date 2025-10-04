@@ -730,12 +730,12 @@ export default function RootLayout({
                   right: 4px !important;
                 }
 
-                /* CAROUSEL MOBILE FIX - Target carousel containers with fixed heights */
+                /* CAROUSEL MOBILE FIX - Target carousel containers with auto heights */
                 .timeline-item div[style*="height: calc(384px"],
                 .timeline-item div[style*="height:calc(384px"] {
-                  height: 120px !important;
-                  max-height: 120px !important;
-                  min-height: 120px !important;
+                  height: auto !important;
+                  max-height: none !important;
+                  min-height: 0 !important;
                   overflow: hidden !important;
                   display: block !important;
                 }
@@ -744,7 +744,7 @@ export default function RootLayout({
                 .timeline-item div.p-6 div.relative[style*="width"],
                 .timeline-item div.p-6 > div.relative {
                   width: 100% !important;
-                  height: 120px !important;
+                  height: auto !important;
                   display: block !important;
                   margin: 0 !important;
                   padding: 0 !important;
@@ -768,14 +768,14 @@ export default function RootLayout({
                 }
 
 
-                /* MOBILE CAROUSEL FIX - Centered and properly sized */
+                /* MOBILE CAROUSEL FIX - Centered with auto height */
                 div[style*="calc(384px"] {
-                  height: 76px !important;
-                  min-height: 76px !important;
-                  max-height: 76px !important;
-                  width: 166px !important; /* 20% wider than 138px */
-                  min-width: 166px !important;
-                  max-width: 166px !important;
+                  height: auto !important;
+                  min-height: 0 !important;
+                  max-height: none !important;
+                  width: 100% !important;
+                  min-width: 0 !important;
+                  max-width: 100% !important;
                   display: block !important;
                   overflow: hidden !important;
                   position: relative !important;
@@ -1072,14 +1072,13 @@ export default function RootLayout({
                 /* CAROUSEL ASPECT RATIO FIX - 3:4 (horizontal:vertical) - NUCLEAR OVERRIDE */
                 /* MÁXIMA ESPECIFICIDAD para sobrescribir reglas anteriores */
 
-                /* Contenedor p-6 - FORZAR aspect ratio, 70% width y centrado */
+                /* Contenedor p-6 - Width responsive con límites, sin aspect-ratio forzado */
                 html body div div div section.timeline-item.mb-16 div.col-span-6 > div.p-6,
                 html body div div div section.timeline-item.grid div.col-span-6 > div.p-6,
                 html body div div div section.timeline-item div.col-span-6 > div.p-6,
                 html body div div div section.timeline-item div.col-span-6 div.p-6,
                 html body div div div #conocidos-2010 div.col-span-6 > div.p-6 {
-                  aspect-ratio: 3 / 4 !important;
-                  width: 70% !important; /* 10% más grande que anterior (64% × 1.10 = 70.4%) */
+                  width: clamp(280px, 70vw, 480px) !important;
                   height: auto !important;
                   display: block !important;
                   padding: 0 !important;
@@ -1091,12 +1090,11 @@ export default function RootLayout({
                   max-height: none !important;
                 }
 
-                /* div.relative dentro de p-6 - FORZAR aspect ratio */
+                /* div.relative dentro de p-6 - Sin aspect ratio forzado */
                 html body div div div section.timeline-item.mb-16 div.p-6 > div.relative,
                 html body div div div section.timeline-item.grid div.p-6 > div.relative,
                 html body div div div section.timeline-item div.p-6 > div.relative,
                 html body div div div section.timeline-item div.p-6 div.relative {
-                  aspect-ratio: 3 / 4 !important;
                   width: 100% !important;
                   height: auto !important;
                   position: relative !important;
@@ -1108,14 +1106,13 @@ export default function RootLayout({
                   max-height: none !important;
                 }
 
-                /* div con style inline height: calc - ELIMINAR height y forzar aspect ratio */
+                /* div con style inline height: calc - Override height pero sin aspect-ratio forzado */
                 html body div div div section.timeline-item.mb-16 div[style*="height: calc"],
                 html body div div div section.timeline-item.grid div[style*="height: calc"],
                 html body div div div section.timeline-item div[style*="height: calc"],
                 html body div div div section.timeline-item div[style*="height:"],
                 html body div div div section.timeline-item div.p-6 div[style*="height"] {
                   height: auto !important;
-                  aspect-ratio: 3 / 4 !important;
                   width: 100% !important;
                   min-height: 0 !important;
                   max-height: none !important;

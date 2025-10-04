@@ -30,6 +30,24 @@
     --midnight: #2e2e3a;
     --font-scale: 1.2;
     --timeline-extra-spacing: 0rem;
+
+    /* Carousel refactor v2: Desktop aspect ratios (calibrated at 1536px) */
+    --base-viewport-width: 1536;
+    --carousel-base-height: 384; /* Base height in px at 1536px */
+
+    /* Desktop scales per carousel (extracted from inline transform values) */
+    --carousel-scale-default: 1.2;     /* Primeras escapadas, Estudios, Ilun */
+    --carousel-scale-policia: 1.254;
+    --carousel-scale-medicina: 1.134;
+    --carousel-scale-hobbies: 1.26;
+    --carousel-scale-indep: 1.32;
+    --carousel-scale-pedida: 1.32;
+
+    /* Frame overlay scale (currently fixed at 1.2 for all) */
+    --frame-overlay-scale: 1.2;
+
+    /* Feature flag for rollback */
+    --mobile-carousel-v2: 1;
   }
 
   .dark {
@@ -533,6 +551,34 @@
     gap: 0.125rem !important; /* 2px */
   }
 
+  /* Mobile Historia layout: Título → Texto → Media (carousel/marco) */
+  .timeline-mobile-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "title"
+      "text"
+      "media";
+    gap: 1rem;
+    padding: 1rem 0.5rem;
+  }
+
+  .timeline-mobile-container .order-1 {
+    grid-area: media;
+  }
+
+  .timeline-mobile-container .order-2 {
+    grid-area: title;
+  }
+
+  /* Ensure all mobile carousels respect natural aspect ratio */
+  .timeline-mobile-container img,
+  .timeline-mobile-container video {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
   /* Círculos más pequeños solo en móviles */
   .timeline-icon-circle {
     min-width: 2.4rem !important;
@@ -587,6 +633,39 @@
   section#conocidos-2010.timeline-item.mb-16 {
     margin-top: -3rem !important; /* Subir aún más la primera sección */
     padding-top: 2rem !important; /* Compensar con padding */
+  }
+
+  /* Mobile carousel behavior: Maintain desktop logic, scale to viewport */
+  /* Carousels should preserve desktop aspect ratios, just scaled down */
+  .timeline-item .p-6,
+  .timeline-item .carousel-container,
+  .timeline-mobile-container .media-container {
+    width: clamp(280px, 85vw, 420px) !important;
+    margin: 0 auto;
+  }
+
+  /* Allow natural image dimensions without forced aspect ratio */
+  .timeline-item .p-6 img:not([alt=""]),
+  .timeline-item .p-6 video,
+  .timeline-mobile-container img:not([alt=""]),
+  .timeline-mobile-container video {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain !important;
+    display: block !important;
+  }
+
+  /* Frame overlays (empty alt) maintain absolute positioning over content */
+  .timeline-item .p-6 img[alt=""],
+  .timeline-mobile-container img[alt=""] {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: auto !important;
+    height: auto !important;
+    transform: translate(-50%, -50%) scale(var(--frame-overlay-scale, 1.2)) !important;
+    pointer-events: none !important;
+    z-index: 30 !important;
   }
 }
 

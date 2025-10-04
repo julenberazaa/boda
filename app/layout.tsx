@@ -58,8 +58,8 @@ export default function RootLayout({
               min-height: 100vh;
             }
 
-            /* MOBILE OVERRIDES - MAXIMUM SPECIFICITY FOR HERO */
-            @media (max-width: 767px) {
+            /* MOBILE OVERRIDES - DISABLED - SEE globals.css FOR CLEAN MOBILE STYLES */
+            @media (max-width: -1px) {
               /* HERO SECTION - Ultra high specificity overrides */
               section.relative.h-screen div.hero-mobile-container h1.font-playfair.font-bold.mb-4,
               section.relative div.hero-mobile-container h1,

@@ -545,38 +545,134 @@
   }
 }
 
-/* Reducir espacio entre columnas en móviles */
+/* ========================================
+   MOBILE LAYOUT - CLEAN REFACTOR
+   Single column, Title → Text → Media order
+   Carousels scale down preserving desktop aspect ratios
+   ======================================== */
 @media (max-width: 767px) {
-  .timeline-item {
-    gap: 0.125rem !important; /* 2px */
+
+  /* RESET: Remove desktop grid, use single-column flex layout */
+  section.timeline-item,
+  section.timeline-item.mb-16,
+  section.timeline-item.grid,
+  section#conocidos-2010 {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    padding: 1rem 0.75rem !important;
+    margin: 0 0 2rem 0 !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
   }
 
-  /* Mobile Historia layout: Título → Texto → Media (carousel/marco) */
+  /* COLUMNS become full-width blocks */
+  section.timeline-item .col-span-6,
+  section.timeline-item > div,
+  #conocidos-2010 > div {
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* MOBILE ORDER: Using flexbox order */
+  /* Title/Text column first */
+  section.timeline-item > div:has(h3),
+  section.timeline-item > div:has(.flex.items-center),
+  #conocidos-2010 > div:last-child {
+    order: 1 !important;
+  }
+
+  /* Media/Carousel column second */
+  section.timeline-item > div:has(.p-6),
+  section.timeline-item > div:has(img),
+  #conocidos-2010 > div:first-child {
+    order: 2 !important;
+  }
+
+  /* CAROUSELS: Scale down, preserve desktop aspect ratios */
+  .timeline-item .p-6,
+  .timeline-item div.p-6 {
+    width: 100% !important;
+    max-width: 420px !important;
+    height: auto !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Carousel inner containers */
+  .timeline-item .p-6 > div,
+  .timeline-item .p-6 div.relative,
+  .timeline-item div[style*="width: 96%"],
+  .timeline-item div[style*="height: calc"] {
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Images/Videos: Natural aspect ratio, no forced 3:4 */
+  .timeline-item .p-6 img:not([alt=""]),
+  .timeline-item .p-6 video,
+  .timeline-item img:not([alt=""]),
+  .timeline-item video {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain !important;
+    display: block !important;
+  }
+
+  /* Frame overlays (empty alt) maintain desktop positioning */
+  .timeline-item .p-6 img[alt=""],
+  .timeline-item img[alt=""] {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: auto !important;
+    height: auto !important;
+    transform: translate(-50%, -50%) scale(var(--frame-overlay-scale, 1.2)) !important;
+    pointer-events: none !important;
+    z-index: 30 !important;
+  }
+
+  /* Timeline mobile container (for TimelineSection component) */
   .timeline-mobile-container {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
     grid-template-areas:
       "title"
       "text"
-      "media";
-    gap: 1rem;
-    padding: 1rem 0.5rem;
+      "media" !important;
+    gap: 1rem !important;
+    padding: 1rem 0.5rem !important;
   }
 
-  .timeline-mobile-container .order-1 {
-    grid-area: media;
+  .timeline-mobile-container > div[style*="grid-area: title"] {
+    grid-area: title !important;
   }
 
-  .timeline-mobile-container .order-2 {
-    grid-area: title;
+  .timeline-mobile-container > div[style*="grid-area: text"] {
+    grid-area: text !important;
   }
 
-  /* Ensure all mobile carousels respect natural aspect ratio */
-  .timeline-mobile-container img,
+  .timeline-mobile-container > div[style*="grid-area: media"] {
+    grid-area: media !important;
+  }
+
+  .timeline-mobile-container img:not([alt=""]),
   .timeline-mobile-container video {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain !important;
   }
 
   /* Círculos más pequeños solo en móviles */
@@ -629,44 +725,6 @@
     margin-bottom: 2rem !important; /* Sobrescribir el 6px del layout */
   }
 
-  /* Específico para el primer elemento que tiene id */
-  section#conocidos-2010.timeline-item.mb-16 {
-    margin-top: -3rem !important; /* Subir aún más la primera sección */
-    padding-top: 2rem !important; /* Compensar con padding */
-  }
-
-  /* Mobile carousel behavior: Maintain desktop logic, scale to viewport */
-  /* Carousels should preserve desktop aspect ratios, just scaled down */
-  .timeline-item .p-6,
-  .timeline-item .carousel-container,
-  .timeline-mobile-container .media-container {
-    width: clamp(280px, 85vw, 420px) !important;
-    margin: 0 auto;
-  }
-
-  /* Allow natural image dimensions without forced aspect ratio */
-  .timeline-item .p-6 img:not([alt=""]),
-  .timeline-item .p-6 video,
-  .timeline-mobile-container img:not([alt=""]),
-  .timeline-mobile-container video {
-    width: 100% !important;
-    height: auto !important;
-    object-fit: contain !important;
-    display: block !important;
-  }
-
-  /* Frame overlays (empty alt) maintain absolute positioning over content */
-  .timeline-item .p-6 img[alt=""],
-  .timeline-mobile-container img[alt=""] {
-    position: absolute !important;
-    top: 50% !important;
-    left: 50% !important;
-    width: auto !important;
-    height: auto !important;
-    transform: translate(-50%, -50%) scale(var(--frame-overlay-scale, 1.2)) !important;
-    pointer-events: none !important;
-    z-index: 30 !important;
-  }
 }
 
 /* Performance optimizations for all devices */

@@ -86,31 +86,56 @@ export default function ImageCarousel({
     })
   }, [experienceId, totalItems, frameSrc])
 
-  // SIMPLE MOBILE DEBUG: Only log if carousel is invisible (height 0)
+  // FOCUSED MOBILE DEBUG: Check why content is invisible despite having space
   useEffect(() => {
     if (!carouselRef.current) return
 
     const isMobile = window.innerWidth <= 767
-    if (!isMobile) return // Only log mobile issues
+    if (!isMobile) return
 
     const carousel = carouselRef.current
     const carouselRect = carousel.getBoundingClientRect()
 
-    // Check if invisible (height 0 or very small)
-    if (carouselRect.height < 10) {
-      emergencyLog('error', `🚨 CAROUSEL INVISIBLE [MOBILE]`, {
-        experienceId,
-        problem: 'height is 0 or very small',
-        carouselHeight: carouselRect.height,
-        carouselWidth: carouselRect.width,
-        viewportWidth: window.innerWidth,
-        computedHeight: window.getComputedStyle(carousel).height,
-        computedWidth: window.getComputedStyle(carousel).width,
-        parent1Height: carousel.parentElement ? window.getComputedStyle(carousel.parentElement).height : 'N/A',
-        parent2Height: carousel.parentElement?.parentElement ? window.getComputedStyle(carousel.parentElement.parentElement).height : 'N/A'
+    // Find the cropBox div (the one with width: 80% inline)
+    const cropBoxDiv = carousel.querySelector('div[style*="width"]') as HTMLElement
+    const cropBoxRect = cropBoxDiv ? cropBoxDiv.getBoundingClientRect() : null
+
+    // Find active image (should have opacity: 1)
+    const activeImg = carousel.querySelector('img:not([alt=""])') as HTMLImageElement
+    const activeImgStyle = activeImg ? window.getComputedStyle(activeImg) : null
+
+    // Find frame (img with empty alt)
+    const frame = carousel.querySelector('img[alt=""]') as HTMLImageElement
+    const frameRect = frame ? frame.getBoundingClientRect() : null
+    const frameStyle = frame ? window.getComputedStyle(frame) : null
+
+    // Only log if there's a problem
+    const hasSpace = carouselRect.height > 10
+    const hasContent = cropBoxRect && cropBoxRect.width > 0 && cropBoxRect.height > 0
+    const imageVisible = activeImg && activeImgStyle?.opacity === '1'
+
+    if (hasSpace && (!hasContent || !imageVisible)) {
+      emergencyLog('error', `🚨 CAROUSEL EMPTY [${experienceId}]`, {
+        carouselSize: `${carouselRect.width}×${carouselRect.height}`,
+        cropBox: cropBoxRect ? {
+          size: `${cropBoxRect.width}×${cropBoxRect.height}`,
+          inlineStyle: cropBoxDiv?.getAttribute('style')
+        } : 'NOT FOUND',
+        activeImage: activeImg ? {
+          opacity: activeImgStyle?.opacity,
+          display: activeImgStyle?.display,
+          visibility: activeImgStyle?.visibility,
+          src: activeImg.src.substring(0, 50)
+        } : 'NOT FOUND',
+        frame: frame ? {
+          size: `${frameRect!.width}×${frameRect!.height}`,
+          display: frameStyle?.display,
+          visibility: frameStyle?.visibility,
+          src: frame.src.substring(0, 50)
+        } : 'NOT FOUND'
       })
     }
-  }, [experienceId])
+  }, [experienceId, activeIndex])
 
   // ResizeObserver fallback for real-time adjustments (universal support)
   useCarouselResize(carouselRef, (width, height) => {

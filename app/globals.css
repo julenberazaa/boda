@@ -690,6 +690,7 @@
     height: auto !important; /* Remove fixed 384px */
     aspect-ratio: 384 / 384 !important; /* Desktop base: 384px height, mismo width → 1:1 base */
     max-width: calc(100vw - 2.75rem) !important; /* Account for padding */
+    overflow: visible !important; /* CRITICAL: prevent content clipping */
   }
 
   /* Contenedor con transform: scale - mantener proporción desktop */
@@ -699,6 +700,12 @@
     /* En mobile: remover scale pero mantener aspect ratio base */
     transform: scale(1) !important; /* Remove desktop scale */
     max-width: calc(100vw - 2.75rem) !important;
+    overflow: visible !important; /* CRITICAL: prevent content clipping */
+  }
+
+  /* ImageCarousel itself needs visible overflow */
+  .timeline-item .p-6 div.relative.w-full.h-full {
+    overflow: visible !important;
   }
 
   /* FRAMES: Asegurar que se vean igual que en desktop */

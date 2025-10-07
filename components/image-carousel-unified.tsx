@@ -444,13 +444,11 @@ export default function ImageCarousel({
           )
         }
 
-        // Móvil: calcular escala proporcional
-        const mobileWidthAvailable = Math.min(windowWidth * 0.7, 480) * 0.96
-        const desktopBase = 384
-        const mobileRatio = mobileWidthAvailable / desktopBase
-        const frameScale = 1.2 * mobileRatio
+        // Móvil: mantener scale desktop (1.2) porque el carousel ya se escaló proporcionalmente
+        // El frame debe ser 1.2x el tamaño del carousel, tanto en desktop como en móvil
+        const frameScale = 1.2
 
-        console.log(`🔧 [Frame ${experienceId}] Mobile (${windowWidth}px), scale: 1.2 * ${mobileRatio.toFixed(3)} = ${frameScale.toFixed(3)}`)
+        console.log(`🔧 [Frame ${experienceId}] Mobile (${windowWidth}px), maintaining desktop scale: ${frameScale}`)
 
         return (
           <img

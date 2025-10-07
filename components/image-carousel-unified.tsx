@@ -78,6 +78,14 @@ export default function ImageCarousel({
 
   // Log carousel initialization for debugging
   useEffect(() => {
+    const isMobile = window.innerWidth <= 767
+    console.log(`🎠 CAROUSEL INIT [${experienceId}] [${isMobile ? 'MOBILE' : 'DESKTOP'}]`, {
+      totalItems,
+      hasFrame: !!frameSrc,
+      carouselRef: !!carouselRef.current,
+      width: window.innerWidth
+    })
+
     emergencyLog('info', `Unified carousel initialized`, {
       experienceId,
       totalItems,

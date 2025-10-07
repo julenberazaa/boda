@@ -686,11 +686,14 @@
   /* CRITICAL: Contenedor con height:calc tiene altura fija desktop (384px) */
   /* En mobile debe escalar manteniendo MISMO aspect ratio que desktop */
   .timeline-item .p-6 div[style*="height: calc"],
-  .timeline-item .p-6 div[style*="height:calc"] {
+  .timeline-item .p-6 div[style*="height:calc"],
+  section[class*="timeline"] div[style*="height"],
+  div.p-6 > div[style*="calc"] {
     height: auto !important; /* Remove fixed 384px */
     aspect-ratio: 384 / 384 !important; /* Desktop base: 384px height, mismo width → 1:1 base */
     max-width: calc(100vw - 2.75rem) !important; /* Account for padding */
     overflow: visible !important; /* CRITICAL: prevent content clipping */
+    display: block !important; /* Ensure container renders */
   }
 
   /* Contenedor con transform: scale - mantener proporción desktop */

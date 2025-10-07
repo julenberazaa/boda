@@ -725,11 +725,18 @@
     opacity: 1 !important;
   }
 
-  /* FRAMES: Asegurar que se vean igual que en desktop */
+  /* FRAMES: Remove scale(1.2) in mobile - causes misalignment */
   .timeline-item .p-6 img[alt=""],
   .timeline-item img[alt=""] {
-    /* Mantener comportamiento desktop - NO override */
+    transform: translate(-50%, -50%) scale(1) !important; /* Remove scale(1.2) */
     max-width: none !important; /* Permitir que frames excedan contenedor */
+  }
+
+  /* CAROUSEL CONTAINER: Ensure centered positioning */
+  .timeline-item .p-6 {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
   }
 
   /* Timeline mobile container (for TimelineSection component) */

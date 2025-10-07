@@ -1065,7 +1065,7 @@ export default function RootLayout({
                 /* CAROUSEL OVERFLOW CONTROL */
                 html body div div div section.timeline-item div[style*="overflow"],
                 html body div div div section.timeline-item .p-6 > div {
-                  overflow: hidden !important;
+                  overflow: visible !important;
                   max-width: 100% !important;
                 }
 
@@ -1085,7 +1085,7 @@ export default function RootLayout({
                   margin: 0 auto !important; /* Centrado horizontal */
                   box-sizing: border-box !important;
                   position: relative !important;
-                  overflow: hidden !important; /* CRÍTICO: debe ser hidden, no visible */
+                  overflow: visible !important; /* CRÍTICO: visible para mostrar frames */
                   min-height: 0 !important;
                   max-height: none !important;
                 }
@@ -1098,7 +1098,7 @@ export default function RootLayout({
                   width: 100% !important;
                   height: auto !important;
                   position: relative !important;
-                  overflow: hidden !important;
+                  overflow: visible !important;
                   margin: 0 !important;
                   padding: 0 !important;
                   box-sizing: border-box !important;
@@ -1116,7 +1116,7 @@ export default function RootLayout({
                   width: 100% !important;
                   min-height: 0 !important;
                   max-height: none !important;
-                  overflow: hidden !important;
+                  overflow: visible !important;
                   position: relative !important;
                 }
 
@@ -1144,184 +1144,6 @@ export default function RootLayout({
           `
         }} />
 
-        {/* PROFESSIONAL DEBUG SYSTEM FOR TIMELINE MOBILE LAYOUT */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            (function() {
-              if (typeof window !== 'undefined') {
-                function runTimelineDebug() {
-                  if (window.innerWidth > 767) {
-                    console.log('🖥️ Desktop mode - Timeline debug skipped');
-                    return;
-                  }
-
-                  console.group('🔍 TIMELINE MOBILE LAYOUT DEBUG REPORT');
-
-                  const timelineElements = document.querySelectorAll('section.timeline-item, #conocidos-2010');
-                  console.log('📊 Found Timeline Elements:', timelineElements.length);
-
-                  timelineElements.forEach((element, index) => {
-                    const computedStyle = getComputedStyle(element);
-                    const isFlexbox = computedStyle.display === 'flex';
-                    const gap = computedStyle.gap;
-                    const width = computedStyle.width;
-                    const marginBottom = computedStyle.marginBottom;
-
-                    console.group(\`📈 Section \${index + 1}: \${element.id || 'timeline-item'}\`);
-                    console.log('✅ Display:', computedStyle.display, isFlexbox ? '(FLEXBOX ✓)' : '(NOT FLEXBOX ❌)');
-                    console.log('📏 Gap:', gap, gap === '8px' ? '(CORRECT ✓)' : '(INCORRECT ❌)');
-                    console.log('📐 Width:', width);
-                    console.log('⬇️ Margin Bottom:', marginBottom, marginBottom === '24px' ? '(CORRECT ✓)' : '(INCORRECT ❌)');
-
-                    const columns = element.querySelectorAll('.col-span-6');
-                    console.log('📋 Columns Found:', columns.length);
-
-                    columns.forEach((column, colIndex) => {
-                      const colStyle = getComputedStyle(column);
-                      const colWidth = colStyle.width;
-                      const colPadding = colStyle.paddingLeft + ' / ' + colStyle.paddingRight;
-                      const colFlex = colStyle.flex;
-
-                      console.group(\`  🏛️ Column \${colIndex + 1}\`);
-                      console.log('  📏 Width:', colWidth);
-                      console.log('  📦 Padding L/R:', colPadding);
-                      console.log('  🔄 Flex:', colFlex);
-                      console.log('  📝 Classes:', column.className);
-
-                      // Check if column is exactly 50% - 4px
-                      const expectedWidth = (window.innerWidth - 8 - 8) / 2;
-                      const actualWidth = column.getBoundingClientRect().width;
-                      const widthDifference = Math.abs(actualWidth - expectedWidth);
-
-                      console.log('  🎯 Expected Width:', expectedWidth + 'px');
-                      console.log('  📊 Actual Width:', actualWidth + 'px');
-                      console.log('  ⚖️ Difference:', widthDifference + 'px', widthDifference < 5 ? '(ACCEPTABLE ✓)' : '(PROBLEM ❌)');
-                      console.groupEnd();
-                    });
-
-                    console.groupEnd();
-                  });
-
-                  // Check if our ultra-aggressive CSS is being applied
-                  const testElement = document.querySelector('html body div div div section.timeline-item');
-                  if (testElement) {
-                    const testStyle = getComputedStyle(testElement);
-                    console.group('🚀 ULTRA-AGGRESSIVE CSS CHECK');
-                    console.log('🎯 Target Element Found:', !!testElement);
-                    console.log('🔧 Display Override:', testStyle.display);
-                    console.log('📏 Gap Override:', testStyle.gap);
-                    console.log('📐 Width Override:', testStyle.width);
-                    console.log('🔍 Selector Specificity Test:', testStyle.display === 'flex' ? 'WORKING ✓' : 'NOT WORKING ❌');
-                    console.groupEnd();
-                  } else {
-                    console.warn('❌ ULTRA-AGGRESSIVE CSS TARGET NOT FOUND');
-                  }
-
-                  // Media Query Debug
-                  console.group('📱 MEDIA QUERY DEBUG');
-                  console.log('🖥️ Window Width:', window.innerWidth + 'px');
-                  console.log('📱 Mobile Breakpoint (≤767px):', window.innerWidth <= 767 ? 'ACTIVE ✓' : 'INACTIVE ❌');
-                  console.log('🎨 CSS Media Query Should Apply:', window.innerWidth <= 767);
-                  console.groupEnd();
-
-                  // CAROUSEL SPECIFIC DEBUG - ULTRA DETAILED
-                  console.group('🎠 CAROUSEL (.p-6) COMPREHENSIVE DEBUG');
-                  const carousels = document.querySelectorAll('section.timeline-item .p-6');
-                  console.log('🎯 Total Carousels Found:', carousels.length);
-
-                  carousels.forEach((carousel, idx) => {
-                    const carouselStyle = getComputedStyle(carousel);
-                    const carouselRect = carousel.getBoundingClientRect();
-                    const parentCol = carousel.closest('.col-span-6');
-                    const parentColStyle = parentCol ? getComputedStyle(parentCol) : null;
-                    const parentColRect = parentCol ? parentCol.getBoundingClientRect() : null;
-
-                    console.group(\`🎠 Carousel \${idx + 1}\`);
-                    console.log('📦 Classes:', carousel.className);
-
-                    // Width Analysis
-                    console.group('📏 WIDTH ANALYSIS');
-                    console.log('  CSS width property:', carouselStyle.width);
-                    console.log('  Computed width (px):', carouselRect.width + 'px');
-                    console.log('  Max-width:', carouselStyle.maxWidth);
-                    console.log('  Min-width:', carouselStyle.minWidth);
-                    if (parentColRect) {
-                      const percentageOfColumn = ((carouselRect.width / parentColRect.width) * 100).toFixed(2);
-                      console.log('  % of Column Width:', percentageOfColumn + '%', percentageOfColumn < 65 ? '(TARGET: 64% ✓)' : '(SHOULD BE 64% ❌)');
-                      console.log('  Parent Column Width:', parentColRect.width + 'px');
-                    }
-                    console.groupEnd();
-
-                    // Box Model
-                    console.group('📦 BOX MODEL');
-                    console.log('  box-sizing:', carouselStyle.boxSizing);
-                    console.log('  padding:', carouselStyle.padding);
-                    console.log('  margin:', carouselStyle.margin);
-                    console.log('  border:', carouselStyle.border);
-                    console.groupEnd();
-
-                    // Aspect Ratio
-                    console.group('📐 ASPECT RATIO');
-                    console.log('  aspect-ratio CSS:', carouselStyle.aspectRatio);
-                    const actualRatio = (carouselRect.width / carouselRect.height).toFixed(2);
-                    const expectedRatio = (3/4).toFixed(2);
-                    console.log('  Actual ratio (W/H):', actualRatio);
-                    console.log('  Expected (3/4):', expectedRatio);
-                    console.log('  Match:', actualRatio === expectedRatio ? 'YES ✓' : 'NO ❌ (diff: ' + Math.abs(actualRatio - expectedRatio).toFixed(2) + ')');
-                    console.groupEnd();
-
-                    // Position & Overflow
-                    console.group('🔧 POSITION & OVERFLOW');
-                    console.log('  position:', carouselStyle.position);
-                    console.log('  overflow:', carouselStyle.overflow);
-                    console.log('  display:', carouselStyle.display);
-                    console.log('  z-index:', carouselStyle.zIndex);
-                    console.groupEnd();
-
-                    // Children Analysis
-                    const relativeChild = carousel.querySelector('.relative, div[class*="relative"]');
-                    if (relativeChild) {
-                      const childStyle = getComputedStyle(relativeChild);
-                      const childRect = relativeChild.getBoundingClientRect();
-                      console.group('👶 CHILD div.relative');
-                      console.log('  width:', childStyle.width, '(' + childRect.width + 'px)');
-                      console.log('  height:', childStyle.height, '(' + childRect.height + 'px)');
-                      console.log('  Has inline style:', relativeChild.hasAttribute('style') ? 'YES: ' + relativeChild.getAttribute('style') : 'NO');
-                      console.groupEnd();
-                    }
-
-                    // All Applied CSS Rules (attempt to trace)
-                    console.group('🎨 CSS SPECIFICITY TEST');
-                    console.log('  Checking if ultra-specific rules apply...');
-                    const ultraSelector = 'html body div div div section.timeline-item div.col-span-6 > div.p-6';
-                    const matches = carousel.matches('section.timeline-item div.col-span-6 > .p-6');
-                    console.log('  Matches ultra selector:', matches ? 'YES ✓' : 'NO ❌');
-                    console.log('  Width from CSS:', carouselStyle.width, carouselStyle.width === '64%' ? '(64% APPLIED ✓)' : '(NOT 64% ❌)');
-                    console.groupEnd();
-
-                    console.groupEnd();
-                  });
-
-                  console.groupEnd();
-
-                  console.groupEnd();
-                }
-
-                // Run debug after DOM is loaded
-                if (document.readyState === 'loading') {
-                  document.addEventListener('DOMContentLoaded', () => setTimeout(runTimelineDebug, 1000));
-                } else {
-                  setTimeout(runTimelineDebug, 1000);
-                }
-
-                // Also run on resize to check responsive behavior
-                window.addEventListener('resize', () => setTimeout(runTimelineDebug, 500));
-              }
-            })();
-            `
-          }}
-        />
       </head>
       <body>
         <div id="main-content">

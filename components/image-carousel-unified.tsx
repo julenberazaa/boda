@@ -287,7 +287,7 @@ export default function ImageCarousel({
   if (totalItems === 0) return null
 
   // Determine which cropBox to use: tempCropBox (being drawn) or saved cropBox
-  // MOBILE: Ignore cropBox calibration (designed for desktop 384px)
+  // MOBILE: Ignore cropBox calibration (designed for desktop 384px) - use centered 80% instead
   const isMobile = typeof window !== 'undefined' && window.innerWidth <= 767
   const activeCropBox = isMobile ? null : (tempCropBox || frameConfig?.cropBox)
 

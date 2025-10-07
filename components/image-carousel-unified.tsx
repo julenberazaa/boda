@@ -81,9 +81,11 @@ export default function ImageCarousel({
     const isMobile = window.innerWidth <= 767
     console.log(`🎠 CAROUSEL INIT [${experienceId}] [${isMobile ? 'MOBILE' : 'DESKTOP'}]`, {
       totalItems,
+      activeIndex,
       hasFrame: !!frameSrc,
       carouselRef: !!carouselRef.current,
-      width: window.innerWidth
+      width: window.innerWidth,
+      firstImageShouldBeVisible: activeIndex === 0
     })
 
     emergencyLog('info', `Unified carousel initialized`, {
@@ -92,7 +94,7 @@ export default function ImageCarousel({
       hasFrame: !!frameSrc,
       userAgent: navigator.userAgent.substring(0, 100)
     })
-  }, [experienceId, totalItems, frameSrc])
+  }, [experienceId, totalItems, frameSrc, activeIndex])
 
   // FOCUSED MOBILE DEBUG: Check why content is invisible despite having space
   useEffect(() => {
@@ -285,7 +287,9 @@ export default function ImageCarousel({
   if (totalItems === 0) return null
 
   // Determine which cropBox to use: tempCropBox (being drawn) or saved cropBox
-  const activeCropBox = tempCropBox || frameConfig?.cropBox
+  // MOBILE: Ignore cropBox calibration (designed for desktop 384px)
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 767
+  const activeCropBox = isMobile ? null : (tempCropBox || frameConfig?.cropBox)
 
   // Calculate drawing rectangle for visualization
   const drawRect = drawStart && drawCurrent ? {

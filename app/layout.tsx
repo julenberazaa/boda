@@ -1143,7 +1143,11 @@ export default function RootLayout({
 
                 /* ===== CAROUSEL CENTERING FIX - CRITICAL ===== */
 
-                /* Center the .p-6 container - let inline styles handle scale */
+                /* REMOVED: Desktop scale override - now handled by inline styles with getResponsiveScale() */
+                /* REMOVED: cropBox override - uses calibrated percentage values from desktop */
+                /* REMOVED: Frame scale override - calculated proportionally in component */
+
+                /* Center the .p-6 container itself */
                 html body div div div section.timeline-item div.p-6 {
                   display: flex !important;
                   justify-content: center !important;

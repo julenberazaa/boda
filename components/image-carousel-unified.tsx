@@ -379,24 +379,57 @@ export default function ImageCarousel({
         </div>
       </div>
 
-      {/* Frame overlay - escala fija 1.2 para todos los dispositivos */}
-      {frameSrc && (
-        <img
-          src={frameSrc}
-          alt=""
-          style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            width: '100%',
-            height: '100%',
-            transform: 'translate(-50%, -50%) scale(1.2, 1.2)',
-            objectFit: 'contain',
-            zIndex: 30,
-            pointerEvents: 'none'
-          }}
-        />
-      )}
+      {/* Frame overlay - escala proporcional según dispositivo */}
+      {frameSrc && (() => {
+        const isMobile = typeof window !== 'undefined' && window.innerWidth <= 767
+
+        if (!isMobile) {
+          // Desktop: usar escala 1.2 calibrada
+          return (
+            <img
+              src={frameSrc}
+              alt=""
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                width: '100%',
+                height: '100%',
+                transform: 'translate(-50%, -50%) scale(1.2, 1.2)',
+                objectFit: 'contain',
+                zIndex: 30,
+                pointerEvents: 'none'
+              }}
+            />
+          )
+        }
+
+        // Móvil: calcular escala proporcional
+        const mobileWidthAvailable = typeof window !== 'undefined'
+          ? Math.min(window.innerWidth * 0.7, 480) * 0.96
+          : 242
+        const desktopBase = 384
+        const mobileRatio = mobileWidthAvailable / desktopBase
+        const frameScale = 1.2 * mobileRatio
+
+        return (
+          <img
+            src={frameSrc}
+            alt=""
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              width: '100%',
+              height: '100%',
+              transform: `translate(-50%, -50%) scale(${frameScale}, ${frameScale})`,
+              objectFit: 'contain',
+              zIndex: 30,
+              pointerEvents: 'none'
+            }}
+          />
+        )
+      })()}
 
       {/* Calibration drawing overlay */}
       {isActiveCalibration && drawRect && (

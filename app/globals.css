@@ -665,79 +665,8 @@
     order: 1 !important; /* Asume que order-2 en desktop = texto */
   }
 
-  /* MOBILE CAROUSEL STRATEGY: Keep desktop carousel logic, only adjust container width */
-  /* NO forzar width/height/padding-bottom - dejar que desktop CSS funcione */
-
-  /* Only adjust .p-6 container to fit mobile viewport */
-  .timeline-item .p-6,
-  .timeline-item div.p-6 {
-    /* Mantener estructura desktop, solo ajustar padding */
-    padding: 0.5rem !important; /* Pequeño padding para margen visual */
-    overflow: visible !important; /* CRITICAL para frames */
-  }
-
-  /* Ajustar el contenedor scaled para que no se salga del viewport */
-  .timeline-item .p-6 > div.relative,
-  .timeline-item .p-6 > div.flex {
-    max-width: calc(100vw - 1.75rem) !important; /* Limitar ancho al viewport */
-    overflow: visible !important;
-  }
-
-  /* CRITICAL: Contenedor con height:calc tiene altura fija desktop (384px) */
-  /* En mobile debe escalar manteniendo MISMO aspect ratio que desktop */
-  .timeline-item .p-6 div[style*="height: calc"],
-  .timeline-item .p-6 div[style*="height:calc"],
-  section[class*="timeline"] div[style*="height"],
-  div.p-6 > div[style*="calc"] {
-    height: auto !important; /* Remove fixed 384px */
-    aspect-ratio: 384 / 384 !important; /* Desktop base: 384px height, mismo width → 1:1 base */
-    max-width: calc(100vw - 2.75rem) !important; /* Account for padding */
-    overflow: visible !important; /* CRITICAL: prevent content clipping */
-    display: block !important; /* Ensure container renders */
-  }
-
-  /* Contenedor con transform: scale - mantener proporción desktop */
-  .timeline-item .p-6 div[style*="transform: scale"],
-  .timeline-item .p-6 div[style*="transform:scale"] {
-    /* Desktop usa scale(1.2), scale(1.254), scale(1.134), etc */
-    /* En mobile: remover scale pero mantener aspect ratio base */
-    transform: scale(1) !important; /* Remove desktop scale */
-    max-width: calc(100vw - 2.75rem) !important;
-    overflow: visible !important; /* CRITICAL: prevent content clipping */
-  }
-
-  /* ImageCarousel itself needs visible overflow */
-  .timeline-item .p-6 div.relative.w-full.h-full {
-    overflow: visible !important;
-  }
-
-  /* MOBILE URGENT FIX: Force centered cropBox (override inline desktop calibration) */
-  .timeline-item .p-6 div.relative.w-full.h-full > div > div[style*="position: absolute"] {
-    width: 80% !important;
-    height: 80% !important;
-    left: 50% !important;
-    top: 50% !important;
-    transform: translate(-50%, -50%) !important;
-  }
-
-  /* MOBILE URGENT FIX: Force first image visible (override opacity: 0 from carousel transition) */
-  .timeline-item .p-6 div.relative.w-full.h-full img:not([alt=""]):first-of-type {
-    opacity: 1 !important;
-  }
-
-  /* FRAMES: Remove scale(1.2) in mobile - causes misalignment */
-  .timeline-item .p-6 img[alt=""],
-  .timeline-item img[alt=""] {
-    transform: translate(-50%, -50%) scale(1) !important; /* Remove scale(1.2) */
-    max-width: none !important; /* Permitir que frames excedan contenedor */
-  }
-
-  /* CAROUSEL CONTAINER: Ensure centered positioning */
-  .timeline-item .p-6 {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-  }
+  /* MOBILE CAROUSEL: CSS overrides removed to allow JavaScript inline styles to work */
+  /* JavaScript in page.tsx and image-carousel-unified.tsx now handles responsive scaling */
 
   /* Timeline mobile container (for TimelineSection component) */
   .timeline-mobile-container {

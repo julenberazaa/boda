@@ -444,13 +444,11 @@ export default function ImageCarousel({
           )
         }
 
-        // Móvil: calcular escala proporcional
-        const mobileWidthAvailable = Math.min(windowWidth * 0.7, 480) * 0.96
-        const desktopBase = 384
-        const mobileRatio = mobileWidthAvailable / desktopBase
-        const frameScale = 1.2 * mobileRatio
+        // Móvil: mantener escala relativa al container (no reducir el frame)
+        // El container ya se escaló con mobileRatio, el frame debe mantener 1.2× respecto al container
+        const frameScale = 1.2
 
-        console.log(`🔧 [Frame ${experienceId}] Mobile (${windowWidth}px), scale: 1.2 * ${mobileRatio.toFixed(3)} = ${frameScale.toFixed(3)}`)
+        console.log(`🔧 [Frame ${experienceId}] Mobile (${windowWidth}px), frame scale: ${frameScale} (fixed, relative to container)`)
 
         return (
           <img

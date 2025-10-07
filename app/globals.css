@@ -683,9 +683,21 @@
     overflow: visible !important;
   }
 
-  /* NO tocar el contenedor con height:calc - dejar que funcione como desktop */
-  /* NO forzar position: absolute en ImageCarousel - ya lo tiene */
-  /* NO forzar padding-bottom - el desktop ya lo maneja correctamente */
+  /* CRITICAL: Contenedor con height:calc tiene altura fija desktop (384px) */
+  /* En mobile debe escalar manteniendo aspect ratio */
+  .timeline-item .p-6 div[style*="height: calc"],
+  .timeline-item .p-6 div[style*="height:calc"] {
+    height: auto !important; /* Remove fixed 384px */
+    aspect-ratio: 1 / 1 !important; /* Square aspect ratio for mobile */
+    max-width: calc(100vw - 2.75rem) !important; /* Account for padding */
+  }
+
+  /* Contenedor con transform: scale también necesita ajuste */
+  .timeline-item .p-6 div[style*="transform: scale"],
+  .timeline-item .p-6 div[style*="transform:scale"] {
+    transform: scale(1) !important; /* Remove desktop scale(1.2) */
+    max-width: calc(100vw - 2.75rem) !important;
+  }
 
   /* FRAMES: Asegurar que se vean igual que en desktop */
   .timeline-item .p-6 img[alt=""],

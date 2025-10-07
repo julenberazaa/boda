@@ -1140,6 +1140,40 @@ export default function RootLayout({
                   z-index: 30 !important;
                   position: absolute !important;
                 }
+
+                /* ===== CAROUSEL CENTERING FIX - CRITICAL ===== */
+
+                /* STEP 1: Remove desktop scale from transform container */
+                html body div div div section.timeline-item div.p-6 > div.relative > div[style*="transform: scale"],
+                html body div div div section.timeline-item div.p-6 > div.relative > div[style*="transform:scale"] {
+                  transform: scale(1) !important;
+                  max-width: 100% !important;
+                  overflow: visible !important;
+                }
+
+                /* STEP 2: Force cropBox to center (override inline left/top from calibration) */
+                html body div div div section.timeline-item div.p-6 div.relative.w-full.h-full > div > div[style*="position: absolute"],
+                html body div div div section.timeline-item div.p-6 div[style*="overflow"] > div[style*="position: absolute"] {
+                  width: 80% !important;
+                  height: 80% !important;
+                  left: 50% !important;
+                  top: 50% !important;
+                  transform: translate(-50%, -50%) !important;
+                }
+
+                /* STEP 3: Remove frame scale (causes misalignment) */
+                html body div div div section.timeline-item div.p-6 img[alt=""],
+                html body div div div section.timeline-item div.relative img[alt=""] {
+                  transform: translate(-50%, -50%) scale(1) !important;
+                }
+
+                /* STEP 4: Center the .p-6 container itself */
+                html body div div div section.timeline-item div.p-6 {
+                  display: flex !important;
+                  justify-content: center !important;
+                  align-items: center !important;
+                  margin: 0 auto !important;
+                }
             }
           `
         }} />

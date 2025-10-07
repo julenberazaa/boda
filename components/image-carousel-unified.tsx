@@ -300,9 +300,8 @@ export default function ImageCarousel({
   if (totalItems === 0) return null
 
   // Determine which cropBox to use: tempCropBox (being drawn) or saved cropBox
-  // MOBILE: Ignore cropBox calibration (designed for desktop 384px) - use centered 80% instead
-  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 767
-  const activeCropBox = isMobile ? null : (tempCropBox || frameConfig?.cropBox)
+  // UNIVERSAL: Use cropBox calibration for all devices (percentages scale automatically)
+  const activeCropBox = tempCropBox || frameConfig?.cropBox
 
   // Calculate drawing rectangle for visualization
   const drawRect = drawStart && drawCurrent ? {
@@ -380,24 +379,31 @@ export default function ImageCarousel({
         </div>
       </div>
 
-      {/* Frame overlay - escala fija 1.2, mantiene proporción original */}
-      {frameSrc && (
-        <img
-          src={frameSrc}
-          alt=""
-          style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            width: '100%',
-            height: '100%',
-            transform: 'translate(-50%, -50%) scale(1.2, 1.2)',
-            objectFit: 'contain',
-            zIndex: 30,
-            pointerEvents: 'none'
-          }}
-        />
-      )}
+      {/* Frame overlay - escala adaptativa según dispositivo */}
+      {frameSrc && (() => {
+        const isMobile = typeof window !== 'undefined' && window.innerWidth <= 767
+        // En móvil: sin escala adicional (el cropBox ya ajusta la posición)
+        // En desktop: mantener escala 1.2 calibrada
+        const frameScale = isMobile ? 1.0 : 1.2
+
+        return (
+          <img
+            src={frameSrc}
+            alt=""
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              width: '100%',
+              height: '100%',
+              transform: `translate(-50%, -50%) scale(${frameScale}, ${frameScale})`,
+              objectFit: 'contain',
+              zIndex: 30,
+              pointerEvents: 'none'
+            }}
+          />
+        )
+      })()}
 
       {/* Calibration drawing overlay */}
       {isActiveCalibration && drawRect && (

@@ -1151,21 +1151,10 @@ export default function RootLayout({
                   overflow: visible !important;
                 }
 
-                /* STEP 2: Force cropBox to center (override inline left/top from calibration) */
-                html body div div div section.timeline-item div.p-6 div.relative.w-full.h-full > div > div[style*="position: absolute"],
-                html body div div div section.timeline-item div.p-6 div[style*="overflow"] > div[style*="position: absolute"] {
-                  width: 80% !important;
-                  height: 80% !important;
-                  left: 50% !important;
-                  top: 50% !important;
-                  transform: translate(-50%, -50%) !important;
-                }
+                /* STEP 2: REMOVED - cropBox now uses calibrated values from desktop */
+                /* Let cropBox position itself using percentage-based inline styles */
 
-                /* STEP 3: Remove frame scale (causes misalignment) */
-                html body div div div section.timeline-item div.p-6 img[alt=""],
-                html body div div div section.timeline-item div.relative img[alt=""] {
-                  transform: translate(-50%, -50%) scale(1) !important;
-                }
+                /* STEP 3: REMOVED - frame scale now handled in component (scale 1.0 for mobile) */
 
                 /* STEP 4: Center the .p-6 container itself */
                 html body div div div section.timeline-item div.p-6 {

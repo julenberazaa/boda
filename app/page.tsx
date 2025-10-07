@@ -1307,8 +1307,8 @@ export default function TimelinePage() {
           </div>
           <div className="col-span-6">
             <div className="p-6 flex justify-center">
-              <div className="relative" style={{ width: '96%' }}>
-                <div style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative', transform: 'scale(1.2)', transformOrigin: 'center', borderRadius: '1rem' }}>
+              <div className="relative" style={{ width: 384 }}>
+                <div style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative', transform: isMobile ? 'scale(1)' : 'scale(1.2)', transformOrigin: 'center', borderRadius: '1rem' }}>
                   <ImageCarousel
                     images={[
                       "/primeras-escapadas-01.png",
@@ -1340,8 +1340,8 @@ export default function TimelinePage() {
         <section className="timeline-item mb-16 grid grid-cols-12 sm:grid-cols-12 gap-8 items-center opacity-0 translate-y-8 transition-all duration-1000 ease-in-out">
           <div className="col-span-6 order-1">
             <div className="p-6 flex justify-center">
-              <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-visible" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative', transform: 'scale(1.2)', transformOrigin: 'center' }}>
+              <div className="relative" style={{ width: 384 }}>
+                <div className="overflow-visible" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative', transform: isMobile ? 'scale(1)' : 'scale(1.2)', transformOrigin: 'center' }}>
                   <ImageCarousel
                     images={[
                       "/estudios/ESTUDIOS.jpeg",
@@ -1394,8 +1394,8 @@ export default function TimelinePage() {
           </div>
           <div className="col-span-6">
             <div className="p-6 flex justify-center">
-              <div className="relative" style={{ width: '96%' }}>
-                <div className="rounded-2xl" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative', transform: 'scale(1.254)', transformOrigin: 'center' }}>
+              <div className="relative" style={{ width: 384 }}>
+                <div className="rounded-2xl" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative', transform: isMobile ? 'scale(1)' : 'scale(1.254)', transformOrigin: 'center' }}>
                   <ImageCarousel
                     images={[
                       "/estudios-oposiciones-01.png",
@@ -1426,8 +1426,8 @@ export default function TimelinePage() {
         <section className="timeline-item mb-16 grid grid-cols-12 sm:grid-cols-12 gap-8 items-center opacity-0 translate-y-8 transition-all duration-1000 ease-in-out">
           <div className="col-span-6 order-1">
             <div className="p-6 flex justify-center">
-              <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-visible rounded-2xl" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative', transform: 'scale(1.134)', transformOrigin: 'center', borderRadius: '1rem' }}>
+              <div className="relative" style={{ width: 384 }}>
+                <div className="overflow-visible rounded-2xl" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative', transform: isMobile ? 'scale(1)' : 'scale(1.134)', transformOrigin: 'center', borderRadius: '1rem' }}>
                   <ImageCarousel
                     images={[
                       "/mir/MIR.png",
@@ -1480,8 +1480,8 @@ export default function TimelinePage() {
           </div>
           <div className="col-span-6">
             <div className="p-6 flex justify-center">
-              <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-visible" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative', transform: 'scale(1.26)', transformOrigin: 'center' }}>
+              <div className="relative" style={{ width: 384 }}>
+                <div className="overflow-visible" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative', transform: isMobile ? 'scale(1)' : 'scale(1.26)', transformOrigin: 'center' }}>
                   <ImageCarousel
                     images={[
                       "/hobbies/HOBBIES.jpeg",
@@ -1512,8 +1512,8 @@ export default function TimelinePage() {
         <section className="timeline-item mb-16 grid grid-cols-12 sm:grid-cols-12 gap-8 items-center opacity-0 translate-y-8 transition-all duration-1000 ease-in-out">
           <div className="col-span-6 order-1">
             <div className="p-6 flex justify-center">
-              <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-visible" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative', transform: 'scale(1.32)', transformOrigin: 'center' }}>
+              <div className="relative" style={{ width: 384 }}>
+                <div className="overflow-visible" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative', transform: isMobile ? 'scale(1)' : 'scale(1.32)', transformOrigin: 'center' }}>
                   <ImageCarousel
                     images={[
                       "/independizarse/INDEP.png",
@@ -1568,8 +1568,8 @@ export default function TimelinePage() {
           </div>
           <div className="col-span-6">
             <div className="p-6 flex justify-center">
-              <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-visible" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative', transform: 'scale(1.2)', transformOrigin: 'center' }}>
+              <div className="relative" style={{ width: 384 }}>
+                <div className="overflow-visible" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative', transform: isMobile ? 'scale(1)' : 'scale(1.2)', transformOrigin: 'center' }}>
                   <ImageCarousel
                     media={[
                       { type: 'image', src: '/ilun/ILUN.png' },
@@ -1619,8 +1619,8 @@ export default function TimelinePage() {
         <section className="timeline-item mb-16 grid grid-cols-12 sm:grid-cols-12 gap-8 items-center opacity-0 translate-y-8 transition-all duration-1000 ease-in-out">
           <div className="col-span-6 order-1">
             <div className="p-6 flex justify-center">
-              <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-visible" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative', transform: 'scale(1.32)', transformOrigin: 'center' }}>
+              <div className="relative" style={{ width: 384 }}>
+                <div className="overflow-visible" style={{ height: 'calc(384px - 0px)', overflow: 'visible', position: 'relative', transform: isMobile ? 'scale(1)' : 'scale(1.32)', transformOrigin: 'center' }}>
                   <ImageCarousel
                     images={[
                       "/pedida/PEDIDA_MANO.png",

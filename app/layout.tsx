@@ -1143,20 +1143,7 @@ export default function RootLayout({
 
                 /* ===== CAROUSEL CENTERING FIX - CRITICAL ===== */
 
-                /* STEP 1: Remove desktop scale from transform container */
-                html body div div div section.timeline-item div.p-6 > div.relative > div[style*="transform: scale"],
-                html body div div div section.timeline-item div.p-6 > div.relative > div[style*="transform:scale"] {
-                  transform: scale(1) !important;
-                  max-width: 100% !important;
-                  overflow: visible !important;
-                }
-
-                /* STEP 2: REMOVED - cropBox now uses calibrated values from desktop */
-                /* Let cropBox position itself using percentage-based inline styles */
-
-                /* STEP 3: REMOVED - frame scale now handled in component (scale 1.0 for mobile) */
-
-                /* STEP 4: Center the .p-6 container itself */
+                /* Center the .p-6 container - let inline styles handle scale */
                 html body div div div section.timeline-item div.p-6 {
                   display: flex !important;
                   justify-content: center !important;

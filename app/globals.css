@@ -566,37 +566,133 @@
     margin-right: 0 !important;
   }
 
-  /* MOBILE: Mantener grid desktop pero con padding lateral de 14px */
+  /* RESET: Remove desktop grid, use single-column flex layout */
   section.timeline-item,
   section.timeline-item.mb-16,
   section.timeline-item.grid,
   section.timeline-item.grid.grid-cols-12,
   section.timeline-item.grid.grid-cols-12.gap-8,
   section#conocidos-2010 {
-    padding-left: 0.875rem !important; /* 14px */
-    padding-right: 0.875rem !important; /* 14px */
-    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    padding: 1rem 0.875rem !important; /* 0.875rem = 14px lateral */
+    padding-left: 0.875rem !important;
+    padding-right: 0.875rem !important;
+    margin: 0 0 2rem 0 !important;
     overflow-x: hidden !important;
+    box-sizing: border-box !important;
   }
 
-  /* Remove Tailwind padding classes que interfieren */
+  /* COLUMNS become full-width blocks - NO extra padding */
+  /* ULTRA HIGH SPECIFICITY to override Tailwind col-span-6 */
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6,
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6.order-1,
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6.order-2,
+  section.timeline-item.grid > div.col-span-6,
+  section.timeline-item > div.col-span-6,
+  section.timeline-item > div,
+  section.timeline-item div.col-span-6.pr-8,
+  section.timeline-item div.col-span-6.pl-8,
+  section.timeline-item div.col-span-6.pr-12,
+  section.timeline-item div.col-span-6.pl-12,
+  section.timeline-item div.col-span-6.order-2.pl-12,
+  section#conocidos-2010 div.col-span-6.pr-8,
+  section#conocidos-2010 div.col-span-6.pl-8,
+  #conocidos-2010 > div {
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    grid-column: unset !important; /* Remove Tailwind grid-column */
+    padding: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Remove Tailwind padding classes ONLY within timeline-item */
   section.timeline-item .pl-8,
   section.timeline-item .pr-8,
   section.timeline-item .pl-12,
-  section.timeline-item .pr-12 {
+  section.timeline-item .pr-12,
+  section.timeline-item .px-4,
+  section.timeline-item .px-6,
+  section.timeline-item .px-8 {
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
 
-  /* NO CAMBIAR ORDER - mantener mismo layout que desktop */
+  /* MOBILE ORDER: Using flexbox order */
+  /* STRATEGY: Force ALL carousels to order: 2 and ALL text to order: 1 */
 
-  /* MOBILE CAROUSEL FIX: Mantener comportamiento desktop pero ajustar overflow */
-  .timeline-item .p-6 {
-    overflow: visible !important; /* CRITICAL: frames deben ser visibles */
+  /* Title/Text column ALWAYS first - ULTRA specific to override Tailwind */
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6:has(h3),
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6:has(.flex.items-center),
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6.pr-12:has(h3),
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6.pr-12:has(.flex.items-center),
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6.order-2:has(h3),
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6.order-2:has(.flex.items-center),
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6.order-2.pl-12:has(h3),
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6.order-2.pl-12:has(.flex.items-center),
+  section.timeline-item > div:has(h3),
+  section.timeline-item > div:has(.flex.items-center),
+  #conocidos-2010 > div:last-child {
+    order: 1 !important;
   }
 
-  /* NO FORZAR widths/heights - dejar que hereden naturalmente del grid/flex parent */
-  /* El layout desktop ya funciona correctamente */
+  /* Media/Carousel column ALWAYS second - ULTRA specific to override Tailwind */
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6:has(.p-6),
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6.order-1:has(.p-6),
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6.order-1:has(div.p-6),
+  section.timeline-item.grid.grid-cols-12 > div.order-1:has(.p-6.flex.justify-center),
+  section.timeline-item.grid > div:has(.p-6),
+  section.timeline-item > div:has(.p-6),
+  section.timeline-item > div:has(img),
+  #conocidos-2010 > div:first-child {
+    order: 2 !important;
+  }
+
+  /* FALLBACK: Si :has() no funciona, forzar por clases específicas */
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6.order-1 {
+    order: 2 !important; /* Asume que order-1 en desktop = carousel */
+  }
+
+  section.timeline-item.grid.grid-cols-12 > div.col-span-6.order-2 {
+    order: 1 !important; /* Asume que order-2 en desktop = texto */
+  }
+
+  /* MOBILE CAROUSEL STRATEGY: Keep desktop carousel logic, only adjust container width */
+  /* NO forzar width/height/padding-bottom - dejar que desktop CSS funcione */
+
+  /* Only adjust .p-6 container to fit mobile viewport */
+  .timeline-item .p-6,
+  .timeline-item div.p-6 {
+    /* Mantener estructura desktop, solo ajustar padding */
+    padding: 0.5rem !important; /* Pequeño padding para margen visual */
+    overflow: visible !important; /* CRITICAL para frames */
+  }
+
+  /* Ajustar el contenedor scaled para que no se salga del viewport */
+  .timeline-item .p-6 > div.relative,
+  .timeline-item .p-6 > div.flex {
+    max-width: calc(100vw - 1.75rem) !important; /* Limitar ancho al viewport */
+    overflow: visible !important;
+  }
+
+  /* NO tocar el contenedor con height:calc - dejar que funcione como desktop */
+  /* NO forzar position: absolute en ImageCarousel - ya lo tiene */
+  /* NO forzar padding-bottom - el desktop ya lo maneja correctamente */
+
+  /* FRAMES: Asegurar que se vean igual que en desktop */
+  .timeline-item .p-6 img[alt=""],
+  .timeline-item img[alt=""] {
+    /* Mantener comportamiento desktop - NO override */
+    max-width: none !important; /* Permitir que frames excedan contenedor */
+  }
 
   /* Timeline mobile container (for TimelineSection component) */
   .timeline-mobile-container {

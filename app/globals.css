@@ -711,6 +711,20 @@
     overflow: visible !important;
   }
 
+  /* MOBILE URGENT FIX: Force centered cropBox (override inline desktop calibration) */
+  .timeline-item .p-6 div.relative.w-full.h-full > div > div[style*="position: absolute"] {
+    width: 80% !important;
+    height: 80% !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+  }
+
+  /* MOBILE URGENT FIX: Force first image visible (override opacity: 0 from carousel transition) */
+  .timeline-item .p-6 div.relative.w-full.h-full img:not([alt=""]):first-of-type {
+    opacity: 1 !important;
+  }
+
   /* FRAMES: Asegurar que se vean igual que en desktop */
   .timeline-item .p-6 img[alt=""],
   .timeline-item img[alt=""] {

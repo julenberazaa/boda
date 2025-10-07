@@ -65,11 +65,18 @@ export default function ImageCarousel({
   const [windowWidth, setWindowWidth] = useState(0)
 
   useEffect(() => {
-    setWindowWidth(window.innerWidth)
-    const handleResize = () => setWindowWidth(window.innerWidth)
+    const width = window.innerWidth
+    setWindowWidth(width)
+    console.log(`🔧 [ImageCarousel ${experienceId}] Window width set to:`, width)
+
+    const handleResize = () => {
+      const newWidth = window.innerWidth
+      setWindowWidth(newWidth)
+      console.log(`🔧 [ImageCarousel ${experienceId}] Window width resized to:`, newWidth)
+    }
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
-  }, [])
+  }, [experienceId])
 
   // Calibration state
   const [isDrawing, setIsDrawing] = useState(false)
@@ -393,6 +400,7 @@ export default function ImageCarousel({
       {frameSrc && (() => {
         // SSR/initial: use desktop scale
         if (windowWidth === 0) {
+          console.log(`🔧 [Frame ${experienceId}] SSR mode, using desktop scale 1.2`)
           return (
             <img
               src={frameSrc}
@@ -416,6 +424,7 @@ export default function ImageCarousel({
 
         if (!isMobile) {
           // Desktop: usar escala 1.2 calibrada
+          console.log(`🔧 [Frame ${experienceId}] Desktop (${windowWidth}px), using scale 1.2`)
           return (
             <img
               src={frameSrc}
@@ -440,6 +449,8 @@ export default function ImageCarousel({
         const desktopBase = 384
         const mobileRatio = mobileWidthAvailable / desktopBase
         const frameScale = 1.2 * mobileRatio
+
+        console.log(`🔧 [Frame ${experienceId}] Mobile (${windowWidth}px), scale: 1.2 * ${mobileRatio.toFixed(3)} = ${frameScale.toFixed(3)}`)
 
         return (
           <img

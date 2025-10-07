@@ -31,30 +31,45 @@ export default function TimelinePage() {
 
   useEffect(() => {
     // Set initial width
-    setWindowWidth(window.innerWidth)
+    const width = window.innerWidth
+    setWindowWidth(width)
+    console.log('🔧 [page.tsx] Window width set to:', width)
 
     // Update on resize
-    const handleResize = () => setWindowWidth(window.innerWidth)
+    const handleResize = () => {
+      const newWidth = window.innerWidth
+      setWindowWidth(newWidth)
+      console.log('🔧 [page.tsx] Window width resized to:', newWidth)
+    }
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
   // Helper: Calculate responsive scale for carousel containers
-  const getResponsiveScale = (desktopScale: number): number => {
-    // SSR/initial: return desktop scale
-    if (windowWidth === 0) return desktopScale
+  const getResponsiveScale = useMemo(() => {
+    return (desktopScale: number): number => {
+      // SSR/initial: return desktop scale
+      if (windowWidth === 0) {
+        console.log(`🔧 [getResponsiveScale] SSR mode, returning desktop scale: ${desktopScale}`)
+        return desktopScale
+      }
 
-    const isMobileDevice = windowWidth <= 767
-    if (!isMobileDevice) return desktopScale
+      const isMobileDevice = windowWidth <= 767
+      if (!isMobileDevice) {
+        console.log(`🔧 [getResponsiveScale] Desktop detected (${windowWidth}px), returning: ${desktopScale}`)
+        return desktopScale
+      }
 
-    // Mobile: Calculate available width
-    const mobileWidthAvailable = Math.min(windowWidth * 0.7, 480) * 0.96
-    const desktopBase = 384
-    const mobileRatio = mobileWidthAvailable / desktopBase
+      // Mobile: Calculate available width
+      const mobileWidthAvailable = Math.min(windowWidth * 0.7, 480) * 0.96
+      const desktopBase = 384
+      const mobileRatio = mobileWidthAvailable / desktopBase
+      const mobileScale = desktopScale * mobileRatio
 
-    // Return proportional scale for mobile
-    return desktopScale * mobileRatio
-  }
+      console.log(`🔧 [getResponsiveScale] Mobile detected (${windowWidth}px), scale: ${desktopScale} * ${mobileRatio.toFixed(3)} = ${mobileScale.toFixed(3)}`)
+      return mobileScale
+    }
+  }, [windowWidth])
 
   const heroRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLIFrameElement>(null)

@@ -63,6 +63,7 @@ export default function ImageCarousel({
 
   // Track window width for responsive frame scaling (client-side only)
   const [windowWidth, setWindowWidth] = useState(0)
+  const [containerHeight, setContainerHeight] = useState(384) // Track actual container height for vertical positioning
 
   useEffect(() => {
     const width = window.innerWidth
@@ -77,6 +78,15 @@ export default function ImageCarousel({
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [experienceId])
+
+  // Measure actual container height for accurate frame positioning in mobile
+  useEffect(() => {
+    if (carouselRef.current) {
+      const rect = carouselRef.current.getBoundingClientRect()
+      setContainerHeight(rect.height)
+      console.log(`🔧 [Frame ${experienceId}] Container height measured: ${rect.height}px`)
+    }
+  }, [windowWidth, experienceId])
 
   // Calibration state
   const [isDrawing, setIsDrawing] = useState(false)
@@ -398,7 +408,7 @@ export default function ImageCarousel({
 
       {/* Frame overlay - escala proporcional según dispositivo */}
       {frameSrc && (() => {
-        // SSR/initial: use desktop scale (uniforme 1.2 como calibrado)
+        // SSR/initial: use desktop scale
         if (windowWidth === 0) {
           console.log(`🔧 [Frame ${experienceId}] SSR mode, using desktop scale 1.2`)
           return (
@@ -423,8 +433,8 @@ export default function ImageCarousel({
         const isMobile = windowWidth <= 767
 
         if (!isMobile) {
-          // Desktop: mantener escala 1.2 uniforme (calibrado con Ctrl+A)
-          console.log(`🔧 [Frame ${experienceId}] Desktop (${windowWidth}px), scale 1.2 (calibrated)`)
+          // Desktop: usar escala 1.2 calibrada
+          console.log(`🔧 [Frame ${experienceId}] Desktop (${windowWidth}px), using scale 1.2`)
           return (
             <img
               src={frameSrc}
@@ -444,12 +454,20 @@ export default function ImageCarousel({
           )
         }
 
-        // Móvil: usar scaleX/scaleY del frameConfig para adaptar frames con diferentes ratios
-        // Obtener valores del config (fallback a 1.2 si no existen)
+        // Móvil: usar scaleX/scaleY específicos del frameConfig
+        // El container ya se escaló con mobileRatio, el frame mantiene su escala original respecto al container
         const scaleX = frameConfig?.scaleX ?? 1.2
         const scaleY = frameConfig?.scaleY ?? 1.2
 
-        console.log(`🔧 [Frame ${experienceId}] Mobile (${windowWidth}px), scale (${scaleX}, ${scaleY}) from config`)
+        // Ajustar posición vertical: compensar el scale del contenedor padre
+        // Si el contenedor tiene height 384px pero se ve como 302px (scale 0.787),
+        // entonces top:50% = 192px, pero debería ser 151px (50% de 302px)
+        const desktopHeight = 384
+        const containerScale = containerHeight / desktopHeight
+        const verticalOffset = (1 - containerScale) * 50 // Porcentaje a restar
+        const topPosition = `calc(50% - ${verticalOffset.toFixed(2)}%)`
+
+        console.log(`🔧 [Frame ${experienceId}] Mobile (${windowWidth}px), scale: ${scaleX}×${scaleY}, containerHeight: ${containerHeight}px, containerScale: ${containerScale.toFixed(3)}, verticalOffset: ${verticalOffset.toFixed(2)}%, top: ${topPosition}`)
 
         return (
           <img
@@ -457,7 +475,7 @@ export default function ImageCarousel({
             alt=""
             style={{
               position: 'absolute',
-              top: '50%',
+              top: topPosition,
               left: '50%',
               width: '100%',
               height: '100%',

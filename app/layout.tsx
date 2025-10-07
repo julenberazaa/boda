@@ -974,7 +974,7 @@ export default function RootLayout({
                   gap: 8px !important; /* EXACTAMENTE 8px entre columnas */
                   padding: 0 4px !important;
                   box-sizing: border-box !important;
-                  align-items: flex-start !important; /* ALINEACIÓN SUPERIOR: evitar desplazamiento de frames */
+                  align-items: center !important; /* CENTRADO VERTICAL: carrusel + texto */
                   margin-bottom: 24px !important; /* Restaurar espaciado vertical entre secciones */
                 }
 

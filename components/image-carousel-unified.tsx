@@ -79,6 +79,19 @@ export default function ImageCarousel({
   // Log carousel initialization for debugging
   useEffect(() => {
     const isMobile = window.innerWidth <= 767
+
+    // DEBUG: Print HTML structure for first carousel only
+    if (experienceId === '02' && carouselRef.current && activeIndex === 0) {
+      const parent = carouselRef.current.parentElement?.parentElement?.parentElement
+      console.log('🔍 HTML STRUCTURE:', parent?.outerHTML?.substring(0, 500))
+
+      const cropBox = carouselRef.current.querySelector('div[style*="position: absolute"]')
+      console.log('🎯 CROPBOX ELEMENT:', cropBox?.outerHTML?.substring(0, 300))
+
+      const frame = carouselRef.current.querySelector('img[alt=""]')
+      console.log('🖼️ FRAME ELEMENT:', frame?.outerHTML?.substring(0, 200))
+    }
+
     console.log(`🎠 CAROUSEL INIT [${experienceId}] [${isMobile ? 'MOBILE' : 'DESKTOP'}]`, {
       totalItems,
       activeIndex,

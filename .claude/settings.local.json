@@ -1,23 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(pnpm build:*)",
-      "Bash(npm run build:*)",
-      "WebSearch",
       "Bash(git add:*)",
-      "Bash(git commit:*)",
-      "Bash(git push:*)",
-      "Bash(grep:*)",
-      "Bash(npx next:*)",
-      "Bash(npx tsc:*)",
-      "Bash(git log:*)",
-      "Bash(git rev-list:*)",
-      "Bash(npm run dev:*)",
-      "Bash(git pull:*)",
-      "Bash(git rebase:*)",
-      "Bash(npm run lint)",
-      "Bash(find:*)",
-      "Bash(pero ajustando el tamaño al ancho del móvil\" - User requirement\n\nBefore: 65 lines of aggressive mobile CSS causing 4 critical bugs\nAfter: 12 lines of minimal, non-invasive adjustments\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []

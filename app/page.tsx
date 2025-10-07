@@ -26,15 +26,29 @@ export default function TimelinePage() {
   // Universal access - no device restrictions
   const isMobile = useMobileDetection()
 
+  // Track window width for responsive scaling (client-side only)
+  const [windowWidth, setWindowWidth] = useState(0)
+
+  useEffect(() => {
+    // Set initial width
+    setWindowWidth(window.innerWidth)
+
+    // Update on resize
+    const handleResize = () => setWindowWidth(window.innerWidth)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
   // Helper: Calculate responsive scale for carousel containers
   const getResponsiveScale = (desktopScale: number): number => {
-    if (typeof window === 'undefined') return desktopScale
+    // SSR/initial: return desktop scale
+    if (windowWidth === 0) return desktopScale
 
-    const isMobileDevice = window.innerWidth <= 767
+    const isMobileDevice = windowWidth <= 767
     if (!isMobileDevice) return desktopScale
 
     // Mobile: Calculate available width
-    const mobileWidthAvailable = Math.min(window.innerWidth * 0.7, 480) * 0.96
+    const mobileWidthAvailable = Math.min(windowWidth * 0.7, 480) * 0.96
     const desktopBase = 384
     const mobileRatio = mobileWidthAvailable / desktopBase
 

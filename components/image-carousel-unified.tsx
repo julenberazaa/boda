@@ -61,6 +61,16 @@ export default function ImageCarousel({
   const carouselRef = useRef<HTMLDivElement>(null)
   const videoRefs = useRef<Record<number, HTMLVideoElement | null>>({})
 
+  // Track window width for responsive frame scaling (client-side only)
+  const [windowWidth, setWindowWidth] = useState(0)
+
+  useEffect(() => {
+    setWindowWidth(window.innerWidth)
+    const handleResize = () => setWindowWidth(window.innerWidth)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
   // Calibration state
   const [isDrawing, setIsDrawing] = useState(false)
   const [drawStart, setDrawStart] = useState<{ x: number; y: number } | null>(null)
@@ -381,7 +391,28 @@ export default function ImageCarousel({
 
       {/* Frame overlay - escala proporcional según dispositivo */}
       {frameSrc && (() => {
-        const isMobile = typeof window !== 'undefined' && window.innerWidth <= 767
+        // SSR/initial: use desktop scale
+        if (windowWidth === 0) {
+          return (
+            <img
+              src={frameSrc}
+              alt=""
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                width: '100%',
+                height: '100%',
+                transform: 'translate(-50%, -50%) scale(1.2, 1.2)',
+                objectFit: 'contain',
+                zIndex: 30,
+                pointerEvents: 'none'
+              }}
+            />
+          )
+        }
+
+        const isMobile = windowWidth <= 767
 
         if (!isMobile) {
           // Desktop: usar escala 1.2 calibrada
@@ -405,9 +436,7 @@ export default function ImageCarousel({
         }
 
         // Móvil: calcular escala proporcional
-        const mobileWidthAvailable = typeof window !== 'undefined'
-          ? Math.min(window.innerWidth * 0.7, 480) * 0.96
-          : 242
+        const mobileWidthAvailable = Math.min(windowWidth * 0.7, 480) * 0.96
         const desktopBase = 384
         const mobileRatio = mobileWidthAvailable / desktopBase
         const frameScale = 1.2 * mobileRatio

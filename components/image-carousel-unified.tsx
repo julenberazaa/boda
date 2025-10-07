@@ -398,7 +398,7 @@ export default function ImageCarousel({
 
       {/* Frame overlay - escala proporcional según dispositivo */}
       {frameSrc && (() => {
-        // Get calibrated scales from frameConfig (default to 1.2 if not specified)
+        // Extract scaleX and scaleY from frameConfig (fallback to 1.2 if not provided)
         const scaleX = frameConfig?.scaleX ?? 1.2
         const scaleY = frameConfig?.scaleY ?? 1.2
 
@@ -427,8 +427,8 @@ export default function ImageCarousel({
         const isMobile = windowWidth <= 767
 
         if (!isMobile) {
-          // Desktop: usar escalas calibradas específicas de cada frame
-          console.log(`🔧 [Frame ${experienceId}] Desktop (${windowWidth}px), using calibrated scale (${scaleX}, ${scaleY})`)
+          // Desktop: usar escala calibrada específica de cada frame
+          console.log(`🔧 [Frame ${experienceId}] Desktop (${windowWidth}px), using scale (${scaleX}, ${scaleY})`)
           return (
             <img
               src={frameSrc}
@@ -448,21 +448,9 @@ export default function ImageCarousel({
           )
         }
 
-        // Móvil: COMPENSAR el scale del contenedor padre
-        // El contenedor ya fue escalado con mobileRatio, entonces el frame debe dividir por mobileRatio
-        // para mantener la MISMA proporción absoluta que en desktop
-        const mobileWidthAvailable = Math.min(windowWidth * 0.7, 480) * 0.96
-        const desktopBase = 384
-        const mobileRatio = mobileWidthAvailable / desktopBase
-
-        // Compensar el scale del contenedor padre
-        const compensatedScaleX = scaleX / mobileRatio
-        const compensatedScaleY = scaleY / mobileRatio
-
-        console.log(`🔧 [Frame ${experienceId}] Mobile (${windowWidth}px), compensating container scale:`)
-        console.log(`   - Container mobileRatio: ${mobileRatio.toFixed(3)}`)
-        console.log(`   - Desktop scale: (${scaleX}, ${scaleY})`)
-        console.log(`   - Compensated scale: (${compensatedScaleX.toFixed(3)}, ${compensatedScaleY.toFixed(3)})`)
+        // Móvil: mantener scales desktop porque el carousel ya se escaló proporcionalmente
+        // El frame debe mantener la misma proporción relativa al carousel en todos los dispositivos
+        console.log(`🔧 [Frame ${experienceId}] Mobile (${windowWidth}px), maintaining desktop scale (${scaleX}, ${scaleY})`)
 
         return (
           <img
@@ -474,7 +462,7 @@ export default function ImageCarousel({
               left: '50%',
               width: '100%',
               height: '100%',
-              transform: `translate(-50%, -50%) scale(${compensatedScaleX}, ${compensatedScaleY})`,
+              transform: `translate(-50%, -50%) scale(${scaleX}, ${scaleY})`,
               objectFit: 'contain',
               zIndex: 30,
               pointerEvents: 'none'

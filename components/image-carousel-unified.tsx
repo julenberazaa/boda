@@ -398,9 +398,13 @@ export default function ImageCarousel({
 
       {/* Frame overlay - escala proporcional según dispositivo */}
       {frameSrc && (() => {
+        // Get calibrated scales from frameConfig (default to 1.2 if not specified)
+        const scaleX = frameConfig?.scaleX ?? 1.2
+        const scaleY = frameConfig?.scaleY ?? 1.2
+
         // SSR/initial: use desktop scale
         if (windowWidth === 0) {
-          console.log(`🔧 [Frame ${experienceId}] SSR mode, using desktop scale 1.2`)
+          console.log(`🔧 [Frame ${experienceId}] SSR mode, using desktop scale (${scaleX}, ${scaleY})`)
           return (
             <img
               src={frameSrc}
@@ -411,7 +415,7 @@ export default function ImageCarousel({
                 left: '50%',
                 width: '100%',
                 height: '100%',
-                transform: 'translate(-50%, -50%) scale(1.2, 1.2)',
+                transform: `translate(-50%, -50%) scale(${scaleX}, ${scaleY})`,
                 objectFit: 'contain',
                 zIndex: 30,
                 pointerEvents: 'none'
@@ -423,8 +427,8 @@ export default function ImageCarousel({
         const isMobile = windowWidth <= 767
 
         if (!isMobile) {
-          // Desktop: usar escala 1.2 calibrada
-          console.log(`🔧 [Frame ${experienceId}] Desktop (${windowWidth}px), using scale 1.2`)
+          // Desktop: usar escalas calibradas específicas de cada frame
+          console.log(`🔧 [Frame ${experienceId}] Desktop (${windowWidth}px), using calibrated scale (${scaleX}, ${scaleY})`)
           return (
             <img
               src={frameSrc}
@@ -435,7 +439,7 @@ export default function ImageCarousel({
                 left: '50%',
                 width: '100%',
                 height: '100%',
-                transform: 'translate(-50%, -50%) scale(1.2, 1.2)',
+                transform: `translate(-50%, -50%) scale(${scaleX}, ${scaleY})`,
                 objectFit: 'contain',
                 zIndex: 30,
                 pointerEvents: 'none'
@@ -444,11 +448,9 @@ export default function ImageCarousel({
           )
         }
 
-        // Móvil: mantener scale desktop (1.2) porque el carousel ya se escaló proporcionalmente
-        // El frame debe ser 1.2x el tamaño del carousel, tanto en desktop como en móvil
-        const frameScale = 1.2
-
-        console.log(`🔧 [Frame ${experienceId}] Mobile (${windowWidth}px), maintaining desktop scale: ${frameScale}`)
+        // Móvil: mantener scales calibrados porque el carousel ya se escaló proporcionalmente
+        // El frame debe mantener la MISMA proporción relativa al carousel que en desktop
+        console.log(`🔧 [Frame ${experienceId}] Mobile (${windowWidth}px), maintaining desktop calibrated scale (${scaleX}, ${scaleY})`)
 
         return (
           <img
@@ -460,7 +462,7 @@ export default function ImageCarousel({
               left: '50%',
               width: '100%',
               height: '100%',
-              transform: `translate(-50%, -50%) scale(${frameScale}, ${frameScale})`,
+              transform: `translate(-50%, -50%) scale(${scaleX}, ${scaleY})`,
               objectFit: 'contain',
               zIndex: 30,
               pointerEvents: 'none'

@@ -398,7 +398,7 @@ export default function ImageCarousel({
 
       {/* Frame overlay - escala proporcional según dispositivo */}
       {frameSrc && (() => {
-        // SSR/initial: use desktop scale
+        // SSR/initial: use desktop scale (uniforme 1.2 como calibrado)
         if (windowWidth === 0) {
           console.log(`🔧 [Frame ${experienceId}] SSR mode, using desktop scale 1.2`)
           return (
@@ -423,8 +423,8 @@ export default function ImageCarousel({
         const isMobile = windowWidth <= 767
 
         if (!isMobile) {
-          // Desktop: usar escala 1.2 calibrada
-          console.log(`🔧 [Frame ${experienceId}] Desktop (${windowWidth}px), using scale 1.2`)
+          // Desktop: mantener escala 1.2 uniforme (calibrado con Ctrl+A)
+          console.log(`🔧 [Frame ${experienceId}] Desktop (${windowWidth}px), scale 1.2 (calibrated)`)
           return (
             <img
               src={frameSrc}
@@ -444,11 +444,12 @@ export default function ImageCarousel({
           )
         }
 
-        // Móvil: mantener escala relativa al container (no reducir el frame)
-        // El container ya se escaló con mobileRatio, el frame debe mantener 1.2× respecto al container
-        const frameScale = 1.2
+        // Móvil: usar scaleX/scaleY del frameConfig para adaptar frames con diferentes ratios
+        // Obtener valores del config (fallback a 1.2 si no existen)
+        const scaleX = frameConfig?.scaleX ?? 1.2
+        const scaleY = frameConfig?.scaleY ?? 1.2
 
-        console.log(`🔧 [Frame ${experienceId}] Mobile (${windowWidth}px), frame scale: ${frameScale} (fixed, relative to container)`)
+        console.log(`🔧 [Frame ${experienceId}] Mobile (${windowWidth}px), scale (${scaleX}, ${scaleY}) from config`)
 
         return (
           <img
@@ -460,7 +461,7 @@ export default function ImageCarousel({
               left: '50%',
               width: '100%',
               height: '100%',
-              transform: `translate(-50%, -50%) scale(${frameScale}, ${frameScale})`,
+              transform: `translate(-50%, -50%) scale(${scaleX}, ${scaleY})`,
               objectFit: 'contain',
               zIndex: 30,
               pointerEvents: 'none'

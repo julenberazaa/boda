@@ -5,6 +5,7 @@ import { emergencyLog } from './emergency-debug'
 import { Edit, Check } from 'lucide-react'
 import type { CropBox } from '@/lib/local-frame-config'
 import { useCarouselResize } from '@/hooks/use-carousel-resize'
+import { logCarouselHierarchy, getComputedStylesWithSource } from '@/lib/css-debug-utils'
 
 interface MediaItem {
   type: 'image' | 'video'
@@ -84,6 +85,126 @@ export default function ImageCarousel({
       userAgent: navigator.userAgent.substring(0, 100)
     })
   }, [experienceId, totalItems, frameSrc])
+
+  // COMPREHENSIVE LOGGING: Capture dimensions, positions, computed styles
+  useEffect(() => {
+    if (!carouselRef.current) return
+
+    const isMobile = window.innerWidth <= 767
+    const carousel = carouselRef.current
+    const carouselRect = carousel.getBoundingClientRect()
+    const carouselStyles = window.getComputedStyle(carousel)
+
+    // Get parent containers hierarchy
+    const parents: Array<{name: string, rect: DOMRect, styles: any}> = []
+    let parent = carousel.parentElement
+    let depth = 0
+    while (parent && depth < 5) {
+      const rect = parent.getBoundingClientRect()
+      const styles = window.getComputedStyle(parent)
+      parents.push({
+        name: `parent${depth}[${parent.className || parent.tagName}]`,
+        rect: {
+          width: rect.width,
+          height: rect.height,
+          top: rect.top,
+          left: rect.left
+        } as any,
+        styles: {
+          width: styles.width,
+          height: styles.height,
+          maxWidth: styles.maxWidth,
+          position: styles.position,
+          display: styles.display,
+          padding: styles.padding,
+          margin: styles.margin,
+          overflow: styles.overflow,
+          transform: styles.transform
+        }
+      })
+      parent = parent.parentElement
+      depth++
+    }
+
+    // Get frame element if exists
+    const frameImg = carousel.querySelector('img[alt=""]')
+    const frameData = frameImg ? {
+      rect: frameImg.getBoundingClientRect(),
+      styles: {
+        width: window.getComputedStyle(frameImg).width,
+        height: window.getComputedStyle(frameImg).height,
+        position: window.getComputedStyle(frameImg).position,
+        top: window.getComputedStyle(frameImg).top,
+        left: window.getComputedStyle(frameImg).left,
+        transform: window.getComputedStyle(frameImg).transform
+      }
+    } : null
+
+    // Get inner content box
+    const contentBox = carousel.querySelector('div[style*="width"]') as HTMLElement
+    const contentData = contentBox ? {
+      inlineStyles: contentBox.getAttribute('style'),
+      computedStyles: {
+        width: window.getComputedStyle(contentBox).width,
+        height: window.getComputedStyle(contentBox).height,
+        position: window.getComputedStyle(contentBox).position,
+        left: window.getComputedStyle(contentBox).left,
+        top: window.getComputedStyle(contentBox).top,
+        transform: window.getComputedStyle(contentBox).transform
+      }
+    } : null
+
+    emergencyLog('warn', `📊 CAROUSEL DIMENSIONS LOG [${isMobile ? 'MOBILE' : 'DESKTOP'}]`, {
+      experienceId,
+      viewport: {
+        width: window.innerWidth,
+        height: window.innerHeight,
+        isMobile
+      },
+      carousel: {
+        rect: {
+          width: carouselRect.width,
+          height: carouselRect.height,
+          top: carouselRect.top,
+          left: carouselRect.left
+        },
+        computedStyles: {
+          width: carouselStyles.width,
+          height: carouselStyles.height,
+          position: carouselStyles.position,
+          display: carouselStyles.display,
+          overflow: carouselStyles.overflow
+        },
+        className: carousel.className
+      },
+      parents,
+      frame: frameData,
+      contentBox: contentData,
+      cropBox: tempCropBox || frameConfig?.cropBox,
+      timestamp: new Date().toISOString()
+    })
+
+    // Log CSS rule matching (will appear in browser console)
+    logCarouselHierarchy(carousel, experienceId || 'unknown')
+
+    // Log CSS source for critical properties
+    const criticalProps = ['width', 'height', 'max-width', 'position', 'display', 'overflow', 'padding', 'margin', 'transform']
+    const cssSourceData = getComputedStylesWithSource(carousel, criticalProps)
+
+    emergencyLog('info', `🎨 CSS SOURCES [${isMobile ? 'MOBILE' : 'DESKTOP'}]`, {
+      experienceId,
+      cssRules: Object.entries(cssSourceData).map(([prop, data]) => ({
+        property: prop,
+        computed: data.computed,
+        matchingRules: data.matchingRules.slice(0, 3).map(r => ({
+          selector: r.selector,
+          value: r.value,
+          specificity: r.specificity,
+          mediaQuery: r.mediaQuery
+        }))
+      }))
+    })
+  }, [experienceId, frameSrc, frameConfig?.cropBox, tempCropBox])
 
   // ResizeObserver fallback for real-time adjustments (universal support)
   useCarouselResize(carouselRef, (width, height) => {

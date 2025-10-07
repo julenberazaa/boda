@@ -684,18 +684,20 @@
   }
 
   /* CRITICAL: Contenedor con height:calc tiene altura fija desktop (384px) */
-  /* En mobile debe escalar manteniendo aspect ratio */
+  /* En mobile debe escalar manteniendo MISMO aspect ratio que desktop */
   .timeline-item .p-6 div[style*="height: calc"],
   .timeline-item .p-6 div[style*="height:calc"] {
     height: auto !important; /* Remove fixed 384px */
-    aspect-ratio: 1 / 1 !important; /* Square aspect ratio for mobile */
+    aspect-ratio: 384 / 384 !important; /* Desktop base: 384px height, mismo width → 1:1 base */
     max-width: calc(100vw - 2.75rem) !important; /* Account for padding */
   }
 
-  /* Contenedor con transform: scale también necesita ajuste */
+  /* Contenedor con transform: scale - mantener proporción desktop */
   .timeline-item .p-6 div[style*="transform: scale"],
   .timeline-item .p-6 div[style*="transform:scale"] {
-    transform: scale(1) !important; /* Remove desktop scale(1.2) */
+    /* Desktop usa scale(1.2), scale(1.254), scale(1.134), etc */
+    /* En mobile: remover scale pero mantener aspect ratio base */
+    transform: scale(1) !important; /* Remove desktop scale */
     max-width: calc(100vw - 2.75rem) !important;
   }
 

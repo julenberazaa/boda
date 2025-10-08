@@ -65,6 +65,7 @@ export default function ImageCarousel({
   const [drawStart, setDrawStart] = useState<{ x: number; y: number } | null>(null)
   const [drawCurrent, setDrawCurrent] = useState<{ x: number; y: number } | null>(null)
   const [tempCropBox, setTempCropBox] = useState<CropBoxPx | null>(null)
+  const [mousePosition, setMousePosition] = useState<{ x: number; y: number } | null>(null)
 
   // Build media list with backward compatibility - UNIFIED
   const mediaItems: MediaItem[] = (() => {
@@ -223,12 +224,18 @@ export default function ImageCarousel({
   }
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isDrawing || !drawStart) return
-
     const rect = carouselRef.current?.getBoundingClientRect()
     if (!rect) return
 
-    setDrawCurrent({ x: e.clientX - rect.left, y: e.clientY - rect.top })
+    // Update mouse position for crosshair
+    if (isActiveCalibration) {
+      setMousePosition({ x: e.clientX - rect.left, y: e.clientY - rect.top })
+    }
+
+    // Update drawing rectangle
+    if (isDrawing && drawStart) {
+      setDrawCurrent({ x: e.clientX - rect.left, y: e.clientY - rect.top })
+    }
   }
 
   const handleMouseUp = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -315,8 +322,8 @@ export default function ImageCarousel({
   } : null
 
   // Use containerWidth/Height if provided, otherwise use default size
-  const actualContainerWidth = containerWidth || 384
-  const actualContainerHeight = containerHeight || 384
+  const actualContainerWidth = containerWidth || 550
+  const actualContainerHeight = containerHeight || 550
 
   return (
     <div
@@ -423,6 +430,59 @@ export default function ImageCarousel({
         }}>
           NO FRAME SRC - {experienceId}
         </div>
+      )}
+
+      {/* Crosshair guidelines for calibration */}
+      {isActiveCalibration && mousePosition && (
+        <>
+          {/* Vertical line */}
+          <div
+            style={{
+              position: 'absolute',
+              left: `${mousePosition.x}px`,
+              top: 0,
+              width: '1px',
+              height: '100%',
+              backgroundColor: '#3b82f6',
+              zIndex: 35,
+              pointerEvents: 'none',
+              opacity: 0.6
+            }}
+          />
+          {/* Horizontal line */}
+          <div
+            style={{
+              position: 'absolute',
+              left: 0,
+              top: `${mousePosition.y}px`,
+              width: '100%',
+              height: '1px',
+              backgroundColor: '#3b82f6',
+              zIndex: 35,
+              pointerEvents: 'none',
+              opacity: 0.6
+            }}
+          />
+          {/* Coordinates display */}
+          <div
+            style={{
+              position: 'absolute',
+              left: `${mousePosition.x + 10}px`,
+              top: `${mousePosition.y + 10}px`,
+              backgroundColor: 'rgba(0,0,0,0.8)',
+              color: '#3b82f6',
+              padding: '4px 8px',
+              borderRadius: '4px',
+              fontSize: '11px',
+              fontWeight: 'bold',
+              zIndex: 36,
+              pointerEvents: 'none',
+              whiteSpace: 'nowrap'
+            }}
+          >
+            {mousePosition.x.toFixed(0)}, {mousePosition.y.toFixed(0)}
+          </div>
+        </>
       )}
 
       {/* Calibration drawing overlay */}

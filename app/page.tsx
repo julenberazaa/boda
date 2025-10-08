@@ -6,7 +6,7 @@ import { Heart, Plane, MapPin, Camera, Video, Sun, Star, Ship, BellRingIcon as R
 import ImageCarousel from "@/components/image-carousel-unified"
 // import FramesOverlay from "@/components/frames-overlay" // DEPRECATED: Replaced with frames inside carousels
 import { getFrameConfig } from "@/lib/local-frame-config"
-import type { CropBox } from "@/lib/local-frame-config"
+import type { CropBoxPx } from "@/lib/local-frame-config"
 // Unified debug logging - no platform-specific logic
 import { emergencyLog } from "@/components/emergency-debug"
 import { useMobileDetection } from "@/hooks/use-mobile-detection"
@@ -55,7 +55,7 @@ export default function TimelinePage() {
 
   // Calibration mode state
   const [calibrationMode, setCalibrationMode] = useState(false)
-  const [calibrationData, setCalibrationData] = useState<Record<string, CropBox>>({})
+  const [calibrationData, setCalibrationData] = useState<Record<string, { cropBox: CropBoxPx, containerWidth: number, containerHeight: number }>>({})
   const [activeCalibration, setActiveCalibration] = useState<string | null>(null)
 
   // Overlay de contraseña (pantalla previa)
@@ -461,10 +461,20 @@ export default function TimelinePage() {
     setActiveCalibration(experienceId)
   }
 
-  const handleConfirmCalibration = (experienceId: string, cropBox: CropBox) => {
-    setCalibrationData(prev => ({ ...prev, [experienceId]: cropBox }))
+  const handleConfirmCalibration = (experienceId: string, cropBox: CropBoxPx, containerSize: { width: number, height: number }) => {
+    setCalibrationData(prev => ({
+      ...prev,
+      [experienceId]: {
+        cropBox,
+        containerWidth: containerSize.width,
+        containerHeight: containerSize.height
+      }
+    }))
     setActiveCalibration(null)
-    console.log(`Calibración guardada para ${experienceId}:`, cropBox)
+    console.log(`📐 Calibración guardada para ${experienceId}:`, {
+      container: `${containerSize.width}×${containerSize.height}px`,
+      cropBox: `x:${cropBox.x}, y:${cropBox.y}, w:${cropBox.width}, h:${cropBox.height}`
+    })
   }
 
   const handleExportCalibration = () => {
@@ -1320,16 +1330,17 @@ export default function TimelinePage() {
                 alt="Primeras escapadas"
                 experienceId="02"
                 frameSrc={getFrameConfig("02")?.frameSrc}
-                frameConfig={getFrameConfig("02") || undefined}
+                containerWidth={getFrameConfig("02")?.containerWidth}
+                containerHeight={getFrameConfig("02")?.containerHeight}
+                cropBoxPx={getFrameConfig("02")?.cropBox}
                 calibrationMode={calibrationMode}
                 isActiveCalibration={activeCalibration === "02"}
                 onStartCalibration={() => handleStartCalibration("02")}
-                onConfirmCalibration={(cropBox) => handleConfirmCalibration("02", cropBox)}
+                onConfirmCalibration={(cropBox, containerSize) => handleConfirmCalibration("02", cropBox, containerSize)}
                 borderRadius="1rem"
                 onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
                   openImageCarousel(imageSrc, imageArray, currentIndex, rect)
                 }}
-                style={{ width: '384px', height: '383.65px', borderRadius: '1rem' }}
               />
             </div>
           </div>
@@ -1350,15 +1361,16 @@ export default function TimelinePage() {
                 alt="Estudios universitarios"
                 experienceId="estudios"
                 frameSrc={getFrameConfig("estudios")?.frameSrc}
-                frameConfig={getFrameConfig("estudios") || undefined}
+                containerWidth={getFrameConfig("estudios")?.containerWidth}
+                containerHeight={getFrameConfig("estudios")?.containerHeight}
+                cropBoxPx={getFrameConfig("estudios")?.cropBox}
                 calibrationMode={calibrationMode}
                 isActiveCalibration={activeCalibration === "estudios"}
                 onStartCalibration={() => handleStartCalibration("estudios")}
-                onConfirmCalibration={(cropBox) => handleConfirmCalibration("estudios", cropBox)}
+                onConfirmCalibration={(cropBox, containerSize) => handleConfirmCalibration("estudios", cropBox, containerSize)}
                 onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
                   openImageCarousel(imageSrc, imageArray, currentIndex, rect)
                 }}
-                style={{ width: '384px', height: '364.77px' }}
               />
             </div>
           </div>
@@ -1401,15 +1413,17 @@ export default function TimelinePage() {
                 alt="Oposiciones de policía"
                 experienceId="03"
                 frameSrc={getFrameConfig("03")?.frameSrc}
-                frameConfig={getFrameConfig("03") || undefined}
+                containerWidth={getFrameConfig("03")?.containerWidth}
+                containerHeight={getFrameConfig("03")?.containerHeight}
+                cropBoxPx={getFrameConfig("03")?.cropBox}
                 calibrationMode={calibrationMode}
                 isActiveCalibration={activeCalibration === "03"}
                 onStartCalibration={() => handleStartCalibration("03")}
-                onConfirmCalibration={(cropBox) => handleConfirmCalibration("03", cropBox)}
+                onConfirmCalibration={(cropBox, containerSize) => handleConfirmCalibration("03", cropBox, containerSize)}
+                borderRadius="1rem"
                 onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
                   openImageCarousel(imageSrc, imageArray, currentIndex, rect)
                 }}
-                style={{ width: '384px', height: '314.09px', borderRadius: '1rem' }}
               />
             </div>
           </div>
@@ -1429,16 +1443,17 @@ export default function TimelinePage() {
                 alt="MIR"
                 experienceId="mir"
                 frameSrc={getFrameConfig("mir")?.frameSrc}
-                frameConfig={getFrameConfig("mir") || undefined}
+                containerWidth={getFrameConfig("mir")?.containerWidth}
+                containerHeight={getFrameConfig("mir")?.containerHeight}
+                cropBoxPx={getFrameConfig("mir")?.cropBox}
                 calibrationMode={calibrationMode}
                 isActiveCalibration={activeCalibration === "mir"}
                 onStartCalibration={() => handleStartCalibration("mir")}
-                onConfirmCalibration={(cropBox) => handleConfirmCalibration("mir", cropBox)}
+                onConfirmCalibration={(cropBox, containerSize) => handleConfirmCalibration("mir", cropBox, containerSize)}
                 borderRadius="1rem"
                 onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
                   openImageCarousel(imageSrc, imageArray, currentIndex, rect)
                 }}
-                style={{ width: '384px', height: '345.66px', borderRadius: '1rem' }}
               />
             </div>
           </div>
@@ -1481,15 +1496,16 @@ export default function TimelinePage() {
                 alt="Hobbies"
                 experienceId="hobbies"
                 frameSrc={getFrameConfig("hobbies")?.frameSrc}
-                frameConfig={getFrameConfig("hobbies") || undefined}
+                containerWidth={getFrameConfig("hobbies")?.containerWidth}
+                containerHeight={getFrameConfig("hobbies")?.containerHeight}
+                cropBoxPx={getFrameConfig("hobbies")?.cropBox}
                 calibrationMode={calibrationMode}
                 isActiveCalibration={activeCalibration === "hobbies"}
                 onStartCalibration={() => handleStartCalibration("hobbies")}
-                onConfirmCalibration={(cropBox) => handleConfirmCalibration("hobbies", cropBox)}
+                onConfirmCalibration={(cropBox, containerSize) => handleConfirmCalibration("hobbies", cropBox, containerSize)}
                 onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
                   openImageCarousel(imageSrc, imageArray, currentIndex, rect)
                 }}
-                style={{ width: '384px', height: '368.67px' }}
               />
             </div>
           </div>
@@ -1512,15 +1528,16 @@ export default function TimelinePage() {
                 alt="Independizarse"
                 experienceId="independizarse"
                 frameSrc={getFrameConfig("independizarse")?.frameSrc}
-                frameConfig={getFrameConfig("independizarse") || undefined}
+                containerWidth={getFrameConfig("independizarse")?.containerWidth}
+                containerHeight={getFrameConfig("independizarse")?.containerHeight}
+                cropBoxPx={getFrameConfig("independizarse")?.cropBox}
                 calibrationMode={calibrationMode}
                 isActiveCalibration={activeCalibration === "independizarse"}
                 onStartCalibration={() => handleStartCalibration("independizarse")}
-                onConfirmCalibration={(cropBox) => handleConfirmCalibration("independizarse", cropBox)}
+                onConfirmCalibration={(cropBox, containerSize) => handleConfirmCalibration("independizarse", cropBox, containerSize)}
                 onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
                   openImageCarousel(imageSrc, imageArray, currentIndex, rect)
                 }}
-                style={{ width: '384px', height: '361.09px' }}
               />
             </div>
           </div>
@@ -1576,11 +1593,13 @@ export default function TimelinePage() {
                 alt="Ilun"
                 experienceId="ilun"
                 frameSrc={getFrameConfig("ilun")?.frameSrc}
-                frameConfig={getFrameConfig("ilun") || undefined}
+                containerWidth={getFrameConfig("ilun")?.containerWidth}
+                containerHeight={getFrameConfig("ilun")?.containerHeight}
+                cropBoxPx={getFrameConfig("ilun")?.cropBox}
                 calibrationMode={calibrationMode}
                 isActiveCalibration={activeCalibration === "ilun"}
                 onStartCalibration={() => handleStartCalibration("ilun")}
-                onConfirmCalibration={(cropBox) => handleConfirmCalibration("ilun", cropBox)}
+                onConfirmCalibration={(cropBox, containerSize) => handleConfirmCalibration("ilun", cropBox, containerSize)}
                 onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
                   openImageCarousel(imageSrc, imageArray, currentIndex, rect)
                 }}
@@ -1590,7 +1609,6 @@ export default function TimelinePage() {
                 onOpenMediaCarousel={(items, startIndex, rect) => {
                   openUnifiedMediaCarousel(items, startIndex, rect)
                 }}
-                style={{ width: '384px', height: '364.28px' }}
               />
             </div>
           </div>
@@ -1607,15 +1625,16 @@ export default function TimelinePage() {
                 alt="Pedida de mano"
                 experienceId="pedida"
                 frameSrc={getFrameConfig("pedida")?.frameSrc}
-                frameConfig={getFrameConfig("pedida") || undefined}
+                containerWidth={getFrameConfig("pedida")?.containerWidth}
+                containerHeight={getFrameConfig("pedida")?.containerHeight}
+                cropBoxPx={getFrameConfig("pedida")?.cropBox}
                 calibrationMode={calibrationMode}
                 isActiveCalibration={activeCalibration === "pedida"}
                 onStartCalibration={() => handleStartCalibration("pedida")}
-                onConfirmCalibration={(cropBox) => handleConfirmCalibration("pedida", cropBox)}
+                onConfirmCalibration={(cropBox, containerSize) => handleConfirmCalibration("pedida", cropBox, containerSize)}
                 onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
                   openImageCarousel(imageSrc, imageArray, currentIndex, rect)
                 }}
-                style={{ width: '384px', height: '383.81px' }}
               />
             </div>
           </div>

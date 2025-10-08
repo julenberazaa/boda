@@ -1,17 +1,8 @@
 // ============================================================================
-// DEPRECATED: This file will be completely rewritten with new structure
-// Current structure uses percentages - NEW system will use absolute pixels
+// SISTEMA UNIFICADO MARCO-CARRUSEL - Tamaños estáticos en píxeles
 // ============================================================================
 
-// OLD: Percentage-based cropBox (will be replaced)
-export interface CropBox {
-  x: number      // % desde la izquierda del contenedor
-  y: number      // % desde arriba del contenedor
-  width: number  // % del ancho del contenedor
-  height: number // % del alto del contenedor
-}
-
-// NEW: Pixel-based cropBox (for future implementation)
+// NEW: Pixel-based cropBox - absolute pixels dentro del container
 export interface CropBoxPx {
   x: number      // px desde la izquierda del container
   y: number      // px desde arriba del container
@@ -19,153 +10,118 @@ export interface CropBoxPx {
   height: number // px de alto del área de fotos
 }
 
-// OLD: Current config (will be replaced)
+// NEW: Configuración simplificada - solo 3 propiedades esenciales
 export interface LocalFrameConfig {
-  frameSrc: string
-  scaleX?: number        // DEPRECATED - will be removed
-  scaleY?: number        // DEPRECATED - will be removed
-  offsetX?: number       // DEPRECATED - will be removed
-  offsetY?: number       // DEPRECATED - will be removed
-  fit?: 'cover' | 'contain' | 'fill'  // DEPRECATED - will be removed
-  cropBox?: CropBox      // DEPRECATED - will be replaced with cropBoxPx
-}
-
-// NEW: Simplified config for future implementation
-export interface LocalFrameConfigNew {
   frameSrc: string           // Path a la imagen PNG del marco
   containerWidth: number     // Ancho total del marco en px
   containerHeight: number    // Alto total del marco en px
   cropBox: CropBoxPx        // Área donde van las fotos (px absolutos)
 }
 
-// Mapeo de experience IDs a configuraciones de marcos locales
-// Cada carrusel tendrá su marco como hermano inmediato
+// Configuraciones de marcos para cada experiencia
+// NOTA: Estos valores son placeholders - se recalibrarán con Ctrl+A
 export const LOCAL_FRAME_CONFIGS: Record<string, LocalFrameConfig> = {
   // Primeras escapadas
   '02': {
     frameSrc: '/frames/frame-02.png',
-    scaleX: 1.2,
-    scaleY: 1.2,
-    offsetX: 0,
-    offsetY: 0,
-    fit: 'contain',
+    containerWidth: 384,
+    containerHeight: 383,
     cropBox: {
-      x: 14.025289851691165,
-      y: 12.864581743876139,
-      width: 74.03273305215838,
-      height: 73.95833333333334
+      x: 54,
+      y: 49,
+      width: 284,
+      height: 284
     }
   },
 
   // Estudios universitarios
   'estudios': {
     frameSrc: '/frames/frame-03.png',
-    scaleX: 1.1,
-    scaleY: 1.15,
-    offsetX: 0,
-    offsetY: 0,
-    fit: 'contain',
+    containerWidth: 384,
+    containerHeight: 365,
     cropBox: {
-      x: 11.235117146960862,
-      y: 12.604165077209473,
-      width: 78.68303035442963,
-      height: 74.73958333333334
+      x: 43,
+      y: 46,
+      width: 302,
+      height: 273
     }
   },
 
   // Oposiciones de policía
   '03': {
     frameSrc: '/frames/udaltzaingoa_marco_real.png',
-    scaleX: 1.25,
-    scaleY: 1.4,
-    offsetX: 0,
-    offsetY: 0,
-    fit: 'contain',
+    containerWidth: 384,
+    containerHeight: 314,
     cropBox: {
-      x: 11.979159038691813,
-      y: 14.427081743876139,
-      width: 75.14880440470347,
-      height: 61.458333333333336
+      x: 46,
+      y: 45,
+      width: 289,
+      height: 193
     }
   },
 
   // MIR / Medicina
   'mir': {
     frameSrc: '/medicina-marco.png',
-    scaleX: 1.0,
-    scaleY: 1.15,
-    offsetX: 0,
-    offsetY: 0,
-    fit: 'contain',
+    containerWidth: 384,
+    containerHeight: 346,
     cropBox: {
-      x: 5.096724707962806,
-      y: 10.989583532015484,
-      width: 89.09969631151723,
-      height: 80.20833333333334
+      x: 20,
+      y: 38,
+      width: 342,
+      height: 277
     }
   },
 
   // Hobbies
   'hobbies': {
     frameSrc: '/frames/frame-05.png',
-    scaleX: 1.2,
-    scaleY: 1.25,
-    offsetX: 0,
-    offsetY: 0,
-    fit: 'contain',
+    containerWidth: 384,
+    containerHeight: 369,
     cropBox: {
-      x: 11.979159038691813,
-      y: 14.114582538604736,
-      width: 74.59076872843092,
-      height: 71.61458333333334
+      x: 46,
+      y: 52,
+      width: 287,
+      height: 264
     }
   },
 
   // Independizarse
   'independizarse': {
     frameSrc: '/frames/frame-04.png',
-    scaleX: 1.2,
-    scaleY: 1.3,
-    offsetX: 0,
-    offsetY: 0,
-    fit: 'contain',
+    containerWidth: 384,
+    containerHeight: 361,
     cropBox: {
-      x: 12.909224175778514,
-      y: 15.052082141240438,
-      width: 74.77678062052178,
-      height: 70.3125
+      x: 50,
+      y: 54,
+      width: 287,
+      height: 254
     }
   },
 
   // Ilun
   'ilun': {
     frameSrc: '/frames/frame-07.png',
-    scaleX: 1.1,
-    scaleY: 1.15,
-    offsetX: 0,
-    offsetY: 0,
-    fit: 'contain',
+    containerWidth: 384,
+    containerHeight: 364,
     cropBox: {
-      x: 11.235111470328413,
-      y: 12.447915474573772,
-      width: 79.05505413861133,
-      height: 75
+      x: 43,
+      y: 45,
+      width: 304,
+      height: 273
     }
   },
 
   // Pedida de mano
   'pedida': {
     frameSrc: '/frames/ChatGPT Image 17 ago 2025, 18_48_23.webp',
-    scaleX: 1.2,
-    scaleY: 1.2,
-    offsetX: 0,
-    offsetY: 0,
-    fit: 'contain',
+    containerWidth: 384,
+    containerHeight: 384,
     cropBox: {
-      x: 13.839283636232762,
-      y: 12.864583730697632,
-      width: 74.77678062052178,
-      height: 74.73958333333334
+      x: 53,
+      y: 49,
+      width: 287,
+      height: 287
     }
   }
 }

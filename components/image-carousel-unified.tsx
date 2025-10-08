@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import { emergencyLog } from './emergency-debug'
 import { Edit, Check } from 'lucide-react'
-import type { CropBox } from '@/lib/local-frame-config'
+import type { CropBoxPx } from '@/lib/local-frame-config'
 import { useCarouselResize } from '@/hooks/use-carousel-resize'
 import { logCarouselHierarchy, getComputedStylesWithSource } from '@/lib/css-debug-utils'
 
@@ -20,22 +20,16 @@ interface ImageCarouselProps extends React.HTMLAttributes<HTMLDivElement> {
   onVideoClick?: (videoSrc: string, rect: DOMRect) => void
   onOpenMediaCarousel?: (items: MediaItem[], startIndex: number, rect: DOMRect) => void
   experienceId?: string
-  // Frame properties - DEPRECATED, will be replaced with new static system
-  // TODO: Replace with containerWidth, containerHeight, cropBoxPx in next implementation
+  // NEW: Static system properties
   frameSrc?: string
-  frameConfig?: {
-    scaleX?: number
-    scaleY?: number
-    offsetX?: number
-    offsetY?: number
-    fit?: 'cover' | 'contain' | 'fill'
-    cropBox?: CropBox
-  }
+  containerWidth?: number
+  containerHeight?: number
+  cropBoxPx?: CropBoxPx
   // Calibration properties
   calibrationMode?: boolean
   isActiveCalibration?: boolean
   onStartCalibration?: () => void
-  onConfirmCalibration?: (cropBox: CropBox) => void
+  onConfirmCalibration?: (cropBox: CropBoxPx, containerSize: { width: number, height: number }) => void
   // Styling properties
   borderRadius?: string
 }
@@ -49,7 +43,9 @@ export default function ImageCarousel({
   onOpenMediaCarousel,
   experienceId,
   frameSrc,
-  frameConfig,
+  containerWidth,
+  containerHeight,
+  cropBoxPx,
   calibrationMode,
   isActiveCalibration,
   onStartCalibration,
@@ -68,7 +64,7 @@ export default function ImageCarousel({
   const [isDrawing, setIsDrawing] = useState(false)
   const [drawStart, setDrawStart] = useState<{ x: number; y: number } | null>(null)
   const [drawCurrent, setDrawCurrent] = useState<{ x: number; y: number } | null>(null)
-  const [tempCropBox, setTempCropBox] = useState<CropBox | null>(null)
+  const [tempCropBox, setTempCropBox] = useState<CropBoxPx | null>(null)
 
   // Build media list with backward compatibility - UNIFIED
   const mediaItems: MediaItem[] = (() => {
@@ -257,7 +253,7 @@ export default function ImageCarousel({
     }
 
     // NEW: Save in PIXELS, not percentages
-    const cropBox: CropBox = {
+    const cropBox: CropBoxPx = {
       x: Math.round(x),
       y: Math.round(y),
       width: Math.round(width),
@@ -308,8 +304,7 @@ export default function ImageCarousel({
   if (totalItems === 0) return null
 
   // Determine which cropBox to use: tempCropBox (being drawn) or saved cropBox
-  // UNIVERSAL: Use cropBox calibration for all devices (percentages scale automatically)
-  const activeCropBox = tempCropBox || frameConfig?.cropBox
+  const activeCropBox = tempCropBox || cropBoxPx
 
   // Calculate drawing rectangle for visualization
   const drawRect = drawStart && drawCurrent ? {
@@ -318,6 +313,10 @@ export default function ImageCarousel({
     width: Math.abs(drawCurrent.x - drawStart.x),
     height: Math.abs(drawCurrent.y - drawStart.y)
   } : null
+
+  // Use containerWidth/Height if provided, otherwise use default size
+  const actualContainerWidth = containerWidth || 384
+  const actualContainerHeight = containerHeight || 384
 
   return (
     <div
@@ -328,14 +327,21 @@ export default function ImageCarousel({
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
+      style={{
+        ...rest.style,
+        position: 'relative',
+        width: `${actualContainerWidth}px`,
+        height: `${actualContainerHeight}px`,
+        margin: '0 auto'
+      }}
     >
-      {/* CropBox - hijo directo del carousel raíz para respetar height calibrada con Ctrl+A */}
+      {/* CropBox - contenedor de imágenes con posición absoluta en píxeles */}
       <div style={{
-        width: activeCropBox ? `${activeCropBox.width}%` : '80%',
-        height: activeCropBox ? `${activeCropBox.height}%` : '80%',
         position: 'absolute',
-        left: activeCropBox ? `${activeCropBox.x}%` : '50%',
-        top: activeCropBox ? `${activeCropBox.y}%` : '50%',
+        left: activeCropBox ? `${activeCropBox.x}px` : '50%',
+        top: activeCropBox ? `${activeCropBox.y}px` : '50%',
+        width: activeCropBox ? `${activeCropBox.width}px` : '80%',
+        height: activeCropBox ? `${activeCropBox.height}px` : '80%',
         transform: activeCropBox ? 'none' : 'translate(-50%, -50%)',
         overflow: 'hidden',
         borderRadius: borderRadius || undefined
@@ -385,32 +391,22 @@ export default function ImageCarousel({
         })}
       </div>
 
-      {/* PLACEHOLDER - Marco irá aquí en la nueva implementación */}
+      {/* Marco PNG superpuesto */}
       {frameSrc && (
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          border: '2px dashed rgba(255, 0, 0, 0.3)',
-          pointerEvents: 'none',
-          zIndex: 30,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}>
-          <div style={{
-            backgroundColor: 'rgba(0, 0, 0, 0.7)',
-            color: 'white',
-            padding: '8px 12px',
-            borderRadius: '4px',
-            fontSize: '12px',
-            fontWeight: 'bold'
-          }}>
-            FRAME PLACEHOLDER - {experienceId}
-          </div>
-        </div>
+        <img
+          src={frameSrc}
+          alt=""
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'contain',
+            pointerEvents: 'none',
+            zIndex: 30
+          }}
+        />
       )}
 
       {/* Calibration drawing overlay */}
@@ -478,8 +474,12 @@ export default function ImageCarousel({
             <button
               onClick={(e) => {
                 e.stopPropagation()
-                if (tempCropBox) {
-                  onConfirmCalibration?.(tempCropBox)
+                if (tempCropBox && carouselRef.current) {
+                  const rect = carouselRef.current.getBoundingClientRect()
+                  onConfirmCalibration?.(tempCropBox, {
+                    width: Math.round(rect.width),
+                    height: Math.round(rect.height)
+                  })
                 }
               }}
               disabled={!tempCropBox}

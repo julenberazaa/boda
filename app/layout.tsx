@@ -730,8 +730,7 @@ export default function RootLayout({
                   right: 4px !important;
                 }
 
-                /* REMOVED: Todos los CSS que sobrescribían height y overflow de carousels */
-                /* Los carousels ahora usan height: 384px fijo respetando solo el cropBox calibrado con Ctrl+A */
+                /* CAROUSEL CSS eliminado - Ahora el cropBox calibrado con Ctrl+A controla todo sin interferencias */
 
                 /* Ensure parent containers don't restrict width */
                 .timeline-item .col-span-6 {

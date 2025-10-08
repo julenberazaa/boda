@@ -1329,7 +1329,7 @@ export default function TimelinePage() {
                 onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
                   openImageCarousel(imageSrc, imageArray, currentIndex, rect)
                 }}
-                style={{ width: '384px', height: '384px', borderRadius: '1rem' }}
+                style={{ width: '384px', height: '383.65px', borderRadius: '1rem' }}
               />
             </div>
           </div>
@@ -1358,7 +1358,7 @@ export default function TimelinePage() {
                 onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
                   openImageCarousel(imageSrc, imageArray, currentIndex, rect)
                 }}
-                style={{ width: '384px', height: '384px' }}
+                style={{ width: '384px', height: '364.77px' }}
               />
             </div>
           </div>
@@ -1409,7 +1409,7 @@ export default function TimelinePage() {
                 onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
                   openImageCarousel(imageSrc, imageArray, currentIndex, rect)
                 }}
-                style={{ width: '384px', height: '384px', borderRadius: '1rem' }}
+                style={{ width: '384px', height: '314.09px', borderRadius: '1rem' }}
               />
             </div>
           </div>
@@ -1438,7 +1438,7 @@ export default function TimelinePage() {
                 onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
                   openImageCarousel(imageSrc, imageArray, currentIndex, rect)
                 }}
-                style={{ width: '384px', height: '384px', borderRadius: '1rem' }}
+                style={{ width: '384px', height: '345.66px', borderRadius: '1rem' }}
               />
             </div>
           </div>
@@ -1489,7 +1489,7 @@ export default function TimelinePage() {
                 onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
                   openImageCarousel(imageSrc, imageArray, currentIndex, rect)
                 }}
-                style={{ width: '384px', height: '384px' }}
+                style={{ width: '384px', height: '368.67px' }}
               />
             </div>
           </div>
@@ -1520,7 +1520,7 @@ export default function TimelinePage() {
                 onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
                   openImageCarousel(imageSrc, imageArray, currentIndex, rect)
                 }}
-                style={{ width: '384px', height: '384px' }}
+                style={{ width: '384px', height: '361.09px' }}
               />
             </div>
           </div>
@@ -1590,7 +1590,7 @@ export default function TimelinePage() {
                 onOpenMediaCarousel={(items, startIndex, rect) => {
                   openUnifiedMediaCarousel(items, startIndex, rect)
                 }}
-                style={{ width: '384px', height: '384px' }}
+                style={{ width: '384px', height: '364.28px' }}
               />
             </div>
           </div>
@@ -1615,7 +1615,7 @@ export default function TimelinePage() {
                 onImageClick={(imageSrc, imageArray, currentIndex, rect) => {
                   openImageCarousel(imageSrc, imageArray, currentIndex, rect)
                 }}
-                style={{ width: '384px', height: '384px' }}
+                style={{ width: '384px', height: '383.81px' }}
               />
             </div>
           </div>

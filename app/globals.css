@@ -31,23 +31,8 @@
     --font-scale: 1.2;
     --timeline-extra-spacing: 0rem;
 
-    /* Carousel refactor v2: Desktop aspect ratios (calibrated at 1536px) */
-    --base-viewport-width: 1536;
-    --carousel-base-height: 384; /* Base height in px at 1536px */
-
-    /* Desktop scales per carousel (extracted from inline transform values) */
-    --carousel-scale-default: 1.2;     /* Primeras escapadas, Estudios, Ilun */
-    --carousel-scale-policia: 1.254;
-    --carousel-scale-medicina: 1.134;
-    --carousel-scale-hobbies: 1.26;
-    --carousel-scale-indep: 1.32;
-    --carousel-scale-pedida: 1.32;
-
-    /* Frame overlay scale (currently fixed at 1.2 for all) */
-    --frame-overlay-scale: 1.2;
-
-    /* Feature flag for rollback */
-    --mobile-carousel-v2: 1;
+    /* DEPRECATED: Carousel scaling variables removed - new system uses static px sizes */
+    /* TODO: Remove in next refactor once new system is implemented */
   }
 
   .dark {
@@ -280,14 +265,7 @@
   box-shadow: 8px 15px 35px rgba(0, 0, 0, 0.3);
 }
 
-/* Frame shadows - adapts to irregular shapes */
-.frame-shadow {
-  filter: drop-shadow(4px 8px 20px rgba(0, 0, 0, 0.15));
-}
-
-.frame-shadow-hover {
-  filter: drop-shadow(6px 12px 30px rgba(0, 0, 0, 0.25));
-}
+/* DEPRECATED: Frame shadows removed - new system uses unified container shadows */
 
 /* Performance optimizations - desactivadas para evitar huecos blancos al final de la página
    causados por tamaños intrínsecos de placeholders cuando los elementos están fuera de viewport. */
@@ -665,8 +643,7 @@
     order: 1 !important; /* Asume que order-2 en desktop = texto */
   }
 
-  /* MOBILE CAROUSEL: CSS overrides removed to allow JavaScript inline styles to work */
-  /* JavaScript in page.tsx and image-carousel-unified.tsx now handles responsive scaling */
+  /* MOBILE CAROUSEL: New system uses static sizes - no responsive scaling needed */
 
   /* Timeline mobile container (for TimelineSection component) */
   .timeline-mobile-container {

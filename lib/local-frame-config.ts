@@ -1,3 +1,9 @@
+// ============================================================================
+// DEPRECATED: This file will be completely rewritten with new structure
+// Current structure uses percentages - NEW system will use absolute pixels
+// ============================================================================
+
+// OLD: Percentage-based cropBox (will be replaced)
 export interface CropBox {
   x: number      // % desde la izquierda del contenedor
   y: number      // % desde arriba del contenedor
@@ -5,14 +11,31 @@ export interface CropBox {
   height: number // % del alto del contenedor
 }
 
+// NEW: Pixel-based cropBox (for future implementation)
+export interface CropBoxPx {
+  x: number      // px desde la izquierda del container
+  y: number      // px desde arriba del container
+  width: number  // px de ancho del área de fotos
+  height: number // px de alto del área de fotos
+}
+
+// OLD: Current config (will be replaced)
 export interface LocalFrameConfig {
   frameSrc: string
-  scaleX?: number
-  scaleY?: number
-  offsetX?: number
-  offsetY?: number
-  fit?: 'cover' | 'contain' | 'fill'
-  cropBox?: CropBox
+  scaleX?: number        // DEPRECATED - will be removed
+  scaleY?: number        // DEPRECATED - will be removed
+  offsetX?: number       // DEPRECATED - will be removed
+  offsetY?: number       // DEPRECATED - will be removed
+  fit?: 'cover' | 'contain' | 'fill'  // DEPRECATED - will be removed
+  cropBox?: CropBox      // DEPRECATED - will be replaced with cropBoxPx
+}
+
+// NEW: Simplified config for future implementation
+export interface LocalFrameConfigNew {
+  frameSrc: string           // Path a la imagen PNG del marco
+  containerWidth: number     // Ancho total del marco en px
+  containerHeight: number    // Alto total del marco en px
+  cropBox: CropBoxPx        // Área donde van las fotos (px absolutos)
 }
 
 // Mapeo de experience IDs a configuraciones de marcos locales

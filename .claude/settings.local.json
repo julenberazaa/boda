@@ -5,7 +5,9 @@
       "Bash(git commit:*)",
       "Bash(git push:*)",
       "Bash(npm run build:*)",
-      "Bash(npx next:*)"
+      "Bash(npx next:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run dev:*)"
     ],
     "deny": [],
     "ask": []

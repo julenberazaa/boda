@@ -348,62 +348,60 @@ export default function ImageCarousel({
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
     >
-      {/* Contenedor interno para las imágenes - usa cropBox si existe */}
-      <div className="overflow-visible w-full h-full flex items-center justify-center">
-        <div style={{
-          width: activeCropBox ? `${activeCropBox.width}%` : '80%',
-          height: activeCropBox ? `${activeCropBox.height}%` : '80%',
-          position: 'absolute',
-          left: activeCropBox ? `${activeCropBox.x}%` : '50%',
-          top: activeCropBox ? `${activeCropBox.y}%` : '50%',
-          transform: activeCropBox ? 'none' : 'translate(-50%, -50%)',
-          overflow: 'hidden',
-          borderRadius: borderRadius || undefined
-        }}>
-          {mediaItems.map((item, index) => {
-            // UNIFIED styling - same for all devices
-            const commonStyle: React.CSSProperties = {
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              opacity: index === activeIndex ? 1 : 0,
-              transition: 'opacity 1s ease-in-out, transform 0.3s ease-out',
-              zIndex: index === activeIndex ? 20 : 10,
-            }
+      {/* CropBox - hijo directo del carousel raíz para respetar height calibrada con Ctrl+A */}
+      <div style={{
+        width: activeCropBox ? `${activeCropBox.width}%` : '80%',
+        height: activeCropBox ? `${activeCropBox.height}%` : '80%',
+        position: 'absolute',
+        left: activeCropBox ? `${activeCropBox.x}%` : '50%',
+        top: activeCropBox ? `${activeCropBox.y}%` : '50%',
+        transform: activeCropBox ? 'none' : 'translate(-50%, -50%)',
+        overflow: 'hidden',
+        borderRadius: borderRadius || undefined
+      }}>
+        {mediaItems.map((item, index) => {
+          // UNIFIED styling - same for all devices
+          const commonStyle: React.CSSProperties = {
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            opacity: index === activeIndex ? 1 : 0,
+            transition: 'opacity 1s ease-in-out, transform 0.3s ease-out',
+            zIndex: index === activeIndex ? 20 : 10,
+          }
 
-            if (item.type === 'image') {
-              return (
-                <img
-                  key={`img-${item.src}-${index}`}
-                  src={item.src}
-                  alt={`${alt} - Imagen ${index + 1}`}
-                  draggable={false}
-                  style={commonStyle}
-                  className="hover-scale-image"
-                  loading="lazy"
-                  decoding="async"
-                />
-              )
-            }
-
+          if (item.type === 'image') {
             return (
-              <video
-                key={`vid-${item.src}-${index}`}
-                ref={(el) => { videoRefs.current[index] = el }}
+              <img
+                key={`img-${item.src}-${index}`}
                 src={item.src}
-                playsInline
-                controls={false}
-                muted
+                alt={`${alt} - Imagen ${index + 1}`}
+                draggable={false}
                 style={commonStyle}
                 className="hover-scale-image"
-                preload={index === activeIndex ? 'auto' : 'metadata'}
+                loading="lazy"
+                decoding="async"
               />
             )
-          })}
-        </div>
+          }
+
+          return (
+            <video
+              key={`vid-${item.src}-${index}`}
+              ref={(el) => { videoRefs.current[index] = el }}
+              src={item.src}
+              playsInline
+              controls={false}
+              muted
+              style={commonStyle}
+              className="hover-scale-image"
+              preload={index === activeIndex ? 'auto' : 'metadata'}
+            />
+          )
+        })}
       </div>
 
       {/* Frame overlay - escala proporcional según dispositivo */}

@@ -750,52 +750,21 @@ export default function RootLayout({
                   padding: 0 !important;
                 }
 
-                /* Force carousel content visibility and proper dimensions */
-                .timeline-item div[style*="position: relative"] > div,
-                .timeline-item div[style*="overflow: hidden"] > * {
-                  display: block !important;
-                  width: 100% !important;
-                  height: 100% !important;
-                  position: relative !important;
-                }
-
-                /* Ensure ImageCarousel component itself is visible */
-                .timeline-item div[style*="height: calc(384px"] .relative.w-full.h-full,
-                .timeline-item div[style*="overflow: hidden"] .relative {
-                  width: 100% !important;
-                  height: 100% !important;
-                  display: block !important;
-                }
+                /* REMOVED: CSS que forzaba height: 100% y bloqueaba el cropBox calibrado con Ctrl+A */
+                /* Ahora el cropBox es hijo directo del carousel raíz y controla su propia altura */
 
 
-                /* MOBILE CAROUSEL FIX - Centered with auto height */
+                /* MOBILE CAROUSEL - Centered, sin forzar height para permitir cropBox */
                 div[style*="calc(384px"] {
-                  height: auto !important;
-                  min-height: 0 !important;
-                  max-height: none !important;
                   width: 100% !important;
-                  min-width: 0 !important;
-                  max-width: 100% !important;
                   display: block !important;
-                  overflow: hidden !important;
+                  overflow: visible !important; /* visible para que el frame pueda sobresalir */
                   position: relative !important;
                   margin: 0 auto !important; /* Center in column */
                 }
 
-                /* Ensure ImageCarousel component fills container */
-                div[style*="calc(384px"] > * {
-                  display: block !important;
-                  width: 100% !important;
-                  height: 100% !important;
-                }
-
-                /* Ensure carousel images display properly */
-                div[style*="calc(384px"] img {
-                  display: block !important;
-                  width: 100% !important;
-                  height: 100% !important;
-                  object-fit: cover !important;
-                }
+                /* REMOVED: CSS que forzaba height: 100% en ImageCarousel y sus imágenes */
+                /* Ahora el cropBox controla la altura de las imágenes según calibración Ctrl+A */
 
                 /* Ensure parent containers don't restrict width */
                 .timeline-item .col-span-6 {

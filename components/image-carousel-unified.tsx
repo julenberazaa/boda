@@ -242,7 +242,7 @@ export default function ImageCarousel({
     const endX = e.clientX - rect.left
     const endY = e.clientY - rect.top
 
-    // Calculate cropBox in percentages
+    // Calculate cropBox in ABSOLUTE PIXELS (not percentages)
     const x = Math.min(drawStart.x, endX)
     const y = Math.min(drawStart.y, endY)
     const width = Math.abs(endX - drawStart.x)
@@ -256,17 +256,22 @@ export default function ImageCarousel({
       return
     }
 
+    // NEW: Save in PIXELS, not percentages
     const cropBox: CropBox = {
-      x: (x / rect.width) * 100,
-      y: (y / rect.height) * 100,
-      width: (width / rect.width) * 100,
-      height: (height / rect.height) * 100
+      x: Math.round(x),
+      y: Math.round(y),
+      width: Math.round(width),
+      height: Math.round(height)
     }
 
     setTempCropBox(cropBox)
     setIsDrawing(false)
     setDrawStart(null)
     setDrawCurrent(null)
+
+    // Log container size for reference (will be needed in config)
+    console.log(`📐 [Calibration ${experienceId}] Container size: ${Math.round(rect.width)}×${Math.round(rect.height)}px`)
+    console.log(`📐 [Calibration ${experienceId}] CropBox (px): x:${cropBox.x}, y:${cropBox.y}, w:${cropBox.width}, h:${cropBox.height}`)
   }
 
   const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {

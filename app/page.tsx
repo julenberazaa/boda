@@ -45,31 +45,7 @@ export default function TimelinePage() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  // Helper: Calculate responsive scale for carousel containers
-  const getResponsiveScale = useMemo(() => {
-    return (desktopScale: number): number => {
-      // SSR/initial: return desktop scale
-      if (windowWidth === 0) {
-        console.log(`🔧 [getResponsiveScale] SSR mode, returning desktop scale: ${desktopScale}`)
-        return desktopScale
-      }
-
-      const isMobileDevice = windowWidth <= 767
-      if (!isMobileDevice) {
-        console.log(`🔧 [getResponsiveScale] Desktop detected (${windowWidth}px), returning: ${desktopScale}`)
-        return desktopScale
-      }
-
-      // Mobile: Calculate available width
-      const mobileWidthAvailable = Math.min(windowWidth * 0.7, 480) * 0.96
-      const desktopBase = 384
-      const mobileRatio = mobileWidthAvailable / desktopBase
-      const mobileScale = desktopScale * mobileRatio
-
-      console.log(`🔧 [getResponsiveScale] Mobile detected (${windowWidth}px), scale: ${desktopScale} * ${mobileRatio.toFixed(3)} = ${mobileScale.toFixed(3)}`)
-      return mobileScale
-    }
-  }, [windowWidth])
+  // REMOVED: getResponsiveScale() - Carousels ahora usan altura fija de 384px sin escalado
 
   const heroRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLIFrameElement>(null)
@@ -1353,7 +1329,7 @@ export default function TimelinePage() {
           <div className="col-span-6">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative', transform: `scale(${getResponsiveScale(1.2)})`, transformOrigin: 'center', borderRadius: '1rem' }}>
+                <div style={{ height: '384px', overflow: 'hidden', position: 'relative', borderRadius: '1rem' }}>
                   <ImageCarousel
                     images={[
                       "/primeras-escapadas-01.png",
@@ -1386,7 +1362,7 @@ export default function TimelinePage() {
           <div className="col-span-6 order-1">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-hidden" style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative', transform: `scale(${getResponsiveScale(1.2)})`, transformOrigin: 'center' }}>
+                <div className="overflow-hidden" style={{ height: '384px', overflow: 'hidden', position: 'relative' }}>
                   <ImageCarousel
                     images={[
                       "/estudios/ESTUDIOS.jpeg",
@@ -1440,7 +1416,7 @@ export default function TimelinePage() {
           <div className="col-span-6">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="rounded-2xl overflow-hidden" style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative', transform: `scale(${getResponsiveScale(1.254)})`, transformOrigin: 'center' }}>
+                <div className="rounded-2xl overflow-hidden" style={{ height: '384px', overflow: 'hidden', position: 'relative' }}>
                   <ImageCarousel
                     images={[
                       "/estudios-oposiciones-01.png",
@@ -1472,7 +1448,7 @@ export default function TimelinePage() {
           <div className="col-span-6 order-1">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-hidden rounded-2xl" style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative', transform: `scale(${getResponsiveScale(1.134)})`, transformOrigin: 'center', borderRadius: '1rem' }}>
+                <div className="overflow-hidden rounded-2xl" style={{ height: '384px', overflow: 'hidden', position: 'relative', borderRadius: '1rem' }}>
                   <ImageCarousel
                     images={[
                       "/mir/MIR.png",
@@ -1526,7 +1502,7 @@ export default function TimelinePage() {
           <div className="col-span-6">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-hidden" style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative', transform: `scale(${getResponsiveScale(1.26)})`, transformOrigin: 'center' }}>
+                <div className="overflow-hidden" style={{ height: '384px', overflow: 'hidden', position: 'relative' }}>
                   <ImageCarousel
                     images={[
                       "/hobbies/HOBBIES.jpeg",
@@ -1558,7 +1534,7 @@ export default function TimelinePage() {
           <div className="col-span-6 order-1">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-hidden" style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative', transform: `scale(${getResponsiveScale(1.32)})`, transformOrigin: 'center' }}>
+                <div className="overflow-hidden" style={{ height: '384px', overflow: 'hidden', position: 'relative' }}>
                   <ImageCarousel
                     images={[
                       "/independizarse/INDEP.png",
@@ -1614,7 +1590,7 @@ export default function TimelinePage() {
           <div className="col-span-6">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-hidden" style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative', transform: `scale(${getResponsiveScale(1.2)})`, transformOrigin: 'center' }}>
+                <div className="overflow-hidden" style={{ height: '384px', overflow: 'hidden', position: 'relative' }}>
                   <ImageCarousel
                     media={[
                       { type: 'image', src: '/ilun/ILUN.png' },
@@ -1665,7 +1641,7 @@ export default function TimelinePage() {
           <div className="col-span-6 order-1">
             <div className="p-6 flex justify-center">
               <div className="relative" style={{ width: '96%' }}>
-                <div className="overflow-hidden" style={{ height: 'calc(384px - 0px)', overflow: 'hidden', position: 'relative', transform: `scale(${getResponsiveScale(1.32)})`, transformOrigin: 'center' }}>
+                <div className="overflow-hidden" style={{ height: '384px', overflow: 'hidden', position: 'relative' }}>
                   <ImageCarousel
                     images={[
                       "/pedida/PEDIDA_MANO.png",

@@ -730,41 +730,8 @@ export default function RootLayout({
                   right: 4px !important;
                 }
 
-                /* CAROUSEL MOBILE FIX - Target carousel containers with auto heights */
-                .timeline-item div[style*="height: calc(384px"],
-                .timeline-item div[style*="height:calc(384px"] {
-                  height: auto !important;
-                  max-height: none !important;
-                  min-height: 0 !important;
-                  overflow: hidden !important;
-                  display: block !important;
-                }
-
-                /* Ensure carousel wrapper visibility and proper sizing */
-                .timeline-item div.p-6 div.relative[style*="width"],
-                .timeline-item div.p-6 > div.relative {
-                  width: 100% !important;
-                  height: auto !important;
-                  display: block !important;
-                  margin: 0 !important;
-                  padding: 0 !important;
-                }
-
-                /* REMOVED: CSS que forzaba height: 100% y bloqueaba el cropBox calibrado con Ctrl+A */
-                /* Ahora el cropBox es hijo directo del carousel raíz y controla su propia altura */
-
-
-                /* MOBILE CAROUSEL - Centered, sin forzar height para permitir cropBox */
-                div[style*="calc(384px"] {
-                  width: 100% !important;
-                  display: block !important;
-                  overflow: visible !important; /* visible para que el frame pueda sobresalir */
-                  position: relative !important;
-                  margin: 0 auto !important; /* Center in column */
-                }
-
-                /* REMOVED: CSS que forzaba height: 100% en ImageCarousel y sus imágenes */
-                /* Ahora el cropBox controla la altura de las imágenes según calibración Ctrl+A */
+                /* REMOVED: Todos los CSS que sobrescribían height y overflow de carousels */
+                /* Los carousels ahora usan height: 384px fijo respetando solo el cropBox calibrado con Ctrl+A */
 
                 /* Ensure parent containers don't restrict width */
                 .timeline-item .col-span-6 {

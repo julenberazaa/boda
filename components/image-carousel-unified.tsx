@@ -61,32 +61,7 @@ export default function ImageCarousel({
   const carouselRef = useRef<HTMLDivElement>(null)
   const videoRefs = useRef<Record<number, HTMLVideoElement | null>>({})
 
-  // Track window width for responsive frame scaling (client-side only)
-  const [windowWidth, setWindowWidth] = useState(0)
-  const [containerHeight, setContainerHeight] = useState(384) // Track actual container height for vertical positioning
-
-  useEffect(() => {
-    const width = window.innerWidth
-    setWindowWidth(width)
-    console.log(`🔧 [ImageCarousel ${experienceId}] Window width set to:`, width)
-
-    const handleResize = () => {
-      const newWidth = window.innerWidth
-      setWindowWidth(newWidth)
-      console.log(`🔧 [ImageCarousel ${experienceId}] Window width resized to:`, newWidth)
-    }
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [experienceId])
-
-  // Measure actual container height for accurate frame positioning in mobile
-  useEffect(() => {
-    if (carouselRef.current) {
-      const rect = carouselRef.current.getBoundingClientRect()
-      setContainerHeight(rect.height)
-      console.log(`🔧 [Frame ${experienceId}] Container height measured: ${rect.height}px`)
-    }
-  }, [windowWidth, experienceId])
+  // REMOVED: windowWidth tracking - Carousels ahora usan altura fija de 384px sin adaptación
 
   // Calibration state
   const [isDrawing, setIsDrawing] = useState(false)
@@ -342,7 +317,8 @@ export default function ImageCarousel({
     <div
       ref={carouselRef}
       {...rest}
-      className={`relative w-full h-full ${calibrationMode ? 'cursor-crosshair' : 'cursor-pointer'}${className ? ` ${className}` : ''}`}
+      className={`relative w-full ${calibrationMode ? 'cursor-crosshair' : 'cursor-pointer'}${className ? ` ${className}` : ''}`}
+      style={{ height: '384px', ...rest.style }}
       onClick={handleContainerClick}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
@@ -404,87 +380,24 @@ export default function ImageCarousel({
         })}
       </div>
 
-      {/* Frame overlay - escala proporcional según dispositivo */}
-      {frameSrc && (() => {
-        // SSR/initial: use desktop scale
-        if (windowWidth === 0) {
-          console.log(`🔧 [Frame ${experienceId}] SSR mode, using desktop scale 1.2`)
-          return (
-            <img
-              src={frameSrc}
-              alt=""
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                width: '100%',
-                height: '100%',
-                transform: 'translate(-50%, -50%) scale(1.2, 1.2)',
-                objectFit: 'contain',
-                zIndex: 30,
-                pointerEvents: 'none'
-              }}
-            />
-          )
-        }
-
-        const isMobile = windowWidth <= 767
-
-        if (!isMobile) {
-          // Desktop: usar escala 1.2 calibrada
-          console.log(`🔧 [Frame ${experienceId}] Desktop (${windowWidth}px), using scale 1.2`)
-          return (
-            <img
-              src={frameSrc}
-              alt=""
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                width: '100%',
-                height: '100%',
-                transform: 'translate(-50%, -50%) scale(1.2, 1.2)',
-                objectFit: 'contain',
-                zIndex: 30,
-                pointerEvents: 'none'
-              }}
-            />
-          )
-        }
-
-        // Móvil: usar scaleX/scaleY específicos del frameConfig
-        // El container ya se escaló con mobileRatio, el frame mantiene su escala original respecto al container
-        const scaleX = frameConfig?.scaleX ?? 1.2
-        const scaleY = frameConfig?.scaleY ?? 1.2
-
-        // Ajustar posición vertical: compensar el scale del contenedor padre
-        // Si el contenedor tiene height 384px pero se ve como 302px (scale 0.787),
-        // entonces top:50% = 192px, pero debería ser 151px (50% de 302px)
-        const desktopHeight = 384
-        const containerScale = containerHeight / desktopHeight
-        const verticalOffset = (1 - containerScale) * 50 // Porcentaje a restar
-        const topPosition = `calc(50% - ${verticalOffset.toFixed(2)}%)`
-
-        console.log(`🔧 [Frame ${experienceId}] Mobile (${windowWidth}px), scale: ${scaleX}×${scaleY}, containerHeight: ${containerHeight}px, containerScale: ${containerScale.toFixed(3)}, verticalOffset: ${verticalOffset.toFixed(2)}%, top: ${topPosition}`)
-
-        return (
-          <img
-            src={frameSrc}
-            alt=""
-            style={{
-              position: 'absolute',
-              top: topPosition,
-              left: '50%',
-              width: '100%',
-              height: '100%',
-              transform: `translate(-50%, -50%) scale(${scaleX}, ${scaleY})`,
-              objectFit: 'contain',
-              zIndex: 30,
-              pointerEvents: 'none'
-            }}
-          />
-        )
-      })()}
+      {/* Frame overlay - escala fija del frameConfig (sin adaptación responsive) */}
+      {frameSrc && (
+        <img
+          src={frameSrc}
+          alt=""
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            width: '100%',
+            height: '100%',
+            transform: `translate(-50%, -50%) scale(${frameConfig?.scaleX ?? 1.2}, ${frameConfig?.scaleY ?? 1.2})`,
+            objectFit: 'contain',
+            zIndex: 30,
+            pointerEvents: 'none'
+          }}
+        />
+      )}
 
       {/* Calibration drawing overlay */}
       {isActiveCalibration && drawRect && (

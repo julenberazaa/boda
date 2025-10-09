@@ -520,7 +520,7 @@
 /* ========================================
    MOBILE LAYOUT - CLEAN REFACTOR
    Single column, Title → Text → Media order
-   Carousels scale down preserving desktop aspect ratios
+   STATIC CAROUSELS: Maintain exact 550px size on ALL devices
    ======================================== */
 @media (max-width: 767px) {
 
@@ -672,12 +672,8 @@
     grid-area: media !important;
   }
 
-  .timeline-mobile-container img:not([alt=""]),
-  .timeline-mobile-container video {
-    width: 100% !important;
-    height: auto !important;
-    object-fit: contain !important;
-  }
+  /* REMOVED: width: 100% rule that was breaking static carousel system
+     Images inside carousels must maintain their exact calibrated dimensions */
 
   /* Círculos más pequeños solo en móviles */
   .timeline-icon-circle {

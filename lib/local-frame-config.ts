@@ -19,7 +19,7 @@ export interface LocalFrameConfig {
 }
 
 // Configuraciones de marcos para cada experiencia
-// NOTA: Estos valores son placeholders - se recalibrarán con Ctrl+A
+// VALORES CALIBRADOS - Capturados con Ctrl+A el 2025-10-08
 export const LOCAL_FRAME_CONFIGS: Record<string, LocalFrameConfig> = {
   // Primeras escapadas
   '02': {
@@ -27,10 +27,10 @@ export const LOCAL_FRAME_CONFIGS: Record<string, LocalFrameConfig> = {
     containerWidth: 550,
     containerHeight: 548,
     cropBox: {
-      x: 77,
-      y: 70,
-      width: 407,
-      height: 407
+      x: 110,
+      y: 151,
+      width: 341,
+      height: 243
     }
   },
 
@@ -40,10 +40,10 @@ export const LOCAL_FRAME_CONFIGS: Record<string, LocalFrameConfig> = {
     containerWidth: 550,
     containerHeight: 523,
     cropBox: {
-      x: 62,
-      y: 66,
-      width: 432,
-      height: 391
+      x: 95,
+      y: 139,
+      width: 364,
+      height: 245
     }
   },
 
@@ -53,10 +53,10 @@ export const LOCAL_FRAME_CONFIGS: Record<string, LocalFrameConfig> = {
     containerWidth: 550,
     containerHeight: 450,
     cropBox: {
-      x: 66,
-      y: 64,
-      width: 414,
-      height: 276
+      x: 71,
+      y: 91,
+      width: 404,
+      height: 239
     }
   },
 
@@ -66,10 +66,10 @@ export const LOCAL_FRAME_CONFIGS: Record<string, LocalFrameConfig> = {
     containerWidth: 550,
     containerHeight: 495,
     cropBox: {
-      x: 29,
-      y: 54,
-      width: 490,
-      height: 396
+      x: 68,
+      y: 124,
+      width: 412,
+      height: 253
     }
   },
 
@@ -79,10 +79,10 @@ export const LOCAL_FRAME_CONFIGS: Record<string, LocalFrameConfig> = {
     containerWidth: 550,
     containerHeight: 528,
     cropBox: {
-      x: 66,
-      y: 74,
-      width: 411,
-      height: 378
+      x: 101,
+      y: 145,
+      width: 342,
+      height: 236
     }
   },
 
@@ -92,10 +92,10 @@ export const LOCAL_FRAME_CONFIGS: Record<string, LocalFrameConfig> = {
     containerWidth: 550,
     containerHeight: 517,
     cropBox: {
-      x: 72,
-      y: 77,
-      width: 411,
-      height: 364
+      x: 103,
+      y: 145,
+      width: 344,
+      height: 230
     }
   },
 
@@ -105,10 +105,10 @@ export const LOCAL_FRAME_CONFIGS: Record<string, LocalFrameConfig> = {
     containerWidth: 550,
     containerHeight: 521,
     cropBox: {
-      x: 62,
-      y: 64,
-      width: 435,
-      height: 391
+      x: 96,
+      y: 138,
+      width: 363,
+      height: 244
     }
   },
 
@@ -118,10 +118,10 @@ export const LOCAL_FRAME_CONFIGS: Record<string, LocalFrameConfig> = {
     containerWidth: 550,
     containerHeight: 550,
     cropBox: {
-      x: 76,
-      y: 70,
-      width: 411,
-      height: 411
+      x: 111,
+      y: 153,
+      width: 340,
+      height: 245
     }
   }
 }

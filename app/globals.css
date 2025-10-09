@@ -607,6 +607,26 @@
     -webkit-overflow-scrolling: touch !important;
   }
 
+  /* CRITICAL: Force carousel to maintain static size - override ANY global rules */
+  section.timeline-item div.p-6.flex.justify-center > div {
+    /* Carousel root container - never scale */
+    min-width: unset !important;
+    max-width: unset !important;
+    width: auto !important; /* Let inline styles control width */
+    height: auto !important; /* Let inline styles control height */
+    flex-shrink: 0 !important;
+  }
+
+  /* CRITICAL: Prevent images/videos inside carousels from being scaled by global rules */
+  section.timeline-item div.p-6.flex.justify-center img:not([alt=""]),
+  section.timeline-item div.p-6.flex.justify-center video {
+    /* Images inside cropBox - controlled by inline styles, not CSS */
+    width: auto !important;
+    height: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+  }
+
   /* MOBILE ORDER: Using flexbox order */
   /* STRATEGY: Force ALL carousels to order: 2 and ALL text to order: 1 */
 

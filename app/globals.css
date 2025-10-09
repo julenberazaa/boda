@@ -515,13 +515,7 @@
 /* Accesibilidad - Motion reduce no needed in fixed layout */
 
 /* Unified styles for all devices - no platform-specific differences */
-
-/* Responsive scaling for smaller screens */
-@container (width < 768px) {
-  .slide-frame {
-    --mobile-scale: 0.8;
-  }
-}
+/* STATIC SYSTEM: No responsive scaling - carousels maintain fixed pixel sizes */
 
 /* ========================================
    MOBILE LAYOUT - CLEAN REFACTOR
@@ -602,6 +596,15 @@
   section.timeline-item .px-8 {
     padding-left: 0 !important;
     padding-right: 0 !important;
+  }
+
+  /* EXCEPTION: Preserve carousel container padding and centering */
+  section.timeline-item div.p-6.flex.justify-center {
+    padding: 1.5rem !important;
+    display: flex !important;
+    justify-content: center !important;
+    overflow-x: auto !important; /* Allow horizontal scroll if carousel > screen */
+    -webkit-overflow-scrolling: touch !important;
   }
 
   /* MOBILE ORDER: Using flexbox order */
@@ -840,32 +843,7 @@
   transform: translateZ(0);
 }
 
-.slide-frame {
-  contain: layout style paint;
-  pointer-events: none;
-  user-select: none;
-  /* Universal rendering optimizations */
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-perspective: 1000px;
-  perspective: 1000px;
-}
-
-.slide-frame img {
-  /* Prevent image rendering issues across browsers */
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
-}
-
-/* Reduce motion for accessibility */
-@media (prefers-reduced-motion: reduce) {
-  .slide-frame {
-    transition: none !important;
-    animation: none !important;
-  }
-}
+/* DEPRECATED: .slide-frame removed - new unified system doesn't use these classes */
 
 /* Hover scale effect for carousel images */
 .hover-scale-image:hover {

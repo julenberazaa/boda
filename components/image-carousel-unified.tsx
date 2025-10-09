@@ -403,8 +403,6 @@ export default function ImageCarousel({
         <img
           src={frameSrc}
           alt=""
-          onLoad={() => console.log(`✅ Frame loaded: ${frameSrc}`)}
-          onError={(e) => console.error(`❌ Frame failed to load: ${frameSrc}`, e)}
           style={{
             position: 'absolute',
             top: 0,
@@ -416,20 +414,6 @@ export default function ImageCarousel({
             zIndex: 30
           }}
         />
-      )}
-      {!frameSrc && experienceId && (
-        <div style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          color: 'red',
-          fontWeight: 'bold',
-          zIndex: 40,
-          pointerEvents: 'none'
-        }}>
-          NO FRAME SRC - {experienceId}
-        </div>
       )}
 
       {/* Crosshair guidelines for calibration */}

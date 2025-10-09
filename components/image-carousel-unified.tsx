@@ -335,11 +335,14 @@ export default function ImageCarousel({
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       style={{
-        ...rest.style,
         position: 'relative',
         width: `${actualContainerWidth}px`,
         height: `${actualContainerHeight}px`,
-        margin: '0 auto'
+        minWidth: `${actualContainerWidth}px`,
+        minHeight: `${actualContainerHeight}px`,
+        maxWidth: `${actualContainerWidth}px`,
+        maxHeight: `${actualContainerHeight}px`,
+        flexShrink: 0
       }}
     >
       {/* CropBox - contenedor de imágenes con posición absoluta en píxeles */}
